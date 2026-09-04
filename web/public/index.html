@@ -1,0 +1,550 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pronóstico calidad del aire · AMM</title>
+<meta name="description" content="Pronóstico de PM2.5 a una hora para las estaciones NE y SO del Área Metropolitana de Monterrey, con datos abiertos del SIMA. Incluye recomendaciones de salud y comparación entre estaciones.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230e7c8a'/%3E%3Cpath d='M4 21c4 0 4-8 8-8s5 6 9 6 3-9 7-9' stroke='white' stroke-width='2.6' fill='none' stroke-linecap='round'/%3E%3C/svg%3E">
+<style>
+:root {
+  --bg: #f4f6f7;
+  --panel: #ffffff;
+  --panel-2: #f0f3f4;
+  --line: #e2e7e9;
+  --line-2: #ccd4d7;
+  --ink: #16232b;
+  --ink-2: #52616a;
+  --ink-3: #869199;
+  --accent: #0e7c8a;
+  --accent-2: #0a5f6b;
+  --accent-ink: #ffffff;
+  --c-real: #1b2733;
+  --c-fc: #0e7c8a;
+
+  /* Escala oficial Índice AIRE y SALUD (NOM-172) */
+  --aica-buena: #00a651;
+  --aica-aceptable: #ffd400;
+  --aica-mala: #ff7e00;
+  --aica-muymala: #ef2b2b;
+  --aica-extrema: #8f3f97;
+
+  --font-sans: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --maxw: 1080px;
+  --radius: 10px;
+  --shadow: 0 1px 2px rgba(16, 33, 41, .05), 0 6px 20px rgba(16, 33, 41, .05);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0e1417; --panel: #151d21; --panel-2: #1c262a; --line: #283237;
+    --line-2: #37434a; --ink: #e8eef0; --ink-2: #9aa5aa; --ink-3: #6d787e;
+    --accent: #3fb6c4; --accent-2: #63c6d1; --accent-ink: #06161a;
+    --c-real: #dbe2e6; --c-fc: #3fb6c4;
+    --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 8px 26px rgba(0, 0, 0, .35);
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0e1417; --panel: #151d21; --panel-2: #1c262a; --line: #283237; --line-2: #37434a;
+  --ink: #e8eef0; --ink-2: #9aa5aa; --ink-3: #6d787e; --accent: #3fb6c4; --accent-2: #63c6d1;
+  --accent-ink: #06161a; --c-real: #dbe2e6; --c-fc: #3fb6c4;
+  --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 8px 26px rgba(0, 0, 0, .35);
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font-family: var(--font-sans); font-size: 15px; line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: var(--accent-2); }
+
+/* ---------- top government-style bar ---------- */
+.gobstrip { background: var(--accent-2); color: #fff; font-size: .74rem; letter-spacing: .02em; }
+.gobstrip .in { max-width: var(--maxw); margin: 0 auto; padding: 7px 24px; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.gobstrip b { font-weight: 600; }
+
+.wrap { max-width: var(--maxw); margin: 0 auto; padding: 26px 24px 72px; }
+
+/* ---------- header ---------- */
+header.site { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 20px; padding-bottom: 20px; border-bottom: 1px solid var(--line); }
+.logo { width: 40px; height: 40px; border-radius: 9px; background: var(--accent); display: grid; place-items: center; flex: none; }
+.logo svg { width: 24px; height: 24px; }
+.site h1 { font-size: 1.16rem; font-weight: 700; margin: 0; letter-spacing: -.01em; line-height: 1.2; }
+.site .org { color: var(--ink-2); font-size: .82rem; margin-top: 1px; }
+.site .spacer { flex: 1; }
+.site .stamp { text-align: right; font-family: var(--font-mono); font-size: .74rem; color: var(--ink-3); line-height: 1.6; }
+.site .stamp b { color: var(--ink-2); font-weight: 500; }
+
+/* ---------- station tabs ---------- */
+.tabs { display: flex; gap: 4px; margin: 26px 0 0; border-bottom: 1px solid var(--line); flex-wrap: wrap; }
+.tabs button {
+  font: inherit; font-weight: 600; font-size: .9rem; border: 0; background: transparent;
+  color: var(--ink-2); padding: 12px 18px; cursor: pointer; border-bottom: 2px solid transparent;
+  margin-bottom: -1px; transition: color .15s, border-color .15s;
+}
+.tabs button[aria-selected="true"] { color: var(--accent-2); border-bottom-color: var(--accent); }
+.tabs button:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+
+/* ---------- hero: ahora -> en 1 hora ---------- */
+.hero { margin-top: 22px; border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; color: #0c1720; }
+.hero.on-dark { color: #fff; }
+.hero .band { display: flex; flex-wrap: wrap; align-items: stretch; gap: 2px 0; }
+.hero .cell { flex: 1 1 190px; padding: 18px 22px; }
+.hero .cell.mid { flex: 0 0 64px; display: grid; place-items: center; }
+.hero .lbl { font-size: .7rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; opacity: .8; }
+.hero .cat { font-size: 1.5rem; font-weight: 700; line-height: 1.15; margin-top: 2px; }
+.hero .num { font-family: var(--font-mono); font-size: 1.15rem; font-weight: 600; margin-top: 4px; }
+.hero .num small { font-size: .74rem; font-weight: 500; opacity: .8; }
+.hero .rng { font-family: var(--font-mono); font-size: .82rem; opacity: .9; margin-top: 2px; }
+.hero .arrow { font-size: 1.7rem; line-height: 1; }
+.hero .trend { padding: 11px 22px; background: rgba(0, 0, 0, .14); font-size: .82rem; font-weight: 500; display: flex; flex-wrap: wrap; gap: 4px 10px; align-items: baseline; }
+.hero.on-dark .trend { background: rgba(0, 0, 0, .28); }
+.hero .trend b { font-weight: 700; }
+
+/* ---------- scale legend ---------- */
+.scale { display: flex; flex-wrap: wrap; gap: 3px; margin-top: 10px; font-size: .68rem; }
+.scale span { flex: 1 1 90px; padding: 4px 8px; color: #0c1720; text-align: center; font-weight: 600; }
+.scale span.dark { color: #fff; }
+.scale .note { flex-basis: 100%; color: var(--ink-3); font-weight: 400; text-align: left; padding: 4px 2px 0; }
+
+/* ---------- layout ---------- */
+section { margin-top: 34px; }
+h2.kick { font-size: .78rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); margin: 0 0 14px; }
+.grid { display: grid; grid-template-columns: minmax(0, 1.85fr) minmax(0, 1fr); gap: 18px; }
+@media (max-width: 860px) { .grid { grid-template-columns: 1fr; } }
+.panel { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); }
+.panel.pad { padding: 20px; }
+.panel.chart { padding: 16px 14px 10px; position: relative; }
+.cols2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+@media (max-width: 760px) { .cols2 { grid-template-columns: 1fr; } }
+
+/* ---------- health recommendations ---------- */
+.rec { padding: 20px; border-left: 6px solid var(--line-2); }
+.rec .head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 12px; }
+.rec .head .cat { font-size: 1.05rem; font-weight: 700; }
+.rec .head .for { font-size: .8rem; color: var(--ink-3); }
+.rec dl { margin: 14px 0 0; display: grid; gap: 12px; }
+.rec dt { font-size: .72rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-3); }
+.rec dd { margin: 3px 0 0; font-size: .9rem; color: var(--ink); }
+.rec ul { margin: 5px 0 0; padding-left: 18px; font-size: .88rem; }
+.rec ul li { margin: 3px 0; }
+
+/* ---------- 72h summary ---------- */
+.sum { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 1px; background: var(--line); border-radius: var(--radius); overflow: hidden; }
+.sum .k { background: var(--panel); padding: 14px 16px; }
+.sum .k .v { font-family: var(--font-mono); font-size: 1.24rem; font-weight: 600; font-variant-numeric: tabular-nums; }
+.sum .k .v small { font-size: .68rem; color: var(--ink-3); font-weight: 500; }
+.sum .k .t { font-size: .74rem; color: var(--ink-3); margin-top: 2px; }
+
+/* comparison table */
+.cmp { width: 100%; border-collapse: collapse; background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); }
+.cmp th, .cmp td { padding: 13px 18px; text-align: right; border-bottom: 1px solid var(--line); }
+.cmp thead th { background: var(--panel-2); font-size: .72rem; letter-spacing: .07em; text-transform: uppercase; color: var(--ink-3); font-weight: 700; }
+.cmp tbody th { text-align: left; font-weight: 500; color: var(--ink-2); font-size: .89rem; }
+.cmp tbody tr:last-child > * { border-bottom: 0; }
+.cmp .val { font-family: var(--font-mono); font-size: .96rem; color: var(--ink); font-variant-numeric: tabular-nums; }
+.cmp .val .u { color: var(--ink-3); font-size: .8em; margin-left: 3px; }
+.cmp .sm { display: block; font-size: .76rem; color: var(--ink-3); margin-top: 2px; }
+.cat-chip { display: inline-block; padding: 2px 10px; border-radius: 999px; font-size: .76rem; font-weight: 700; color: #0c1720; }
+.cat-chip.dark { color: #fff; }
+.delta { display: inline-flex; align-items: center; gap: 4px; font-size: .76rem; font-weight: 700; }
+.delta.up { color: #2e9e4f; } .delta.down { color: #c9500f; }
+
+/* chart */
+.legend { display: flex; flex-wrap: wrap; gap: 12px 20px; font-size: .78rem; color: var(--ink-2); padding: 0 4px 10px; }
+.legend i { display: inline-block; width: 16px; height: 3px; border-radius: 2px; vertical-align: middle; margin-right: 7px; }
+.legend i.dash { background: repeating-linear-gradient(90deg, var(--c-fc) 0 5px, transparent 5px 9px); }
+.legend i.band { height: 11px; background: var(--c-fc); opacity: .18; }
+.chart svg { display: block; width: 100%; height: auto; overflow: visible; }
+.gridline { stroke: var(--line); stroke-width: 1; }
+.axis { fill: var(--ink-3); font-family: var(--font-mono); font-size: 10px; }
+.s-real { fill: none; stroke: var(--c-real); stroke-width: 2; stroke-linejoin: round; }
+.s-fc { fill: none; stroke: var(--c-fc); stroke-width: 2; stroke-dasharray: 5 4; stroke-linejoin: round; }
+.pi { fill: var(--c-fc); opacity: .12; }
+.dot { stroke: var(--panel); stroke-width: 2; }
+.xh { stroke: var(--ink-3); stroke-width: 1; stroke-dasharray: 3 3; opacity: 0; }
+.tip { position: absolute; pointer-events: none; z-index: 6; background: var(--panel); color: var(--ink); border: 1px solid var(--line-2); border-radius: 8px; padding: 8px 11px; font: 500 .75rem/1.5 var(--font-mono); box-shadow: var(--shadow); white-space: nowrap; opacity: 0; transition: opacity .1s; }
+.tip .r { color: var(--ink); } .tip .f { color: var(--accent-2); }
+figcaption { color: var(--ink-3); font: .7rem/1.5 var(--font-mono); padding: 8px 4px 0; }
+
+/* model card */
+.card h3 { margin: 0 0 3px; font-size: .92rem; font-weight: 700; }
+.card .mdl { font-family: var(--font-mono); color: var(--accent-2); font-size: .88rem; }
+.card dl { display: grid; grid-template-columns: auto 1fr; gap: 8px 14px; margin: 16px 0 0; font-size: .83rem; }
+.card dt { color: var(--ink-3); }
+.card dd { margin: 0; text-align: right; font-family: var(--font-mono); color: var(--ink); font-variant-numeric: tabular-nums; }
+.card dd.bad { color: #c9500f; }
+.card dd.good { color: #2e9e4f; }
+.card .ci { display: block; font-size: .74rem; color: var(--ink-3); margin-top: 1px; }
+.card .lv { display: grid; grid-template-columns: 62px 1fr 42px; align-items: center; gap: 9px; margin-top: 7px; font-size: .78rem; }
+.card .lv span:first-child { color: var(--ink-3); }
+.card .lv .bar { height: 8px; border-radius: 3px; }
+.card .lv span:last-child { text-align: right; font-family: var(--font-mono); color: var(--ink-2); }
+.card .lvhead { margin-top: 16px; font-size: .72rem; letter-spacing: .05em; text-transform: uppercase; color: var(--ink-3); }
+
+/* prose */
+.prose { font-size: .9rem; color: var(--ink-2); }
+.prose h3 { font-size: .92rem; color: var(--ink); margin: 0 0 6px; }
+.prose p { margin: 0 0 10px; }
+.prose ul { margin: 0 0 10px; padding-left: 18px; }
+.prose li { margin: 4px 0; }
+.prose .mono { font-family: var(--font-mono); font-size: .85em; color: var(--ink); }
+
+.state { padding: 64px 0; text-align: center; color: var(--ink-3); font-family: var(--font-mono); font-size: .9rem; }
+[hidden] { display: none !important; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+<div class="gobstrip"><div class="in">
+  <span><b>SIMA</b> · Sistema Integral de Monitoreo Ambiental — Nuevo León</span>
+</div></div>
+
+<div class="wrap">
+  <header class="site">
+    <span class="logo" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M4 21c4 0 4-8 8-8s5 6 9 6 3-9 7-9" stroke="#fff" stroke-width="2.6" fill="none" stroke-linecap="round"/></svg></span>
+    <div>
+      <h1>Pronóstico de calidad del aire — PM2.5</h1>
+      <div class="org">Área Metropolitana de Monterrey · estaciones NE y SO · horizonte 1 hora</div>
+    </div>
+    <span class="spacer"></span>
+    <div class="stamp" id="stamp"></div>
+  </header>
+
+  <p class="state" id="loading">Cargando pronóstico…</p>
+  <p class="state" id="error" hidden>No se pudo cargar el pronóstico (revisa <code>/api/forecast</code>).</p>
+
+  <main id="app" hidden>
+    <div class="tabs" role="tablist" id="tabs"></div>
+
+    <div id="hero" class="hero"></div>
+    <div id="scale" class="scale"></div>
+
+    <section>
+      <h2 class="kick">Recomendaciones de salud · Índice AIRE y SALUD</h2>
+      <div id="rec" class="panel rec"></div>
+    </section>
+
+    <section>
+      <h2 class="kick">Medición vs. pronóstico · 72 observaciones recientes</h2>
+      <div class="grid">
+        <figure class="panel chart" style="margin:0">
+          <div class="legend" aria-hidden="true">
+            <span><i style="background:var(--c-real)"></i>Medición real</span>
+            <span><i class="dash"></i>Pronóstico</span>
+            <span><i class="band"></i>Intervalo de predicción 95%</span>
+          </div>
+          <div id="chart"></div>
+          <div class="tip" id="tip"></div>
+          <figcaption id="cap"></figcaption>
+        </figure>
+        <div class="panel pad card" id="card"></div>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="kick">Resumen de las últimas 72 observaciones</h2>
+      <div id="sum" class="sum"></div>
+      <p class="prose" style="margin-top:10px" id="sumnote"></p>
+    </section>
+
+    <section>
+      <h2 class="kick">Comparación entre estaciones</h2>
+      <table class="cmp" id="cmp"></table>
+    </section>
+  </main>
+</div>
+
+<script>
+"use strict";
+const $ = (s) => document.querySelector(s);
+const state = { data: null, est: null };
+
+/* --- Escala Índice AIRE y SALUD (NOM-172), aproximada por concentración de PM2.5 (µg/m³) --- */
+const AICA = [
+  { cat: "Buena",               max: 25,        varc: "--aica-buena",     dark: false },
+  { cat: "Aceptable",           max: 45,        varc: "--aica-aceptable", dark: false },
+  { cat: "Mala",                max: 79,        varc: "--aica-mala",      dark: false },
+  { cat: "Muy mala",            max: 147,       varc: "--aica-muymala",   dark: true  },
+  { cat: "Extremadamente mala", max: Infinity,  varc: "--aica-extrema",   dark: true  },
+];
+const aica = (v) => AICA.find((b) => v <= b.max);
+
+/* --- Mensajes orientativos de salud por categoría (base: Índice AIRE y SALUD, NOM-172) --- */
+const SALUD = {
+  "Buena": {
+    general: "Calidad del aire satisfactoria; el riesgo asociado es mínimo o nulo.",
+    sensibles: "Sin restricciones. Buen momento para actividades al aire libre.",
+    acciones: ["Ventila tu hogar y espacios de trabajo.", "Ideal para ejercicio y actividades al exterior."],
+  },
+  "Aceptable": {
+    general: "Calidad del aire aceptable. Puedes realizar actividades al aire libre con normalidad.",
+    sensibles: "Personas muy sensibles: si aparece tos o falta de aire, considera reducir el esfuerzo físico intenso y prolongado al exterior.",
+    acciones: ["Mantén tus actividades habituales.", "Grupos sensibles: atención a síntomas respiratorios."],
+  },
+  "Mala": {
+    general: "Reduce el esfuerzo físico intenso y prolongado al aire libre; prefiere hacerlo en interiores.",
+    sensibles: "Niñez, personas mayores, embarazo y quienes viven con asma o enfermedad cardiaca: evita el ejercicio al aire libre y permanece en interiores.",
+    acciones: ["Cierra ventanas durante las horas de mayor concentración.", "Reprograma deporte y clases al aire libre.", "Usa cubrebocas KN95/N95 si debes exponerte."],
+  },
+  "Muy mala": {
+    general: "Evita las actividades al aire libre. Permanece en interiores con ventanas cerradas.",
+    sensibles: "Grupos sensibles: no salgas al exterior. Ante síntomas respiratorios o cardiacos, busca atención médica.",
+    acciones: ["Suspende eventos, deporte y clases al aire libre.", "Usa purificador de aire en interiores si es posible.", "Cubrebocas N95 al salir.", "Posible activación de contingencia atmosférica; sigue avisos oficiales."],
+  },
+  "Extremadamente mala": {
+    general: "Permanece en interiores. Evita toda actividad física al aire libre.",
+    sensibles: "Grupos sensibles: permanece en casa. Ante cualquier síntoma acude a servicios de salud.",
+    acciones: ["Emergencia sanitaria: suspensión de actividades al aire libre.", "Sella ventanas y puertas; usa purificador de aire.", "Sigue las indicaciones de contingencia atmosférica del Gobierno de Nuevo León."],
+  },
+};
+
+const NIVEL = { bajo: "Bajo", medio: "Medio", alto: "Alto", muy_alto: "Muy alto" };
+const n1 = (x) => (x == null ? "—" : Number(x).toFixed(1));
+const n0 = (x) => (x == null ? "—" : Math.round(Number(x)));
+const pct = (x) => (x == null ? "—" : Math.round(x * 100) + "%");
+const pct1 = (x) => (x == null ? "—" : (x * 100).toFixed(1) + "%");
+// "[2.62, 3.59]" -> "2.6 – 3.6"
+const ic = (s) => {
+  const m = String(s || "").match(/-?\d+(?:\.\d+)?/g);
+  return m && m.length === 2 ? `${(+m[0]).toFixed(1)} – ${(+m[1]).toFixed(1)}` : null;
+};
+function fmtDT(iso) {
+  const d = new Date(iso);
+  const dd = ["dom", "lun", "mar", "mié", "jue", "vie", "sáb"];
+  const mm = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"];
+  return `${dd[d.getDay()]} ${d.getDate()} ${mm[d.getMonth()]} ${d.getFullYear()}, ${String(d.getHours()).padStart(2, "0")}:00`;
+}
+const chip = (v) => {
+  const a = aica(v);
+  return `<span class="cat-chip ${a.dark ? "dark" : ""}" style="background:var(${a.varc})">${a.cat}</span>`;
+};
+
+async function boot() {
+  try {
+    if (window.__FORECAST__) state.data = window.__FORECAST__;
+    else {
+      const r = await fetch("/api/forecast", { headers: { accept: "application/json" } });
+      if (!r.ok) throw new Error("HTTP " + r.status);
+      state.data = await r.json();
+    }
+  } catch (e) {
+    $("#loading").hidden = true; $("#error").hidden = false; return;
+  }
+  state.est = Object.keys(state.data.estaciones)[0];
+  $("#loading").hidden = true; $("#app").hidden = false;
+  buildStatic();
+  render();
+}
+
+function buildStatic() {
+  const d = state.data;
+  $("#stamp").innerHTML =
+    `Datos <b>SIMA / SIMAJ</b> · histórico 2020–2025<br>Cálculo <b>${d.generado.slice(0, 10)}</b> · horizonte ${d.horizonte || "t+1"}`;
+
+  const entradas = Object.entries(d.estaciones);
+  $("#tabs").innerHTML = entradas.map(([k, e], i) =>
+    `<button role="tab" data-est="${k}" aria-selected="${i === 0}">${k} · ${e.nombre.split("·")[0].trim()}</button>`).join("");
+  $("#tabs").querySelectorAll("button").forEach((b) =>
+    b.addEventListener("click", () => { state.est = b.dataset.est; render(); }));
+
+  // AICA scale legend
+  $("#scale").innerHTML = AICA.map((b) =>
+    `<span class="${b.dark ? "dark" : ""}" style="background:var(${b.varc})">${b.cat}${b.max < Infinity ? " ≤" + b.max : " >147"}</span>`).join("") +
+    `<span class="note">Escala Índice AIRE y SALUD (NOM-172), aprox. por PM2.5 en µg/m³.</span>`;
+
+  buildCmp(entradas);
+}
+
+function buildCmp(entradas) {
+  const U = state.data.unidad || "µg/m³";
+  const rows = [
+    ["Categoría pronosticada", (e) => chip(e.ultimo_punto.pronostico)],
+    ["PM2.5 en 1 hora", (e) => `<span class="val">${n1(e.ultimo_punto.pronostico)}<span class="u">${U}</span></span>`],
+    ["Nivel base (prom. 72 obs.)", (e) => {
+      const m = e.serie_reciente.reduce((s, r) => s + r.real, 0) / e.serie_reciente.length;
+      return `<span class="val">${n1(m)}<span class="u">${U}</span></span>`;
+    }],
+    ["Rango probable (95%)", (e) => {
+      const lo = Math.max(0, e.ultimo_punto.pronostico + e.banda95[0]);
+      return `<span class="val">${n1(lo)} – ${n1(e.ultimo_punto.pronostico + e.banda95[1])}</span>`;
+    }],
+    ["Error típico (MAE)", (e) => `<span class="val">${n1(e.mae)}<span class="u">${U}</span>${ic(e.mae_ic95) ? `<span class="sm">IC 95%: ${ic(e.mae_ic95)}</span>` : ""}</span>`],
+    ["Mejora vs. pronóstico ingenuo", (e) => {
+      const mej = e.mae_naive ? (e.mae_naive - e.mae) / e.mae_naive : null;
+      return `<span class="val">${mej == null ? "—" : (mej * 100).toFixed(1) + "%"}</span>`;
+    }],
+    ["Cobertura real del rango 95%", (e) => `<span class="val">${pct(e.cobertura95)}<span class="sm">meta 95%</span></span>`],
+  ];
+  $("#cmp").innerHTML =
+    `<thead><tr><th></th>${entradas.map(([k, e]) => `<th>${k} · ${(e.nombre.split("·")[1] || e.nombre).trim()}</th>`).join("")}</tr></thead>` +
+    `<tbody>${rows.map(([lab, f]) => `<tr><th>${lab}</th>${entradas.map(([, e]) => `<td>${f(e)}</td>`).join("")}</tr>`).join("")}</tbody>`;
+}
+
+function render() {
+  const d = state.data, k = state.est, e = d.estaciones[k], U = d.unidad || "µg/m³";
+  $("#tabs").querySelectorAll("button").forEach((b) => b.setAttribute("aria-selected", String(b.dataset.est === k)));
+  drawHero(k, e, U);
+  drawRec(e);
+  drawChart(k, e, U);
+  drawCard(k, e);
+  drawResumen(k, e, U);
+}
+
+function drawHero(k, e, U) {
+  const now = e.ultimo_punto.real, fc = e.ultimo_punto.pronostico;
+  const a = aica(fc), aNow = aica(now);
+  const lo = Math.max(0, fc + e.banda95[0]), hi = fc + e.banda95[1];
+  const diff = fc - now;
+  let word = "estable", arrow = "→";
+  if (diff <= -1.5) { word = "mejora"; arrow = "↘"; }
+  else if (diff >= 1.5) { word = "empeora"; arrow = "↗"; }
+  const cruce = a.cat !== aNow.cat ? ` — pasa de <b>${aNow.cat}</b> a <b>${a.cat}</b>` : "";
+  const h = $("#hero");
+  h.className = "hero" + (a.dark ? " on-dark" : "");
+  h.style.background = `var(${a.varc})`;
+  h.innerHTML = `
+    <div class="band">
+      <div class="cell">
+        <div class="lbl">${k} · ${(e.nombre.split("·")[1] || "").trim()} — ahora</div>
+        <div class="cat">${aNow.cat}</div>
+        <div class="num">${n1(now)} <small>${U}</small></div>
+      </div>
+      <div class="cell mid"><span class="arrow" aria-hidden="true">${arrow}</span></div>
+      <div class="cell">
+        <div class="lbl">Pronóstico en 1 hora</div>
+        <div class="cat">${a.cat}</div>
+        <div class="num">${n1(fc)} <small>${U}</small></div>
+        <div class="rng">rango probable 95%: ${n1(lo)} – ${n1(hi)}</div>
+      </div>
+    </div>
+    <div class="trend">Tendencia: <b>${word}</b> (${diff >= 0 ? "+" : ""}${n1(diff)} ${U} en 1 h)${cruce}. Última observación: ${fmtDT(e.ultimo_punto.fecha_hora)}.</div>`;
+}
+
+function drawRec(e) {
+  const a = aica(e.ultimo_punto.pronostico);
+  const s = SALUD[a.cat] || SALUD["Aceptable"];
+  const r = $("#rec");
+  r.style.borderLeftColor = `var(${a.varc})`;
+  r.innerHTML = `
+    <div class="head">
+      <span class="cat-chip ${a.dark ? "dark" : ""}" style="background:var(${a.varc})">${a.cat}</span>
+      <span class="cat">Recomendaciones para las próximas horas</span>
+      <span class="for">categoría del pronóstico a 1 h</span>
+    </div>
+    <dl>
+      <div><dt>Población general</dt><dd>${s.general}</dd></div>
+      <div><dt>Grupos sensibles · niñez, personas mayores, embarazo, asma o enfermedad cardiaca</dt><dd>${s.sensibles}</dd></div>
+      <div><dt>Acciones recomendadas</dt><dd><ul>${s.acciones.map((x) => `<li>${x}</li>`).join("")}</ul></dd></div>
+    </dl>`;
+}
+
+function drawResumen(k, e, U) {
+  const xs = e.serie_reciente.map((r) => r.real);
+  const n = xs.length;
+  const mean = xs.reduce((s, v) => s + v, 0) / n;
+  let maxV = -Infinity, maxT = null, minV = Infinity;
+  for (const r of e.serie_reciente) {
+    if (r.real > maxV) { maxV = r.real; maxT = r.fecha_hora; }
+    if (r.real < minV) minV = r.real;
+  }
+  const buenas = xs.filter((v) => v <= 25).length;
+  const malas = xs.filter((v) => v > 45).length;
+  const cells = [
+    { v: n1(mean), u: U, t: "Promedio" },
+    { v: n1(maxV), u: U, t: "Máximo · " + fmtDT(maxT).split(",")[0] },
+    { v: n1(minV), u: U, t: "Mínimo" },
+    { v: buenas + "/" + n, u: "", t: "Observaciones en “Buena”" },
+    { v: malas + "/" + n, u: "", t: "En “Mala” o peor" },
+  ];
+  $("#sum").innerHTML = cells.map((c) =>
+    `<div class="k"><div class="v">${c.v}${c.u ? ` <small>${c.u}</small>` : ""}</div><div class="t">${c.t}</div></div>`).join("");
+  $("#sumnote").textContent =
+    `Estación ${k} · ${e.nombre}. Las 72 observaciones son las más recientes con datos completos del periodo de prueba (${e.periodo_prueba ? e.periodo_prueba.map((x) => x.slice(0, 10)).join(" a ") : ""}); pueden no ser 72 horas de reloj consecutivas.`;
+}
+
+function drawCard(k, e) {
+  const lv = e.error_por_nivel || [];
+  const mx = Math.max(...lv.map((x) => x.mae), 1);
+  const zona = (e.nombre.split("·")[1] || "").trim();
+  const mej = e.mae_naive ? (e.mae_naive - e.mae) / e.mae_naive : null;
+  $("#card").innerHTML = `
+    <h3>Confiabilidad — ${k}${zona ? " · " + zona : ""}</h3>
+    <div class="mdl">${e.modelo}</div>
+    <dl>
+      <dt>Error típico (MAE)</dt><dd>${n1(e.mae)} µg/m³${ic(e.mae_ic95) ? `<span class="ci">IC 95%: ${ic(e.mae_ic95)}</span>` : ""}</dd>
+      <dt>Error grande habitual (RMSE)</dt><dd>${n1(e.rmse)}</dd>
+      <dt>Sesgo medio</dt><dd>${e.sesgo >= 0 ? "+" : ""}${n1(e.sesgo)}</dd>
+      <dt>Mejora vs. pronóstico ingenuo</dt><dd class="${mej != null && mej > 0 ? "good" : "bad"}">${mej == null ? "—" : (mej * 100).toFixed(1) + "%"}</dd>
+      <dt>Cobertura real del rango 95%</dt><dd class="${e.cobertura95 >= 0.93 ? "good" : "bad"}">${pct(e.cobertura95)}</dd>
+    </dl>
+    ${lv.length ? `<div class="lvhead">Error según qué tan contaminado esté el aire</div>
+      ${lv.map((x) => { const a = aica([25, 45, 79, 200][["bajo", "medio", "alto", "muy_alto"].indexOf(x.nivel)] - 1); return `<div class="lv"><span>${NIVEL[x.nivel] || x.nivel}</span><span class="bar" style="width:${Math.round(x.mae / mx * 100)}%;background:var(${a.varc})"></span><span>${n1(x.mae)}</span></div>`; }).join("")}
+      <p style="font-size:.8rem;color:var(--ink-2);margin:12px 0 0">El pronóstico es más certero con aire limpio; en episodios altos el error crece.</p>` : ""}`;
+}
+
+function drawChart(k, e, U) {
+  const W = 780, H = 320, m = { t: 16, r: 52, b: 28, l: 42 };
+  const iw = W - m.l - m.r, ih = H - m.t - m.b;
+  const rows = e.serie_reciente, N = rows.length, b = e.banda95;
+  const vals = rows.flatMap((r) => [r.real, r.pronostico, r.pronostico + b[0], r.pronostico + b[1]]);
+  const vmax = Math.max(...vals) * 1.03, vmin = Math.min(0, ...vals);
+  const X = (i) => m.l + (i / (N - 1)) * iw;
+  const Y = (v) => m.t + ih - ((v - vmin) / (vmax - vmin)) * ih;
+
+  let grid = "";
+  for (let q = 0; q <= 4; q++) {
+    const v = vmin + (q / 4) * (vmax - vmin);
+    grid += `<line class="gridline" x1="${m.l}" y1="${Y(v).toFixed(1)}" x2="${m.l + iw}" y2="${Y(v).toFixed(1)}"/>` +
+      `<text class="axis" x="${m.l - 8}" y="${(Y(v) + 3).toFixed(1)}" text-anchor="end">${v.toFixed(0)}</text>`;
+  }
+  let xax = "";
+  for (let i = 0; i < N; i += 12) {
+    const dt = new Date(rows[i].fecha_hora);
+    xax += `<text class="axis" x="${X(i).toFixed(1)}" y="${H - 9}" text-anchor="middle">${String(dt.getDate()).padStart(2, "0")}·${String(dt.getHours()).padStart(2, "0")}h</text>`;
+  }
+  const path = (key) => "M" + rows.map((r, i) => `${X(i).toFixed(1)},${Y(r[key]).toFixed(1)}`).join(" L");
+  const top = rows.map((r, i) => `${X(i).toFixed(1)},${Y(r.pronostico + b[1]).toFixed(1)}`).join(" L");
+  const bot = rows.map((r, i) => `${X(i).toFixed(1)},${Y(Math.max(vmin, r.pronostico + b[0])).toFixed(1)}`).reverse().join(" L");
+  const last = N - 1;
+
+  $("#chart").innerHTML = `
+  <svg viewBox="0 0 ${W} ${H}" role="img" aria-label="PM2.5 medido y pronosticado, 72 observaciones recientes, estación ${k}, con intervalo del 95 por ciento">
+    <path class="pi" d="M${top} L${bot} Z"/>
+    ${grid}${xax}
+    <path class="s-real" d="${path("real")}"/>
+    <path class="s-fc" d="${path("pronostico")}"/>
+    <circle class="dot" cx="${X(last).toFixed(1)}" cy="${Y(rows[last].real).toFixed(1)}" r="3.6" fill="var(--c-real)"/>
+    <circle class="dot" cx="${X(last).toFixed(1)}" cy="${Y(rows[last].pronostico).toFixed(1)}" r="3.6" fill="var(--c-fc)"/>
+    <text class="axis" x="${(X(last) + 7).toFixed(1)}" y="${(Y(rows[last].real) + 3).toFixed(1)}" fill="var(--c-real)">real</text>
+    <text class="axis" x="${(X(last) + 7).toFixed(1)}" y="${(Y(rows[last].pronostico) + 3).toFixed(1)}" fill="var(--c-fc)">pron.</text>
+    <line class="xh" id="xh" x1="0" y1="${m.t}" x2="0" y2="${m.t + ih}"/>
+    <rect id="hit" x="${m.l}" y="${m.t}" width="${iw}" height="${ih}" fill="transparent"/>
+  </svg>`;
+  $("#cap").textContent = `PM2.5 en ${U}. Banda sombreada = rango probable 95%. Eje horizontal: día·hora de cada observación (pueden no ser horas consecutivas).`;
+
+  const svg = $("#chart svg"), xh = $("#xh"), hit = $("#hit"), tip = $("#tip");
+  hit.onmousemove = (ev) => {
+    const bb = svg.getBoundingClientRect();
+    let i = Math.round(((ev.clientX - bb.left) / bb.width * W - m.l) / iw * (N - 1));
+    i = Math.max(0, Math.min(N - 1, i));
+    const r = rows[i];
+    xh.setAttribute("x1", X(i)); xh.setAttribute("x2", X(i)); xh.style.opacity = 1;
+    tip.style.opacity = 1;
+    tip.innerHTML = `${fmtDT(r.fecha_hora)}<br><span class="r">real ${n1(r.real)}</span> · <span class="f">pron. ${n1(r.pronostico)}</span>`;
+    const fb = tip.parentElement.getBoundingClientRect();
+    tip.style.left = Math.min(ev.clientX - fb.left + 14, fb.width - tip.offsetWidth - 8) + "px";
+    tip.style.top = Math.max(4, ev.clientY - fb.top - tip.offsetHeight - 12) + "px";
+  };
+  hit.onmouseleave = () => { xh.style.opacity = 0; tip.style.opacity = 0; };
+}
+
+boot();
+</script>
+</body>
+</html>

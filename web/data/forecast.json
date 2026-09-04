@@ -1,0 +1,842 @@
+{
+  "generado": "2026-09-03T00:48:02",
+  "contaminante": "PM2.5",
+  "unidad": "µg/m³",
+  "horizonte": "t+1 (1 hora)",
+  "fuente": "SIMA / SIMAJ 2020-2025",
+  "particion_prueba_dias": 60,
+  "estaciones": {
+    "NE": {
+      "clave": "NE",
+      "nombre": "Noreste · San Nicolás",
+      "modelo": "Random Forest",
+      "mae": 3.03,
+      "mae_ic95": "[2.62, 3.59]",
+      "mae_naive": 3.14,
+      "rmse": 7.42,
+      "sesgo": -0.03,
+      "n_prueba": 1440,
+      "periodo_prueba": [
+        "2024-04-20T00:00:00",
+        "2025-03-11T03:00:00"
+      ],
+      "banda95": [
+        -8.41,
+        8.63
+      ],
+      "cobertura95": 0.854,
+      "cobertura80": 0.597,
+      "homocedastico": "NO",
+      "ljung_box_p_lag24": 0,
+      "sarimax": {
+        "mae_diario": 5.83,
+        "cobertura_ic95": 1
+      },
+      "error_por_nivel": [
+        {
+          "nivel": "bajo",
+          "mae": 2.12,
+          "sesgo": -1.33
+        },
+        {
+          "nivel": "medio",
+          "mae": 2.77,
+          "sesgo": -0.6
+        },
+        {
+          "nivel": "alto",
+          "mae": 2.7,
+          "sesgo": 0.19
+        },
+        {
+          "nivel": "muy_alto",
+          "mae": 4.59,
+          "sesgo": 1.69
+        }
+      ],
+      "ultimo_punto": {
+        "fecha_hora": "2025-03-11T03:00:00",
+        "real": 27.93,
+        "pronostico": 28.72
+      },
+      "serie_reciente": [
+        {
+          "fecha_hora": "2024-07-31T19:00:00",
+          "real": 29.67,
+          "pronostico": 28.03
+        },
+        {
+          "fecha_hora": "2024-07-31T20:00:00",
+          "real": 29.87,
+          "pronostico": 29.37
+        },
+        {
+          "fecha_hora": "2024-07-31T21:00:00",
+          "real": 27.98,
+          "pronostico": 29.67
+        },
+        {
+          "fecha_hora": "2024-07-31T22:00:00",
+          "real": 30.83,
+          "pronostico": 27.71
+        },
+        {
+          "fecha_hora": "2024-07-31T23:00:00",
+          "real": 34.8,
+          "pronostico": 29.73
+        },
+        {
+          "fecha_hora": "2024-08-01T00:00:00",
+          "real": 33.8,
+          "pronostico": 31.95
+        },
+        {
+          "fecha_hora": "2024-08-01T01:00:00",
+          "real": 32.8,
+          "pronostico": 31
+        },
+        {
+          "fecha_hora": "2024-08-01T02:00:00",
+          "real": 31.61,
+          "pronostico": 30.16
+        },
+        {
+          "fecha_hora": "2024-08-01T03:00:00",
+          "real": 31.38,
+          "pronostico": 30.23
+        },
+        {
+          "fecha_hora": "2024-08-28T09:00:00",
+          "real": 13.66,
+          "pronostico": 13.65
+        },
+        {
+          "fecha_hora": "2024-08-28T10:00:00",
+          "real": 15.4,
+          "pronostico": 15.4
+        },
+        {
+          "fecha_hora": "2024-08-28T11:00:00",
+          "real": 15.89,
+          "pronostico": 16.61
+        },
+        {
+          "fecha_hora": "2024-08-28T12:00:00",
+          "real": 14.55,
+          "pronostico": 16.26
+        },
+        {
+          "fecha_hora": "2024-08-28T13:00:00",
+          "real": 23.42,
+          "pronostico": 14
+        },
+        {
+          "fecha_hora": "2024-08-28T14:00:00",
+          "real": 12.47,
+          "pronostico": 21.76
+        },
+        {
+          "fecha_hora": "2024-08-28T15:00:00",
+          "real": 11.7,
+          "pronostico": 12.29
+        },
+        {
+          "fecha_hora": "2024-08-28T16:00:00",
+          "real": 10.65,
+          "pronostico": 11.59
+        },
+        {
+          "fecha_hora": "2024-08-28T17:00:00",
+          "real": 10.69,
+          "pronostico": 11.19
+        },
+        {
+          "fecha_hora": "2024-08-28T18:00:00",
+          "real": 9.64,
+          "pronostico": 11.3
+        },
+        {
+          "fecha_hora": "2024-08-28T19:00:00",
+          "real": 7.64,
+          "pronostico": 10.24
+        },
+        {
+          "fecha_hora": "2024-08-28T20:00:00",
+          "real": 5.69,
+          "pronostico": 8.23
+        },
+        {
+          "fecha_hora": "2024-08-28T21:00:00",
+          "real": 8.2,
+          "pronostico": 6.15
+        },
+        {
+          "fecha_hora": "2024-08-28T22:00:00",
+          "real": 7.36,
+          "pronostico": 8.49
+        },
+        {
+          "fecha_hora": "2024-08-28T23:00:00",
+          "real": 7.52,
+          "pronostico": 7.64
+        },
+        {
+          "fecha_hora": "2024-08-29T00:00:00",
+          "real": 7.17,
+          "pronostico": 7.99
+        },
+        {
+          "fecha_hora": "2024-08-29T01:00:00",
+          "real": 5.87,
+          "pronostico": 7.59
+        },
+        {
+          "fecha_hora": "2024-08-29T02:00:00",
+          "real": 5.32,
+          "pronostico": 6.28
+        },
+        {
+          "fecha_hora": "2024-08-29T03:00:00",
+          "real": 5.17,
+          "pronostico": 6.03
+        },
+        {
+          "fecha_hora": "2024-08-29T04:00:00",
+          "real": 4.19,
+          "pronostico": 6.1
+        },
+        {
+          "fecha_hora": "2024-08-29T05:00:00",
+          "real": 4.27,
+          "pronostico": 4.92
+        },
+        {
+          "fecha_hora": "2024-08-29T06:00:00",
+          "real": 4.46,
+          "pronostico": 5.02
+        },
+        {
+          "fecha_hora": "2024-08-29T07:00:00",
+          "real": 7.67,
+          "pronostico": 5.12
+        },
+        {
+          "fecha_hora": "2024-08-29T08:00:00",
+          "real": 13.77,
+          "pronostico": 8.82
+        },
+        {
+          "fecha_hora": "2024-08-29T09:00:00",
+          "real": 13.76,
+          "pronostico": 16.13
+        },
+        {
+          "fecha_hora": "2024-08-29T10:00:00",
+          "real": 9.99,
+          "pronostico": 14.01
+        },
+        {
+          "fecha_hora": "2024-08-29T11:00:00",
+          "real": 7.8,
+          "pronostico": 10.88
+        },
+        {
+          "fecha_hora": "2024-08-29T12:00:00",
+          "real": 10.16,
+          "pronostico": 8.8
+        },
+        {
+          "fecha_hora": "2024-08-29T13:00:00",
+          "real": 12.82,
+          "pronostico": 11.22
+        },
+        {
+          "fecha_hora": "2024-08-29T14:00:00",
+          "real": 15.42,
+          "pronostico": 12.86
+        },
+        {
+          "fecha_hora": "2024-08-29T15:00:00",
+          "real": 19.57,
+          "pronostico": 15.66
+        },
+        {
+          "fecha_hora": "2024-08-29T16:00:00",
+          "real": 12.97,
+          "pronostico": 17.7
+        },
+        {
+          "fecha_hora": "2024-08-29T17:00:00",
+          "real": 15.03,
+          "pronostico": 12.3
+        },
+        {
+          "fecha_hora": "2024-08-29T18:00:00",
+          "real": 20.99,
+          "pronostico": 15.25
+        },
+        {
+          "fecha_hora": "2024-08-29T19:00:00",
+          "real": 12.29,
+          "pronostico": 20.03
+        },
+        {
+          "fecha_hora": "2024-08-29T20:00:00",
+          "real": 17.59,
+          "pronostico": 12.58
+        },
+        {
+          "fecha_hora": "2024-12-31T22:00:00",
+          "real": 194.76,
+          "pronostico": 108.86
+        },
+        {
+          "fecha_hora": "2024-12-31T23:00:00",
+          "real": 306.82,
+          "pronostico": 214.61
+        },
+        {
+          "fecha_hora": "2025-01-01T00:00:00",
+          "real": 86,
+          "pronostico": 284.41
+        },
+        {
+          "fecha_hora": "2025-01-01T01:00:00",
+          "real": 72.05,
+          "pronostico": 77.21
+        },
+        {
+          "fecha_hora": "2025-01-01T02:00:00",
+          "real": 63.08,
+          "pronostico": 64.82
+        },
+        {
+          "fecha_hora": "2025-01-01T03:00:00",
+          "real": 40.4,
+          "pronostico": 58.89
+        },
+        {
+          "fecha_hora": "2025-01-01T04:00:00",
+          "real": 28.77,
+          "pronostico": 37.43
+        },
+        {
+          "fecha_hora": "2025-03-10T08:00:00",
+          "real": 11.06,
+          "pronostico": 16.49
+        },
+        {
+          "fecha_hora": "2025-03-10T09:00:00",
+          "real": 19.7,
+          "pronostico": 12.3
+        },
+        {
+          "fecha_hora": "2025-03-10T10:00:00",
+          "real": 10.51,
+          "pronostico": 21.15
+        },
+        {
+          "fecha_hora": "2025-03-10T11:00:00",
+          "real": 9.84,
+          "pronostico": 12.25
+        },
+        {
+          "fecha_hora": "2025-03-10T12:00:00",
+          "real": 8.45,
+          "pronostico": 10.65
+        },
+        {
+          "fecha_hora": "2025-03-10T13:00:00",
+          "real": 5.58,
+          "pronostico": 10.18
+        },
+        {
+          "fecha_hora": "2025-03-10T14:00:00",
+          "real": 5.5,
+          "pronostico": 6.17
+        },
+        {
+          "fecha_hora": "2025-03-10T15:00:00",
+          "real": 5.92,
+          "pronostico": 6.41
+        },
+        {
+          "fecha_hora": "2025-03-10T16:00:00",
+          "real": 8.55,
+          "pronostico": 7.02
+        },
+        {
+          "fecha_hora": "2025-03-10T17:00:00",
+          "real": 6.91,
+          "pronostico": 10.48
+        },
+        {
+          "fecha_hora": "2025-03-10T18:00:00",
+          "real": 6.43,
+          "pronostico": 7.77
+        },
+        {
+          "fecha_hora": "2025-03-10T19:00:00",
+          "real": 6.6,
+          "pronostico": 7.71
+        },
+        {
+          "fecha_hora": "2025-03-10T20:00:00",
+          "real": 9.28,
+          "pronostico": 7.68
+        },
+        {
+          "fecha_hora": "2025-03-10T21:00:00",
+          "real": 13.15,
+          "pronostico": 11.25
+        },
+        {
+          "fecha_hora": "2025-03-10T22:00:00",
+          "real": 11.76,
+          "pronostico": 14.24
+        },
+        {
+          "fecha_hora": "2025-03-10T23:00:00",
+          "real": 17.19,
+          "pronostico": 11.82
+        },
+        {
+          "fecha_hora": "2025-03-11T00:00:00",
+          "real": 20.05,
+          "pronostico": 16.14
+        },
+        {
+          "fecha_hora": "2025-03-11T01:00:00",
+          "real": 23.91,
+          "pronostico": 18.06
+        },
+        {
+          "fecha_hora": "2025-03-11T02:00:00",
+          "real": 29.07,
+          "pronostico": 23.91
+        },
+        {
+          "fecha_hora": "2025-03-11T03:00:00",
+          "real": 27.93,
+          "pronostico": 28.72
+        }
+      ]
+    },
+    "SO": {
+      "clave": "SO",
+      "nombre": "Suroeste · Santa Catarina",
+      "modelo": "Random Forest",
+      "mae": 5.8,
+      "mae_ic95": "[4.93, 6.71]",
+      "mae_naive": 6.25,
+      "rmse": 10.35,
+      "sesgo": -0.25,
+      "n_prueba": 1440,
+      "periodo_prueba": [
+        "2024-11-22T18:00:00",
+        "2025-03-31T03:00:00"
+      ],
+      "banda95": [
+        -17.02,
+        21.51
+      ],
+      "cobertura95": 0.787,
+      "cobertura80": 0.577,
+      "homocedastico": "NO",
+      "ljung_box_p_lag24": 0.0077,
+      "sarimax": {
+        "mae_diario": 8.02,
+        "cobertura_ic95": 1
+      },
+      "error_por_nivel": [
+        {
+          "nivel": "bajo",
+          "mae": 2.26,
+          "sesgo": -1.85
+        },
+        {
+          "nivel": "medio",
+          "mae": 3.31,
+          "sesgo": -1.6
+        },
+        {
+          "nivel": "alto",
+          "mae": 5.48,
+          "sesgo": -1.83
+        },
+        {
+          "nivel": "muy_alto",
+          "mae": 12.14,
+          "sesgo": 4.3
+        }
+      ],
+      "ultimo_punto": {
+        "fecha_hora": "2025-03-31T03:00:00",
+        "real": 11.03,
+        "pronostico": 10.99
+      },
+      "serie_reciente": [
+        {
+          "fecha_hora": "2025-03-28T04:00:00",
+          "real": 7.16,
+          "pronostico": 12.31
+        },
+        {
+          "fecha_hora": "2025-03-28T05:00:00",
+          "real": 10.47,
+          "pronostico": 8.52
+        },
+        {
+          "fecha_hora": "2025-03-28T06:00:00",
+          "real": 12.87,
+          "pronostico": 12.55
+        },
+        {
+          "fecha_hora": "2025-03-28T07:00:00",
+          "real": 16.86,
+          "pronostico": 14.48
+        },
+        {
+          "fecha_hora": "2025-03-28T08:00:00",
+          "real": 17.91,
+          "pronostico": 22.05
+        },
+        {
+          "fecha_hora": "2025-03-28T09:00:00",
+          "real": 18.53,
+          "pronostico": 20.03
+        },
+        {
+          "fecha_hora": "2025-03-28T10:00:00",
+          "real": 13.37,
+          "pronostico": 20.32
+        },
+        {
+          "fecha_hora": "2025-03-28T11:00:00",
+          "real": 11.07,
+          "pronostico": 15.27
+        },
+        {
+          "fecha_hora": "2025-03-28T12:00:00",
+          "real": 18.15,
+          "pronostico": 11.73
+        },
+        {
+          "fecha_hora": "2025-03-28T13:00:00",
+          "real": 18.41,
+          "pronostico": 19.62
+        },
+        {
+          "fecha_hora": "2025-03-28T14:00:00",
+          "real": 17.48,
+          "pronostico": 19.21
+        },
+        {
+          "fecha_hora": "2025-03-28T15:00:00",
+          "real": 15.04,
+          "pronostico": 18.48
+        },
+        {
+          "fecha_hora": "2025-03-28T16:00:00",
+          "real": 15.85,
+          "pronostico": 13.64
+        },
+        {
+          "fecha_hora": "2025-03-28T17:00:00",
+          "real": 12.8,
+          "pronostico": 15.31
+        },
+        {
+          "fecha_hora": "2025-03-28T18:00:00",
+          "real": 9.45,
+          "pronostico": 12.27
+        },
+        {
+          "fecha_hora": "2025-03-28T19:00:00",
+          "real": 11.32,
+          "pronostico": 9.06
+        },
+        {
+          "fecha_hora": "2025-03-28T20:00:00",
+          "real": 12.59,
+          "pronostico": 11.56
+        },
+        {
+          "fecha_hora": "2025-03-28T21:00:00",
+          "real": 10.51,
+          "pronostico": 13.59
+        },
+        {
+          "fecha_hora": "2025-03-28T22:00:00",
+          "real": 10.16,
+          "pronostico": 12.12
+        },
+        {
+          "fecha_hora": "2025-03-28T23:00:00",
+          "real": 12.45,
+          "pronostico": 12.67
+        },
+        {
+          "fecha_hora": "2025-03-29T00:00:00",
+          "real": 21.17,
+          "pronostico": 15.27
+        },
+        {
+          "fecha_hora": "2025-03-29T01:00:00",
+          "real": 20.9,
+          "pronostico": 22.43
+        },
+        {
+          "fecha_hora": "2025-03-29T02:00:00",
+          "real": 23.68,
+          "pronostico": 21.53
+        },
+        {
+          "fecha_hora": "2025-03-29T03:00:00",
+          "real": 26.5,
+          "pronostico": 25.53
+        },
+        {
+          "fecha_hora": "2025-03-29T04:00:00",
+          "real": 26.2,
+          "pronostico": 29.38
+        },
+        {
+          "fecha_hora": "2025-03-29T05:00:00",
+          "real": 24.12,
+          "pronostico": 28.71
+        },
+        {
+          "fecha_hora": "2025-03-29T06:00:00",
+          "real": 26.04,
+          "pronostico": 26.6
+        },
+        {
+          "fecha_hora": "2025-03-29T07:00:00",
+          "real": 30.72,
+          "pronostico": 30.18
+        },
+        {
+          "fecha_hora": "2025-03-29T08:00:00",
+          "real": 28.89,
+          "pronostico": 35.83
+        },
+        {
+          "fecha_hora": "2025-03-29T09:00:00",
+          "real": 19.05,
+          "pronostico": 29.17
+        },
+        {
+          "fecha_hora": "2025-03-29T10:00:00",
+          "real": 13.55,
+          "pronostico": 20.27
+        },
+        {
+          "fecha_hora": "2025-03-29T11:00:00",
+          "real": 13.47,
+          "pronostico": 17.41
+        },
+        {
+          "fecha_hora": "2025-03-29T12:00:00",
+          "real": 8.5,
+          "pronostico": 17.45
+        },
+        {
+          "fecha_hora": "2025-03-29T13:00:00",
+          "real": 12.48,
+          "pronostico": 8.98
+        },
+        {
+          "fecha_hora": "2025-03-29T14:00:00",
+          "real": 12.45,
+          "pronostico": 13.39
+        },
+        {
+          "fecha_hora": "2025-03-29T15:00:00",
+          "real": 9.89,
+          "pronostico": 12.59
+        },
+        {
+          "fecha_hora": "2025-03-29T16:00:00",
+          "real": 9.41,
+          "pronostico": 9.88
+        },
+        {
+          "fecha_hora": "2025-03-29T17:00:00",
+          "real": 8.11,
+          "pronostico": 10.11
+        },
+        {
+          "fecha_hora": "2025-03-29T18:00:00",
+          "real": 7.96,
+          "pronostico": 9.57
+        },
+        {
+          "fecha_hora": "2025-03-29T19:00:00",
+          "real": 8.36,
+          "pronostico": 9.55
+        },
+        {
+          "fecha_hora": "2025-03-29T20:00:00",
+          "real": 12.44,
+          "pronostico": 10.14
+        },
+        {
+          "fecha_hora": "2025-03-29T21:00:00",
+          "real": 15.17,
+          "pronostico": 14.69
+        },
+        {
+          "fecha_hora": "2025-03-29T22:00:00",
+          "real": 25.86,
+          "pronostico": 18.2
+        },
+        {
+          "fecha_hora": "2025-03-29T23:00:00",
+          "real": 15.32,
+          "pronostico": 25.61
+        },
+        {
+          "fecha_hora": "2025-03-30T00:00:00",
+          "real": 14.11,
+          "pronostico": 17.32
+        },
+        {
+          "fecha_hora": "2025-03-30T01:00:00",
+          "real": 15.96,
+          "pronostico": 17.93
+        },
+        {
+          "fecha_hora": "2025-03-30T02:00:00",
+          "real": 18.52,
+          "pronostico": 18.55
+        },
+        {
+          "fecha_hora": "2025-03-30T03:00:00",
+          "real": 21.04,
+          "pronostico": 21.06
+        },
+        {
+          "fecha_hora": "2025-03-30T04:00:00",
+          "real": 18.28,
+          "pronostico": 23.05
+        },
+        {
+          "fecha_hora": "2025-03-30T05:00:00",
+          "real": 15.39,
+          "pronostico": 18.55
+        },
+        {
+          "fecha_hora": "2025-03-30T06:00:00",
+          "real": 12.51,
+          "pronostico": 16.37
+        },
+        {
+          "fecha_hora": "2025-03-30T07:00:00",
+          "real": 17.41,
+          "pronostico": 14.57
+        },
+        {
+          "fecha_hora": "2025-03-30T08:00:00",
+          "real": 14.58,
+          "pronostico": 21.14
+        },
+        {
+          "fecha_hora": "2025-03-30T09:00:00",
+          "real": 8.61,
+          "pronostico": 15.98
+        },
+        {
+          "fecha_hora": "2025-03-30T10:00:00",
+          "real": 12.59,
+          "pronostico": 9.82
+        },
+        {
+          "fecha_hora": "2025-03-30T11:00:00",
+          "real": 7,
+          "pronostico": 17.67
+        },
+        {
+          "fecha_hora": "2025-03-30T12:00:00",
+          "real": 6.77,
+          "pronostico": 8.38
+        },
+        {
+          "fecha_hora": "2025-03-30T13:00:00",
+          "real": 5.74,
+          "pronostico": 7.85
+        },
+        {
+          "fecha_hora": "2025-03-30T14:00:00",
+          "real": 5.36,
+          "pronostico": 7.55
+        },
+        {
+          "fecha_hora": "2025-03-30T15:00:00",
+          "real": 6.1,
+          "pronostico": 7.04
+        },
+        {
+          "fecha_hora": "2025-03-30T16:00:00",
+          "real": 5.03,
+          "pronostico": 8.06
+        },
+        {
+          "fecha_hora": "2025-03-30T17:00:00",
+          "real": 3.61,
+          "pronostico": 6.29
+        },
+        {
+          "fecha_hora": "2025-03-30T18:00:00",
+          "real": 4.69,
+          "pronostico": 4.32
+        },
+        {
+          "fecha_hora": "2025-03-30T19:00:00",
+          "real": 10.98,
+          "pronostico": 7.22
+        },
+        {
+          "fecha_hora": "2025-03-30T20:00:00",
+          "real": 10.67,
+          "pronostico": 12.4
+        },
+        {
+          "fecha_hora": "2025-03-30T21:00:00",
+          "real": 10.19,
+          "pronostico": 11.01
+        },
+        {
+          "fecha_hora": "2025-03-30T22:00:00",
+          "real": 9.86,
+          "pronostico": 10.66
+        },
+        {
+          "fecha_hora": "2025-03-30T23:00:00",
+          "real": 9.8,
+          "pronostico": 10.06
+        },
+        {
+          "fecha_hora": "2025-03-31T00:00:00",
+          "real": 10.43,
+          "pronostico": 10.48
+        },
+        {
+          "fecha_hora": "2025-03-31T01:00:00",
+          "real": 10.65,
+          "pronostico": 10.76
+        },
+        {
+          "fecha_hora": "2025-03-31T02:00:00",
+          "real": 10.51,
+          "pronostico": 11.15
+        },
+        {
+          "fecha_hora": "2025-03-31T03:00:00",
+          "real": 11.03,
+          "pronostico": 10.99
+        }
+      ]
+    }
+  }
+}

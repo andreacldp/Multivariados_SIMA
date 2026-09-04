@@ -1,0 +1,17 @@
+{
+  "name": "pronostico-pm25-zmm",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Dashboard ejecutivo del pronóstico de PM2.5 a una hora para las estaciones NE y SO de la Zona Metropolitana de Monterrey.",
+  "scripts": {
+    "dev": "node scripts/dev.mjs",
+    "start": "node scripts/dev.mjs",
+    "sync": "node scripts/sync-data.mjs",
+    "static": "node scripts/build-static.mjs",
+    "artifact": "node scripts/build-artifact.mjs"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
