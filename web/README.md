@@ -18,6 +18,16 @@ handler en `api/` que sirve el pronóstico. Todo corre con Node local.
 - **Resumen de 72 observaciones**: promedio, máximo/mínimo, horas en “Buena” y
   en “Mala o peor”.
 - **Comparación entre estaciones**.
+- **Diagnóstico del modelo · ¿cuándo se equivoca?**: MAE y sesgo por nivel de
+  contaminación, factor de degradación del error, y dónde aporta el modelo frente
+  a repetir el último valor (horas de cambio de régimen).
+- **El peor episodio del periodo de prueba**: serie real vs. pronóstico en la
+  ventana continua de 72 h con el pico más alto, con la subestimación y el
+  retraso en el pico.
+- **Ficha técnica · residuos**: homocedasticidad (Breusch–Pagan, White, ARCH),
+  autocorrelación (Durbin–Watson, Ljung–Box) y ACF de los residuos.
+- **Cómo modelamos**: importancia de variables del modelo campeón y ficha de
+  método (para el equipo técnico de SIMA).
 
 ## Estructura
 
@@ -47,6 +57,13 @@ Después de volver a ejecutar el notebook (`python ../build_etapa3.py`):
 
 ```bash
 npm run sync         # refresca data/forecast.json desde ../output/etapa3_forecast.json
+```
+
+Atajo para la demo (regenera el export en ~2 min, sin reentrenar LSTM/SARIMAX):
+
+```bash
+python ../build_forecast_demo.py   # reescribe ../output/etapa3_forecast.json
+npm run sync && npm run static && npm run artifact
 ```
 
 ## Previsualizar sin servidor

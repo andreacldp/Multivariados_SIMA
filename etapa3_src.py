@@ -853,6 +853,70 @@ for est in ESTACIONES:
                                (tabla_ml["modelo"] == "Naive (t-1)")]["MAE"].iloc[0])
     sx = resultados_sarimax[est]
 
+    # --- diagnóstico de residuos para la ficha técnica de la página ---
+    e_arr = res["e"].to_numpy()
+    dw = float(durbin_watson(e_arr))
+    acf_res = [round(float(v), 3) for v in acf(e_arr, nlags=36, fft=False)]  # índice = lag
+    ljung_web = [{"lag": int(l), "p": round(float(df_lb.loc[(est, l), "LjungBox_p"]), 4)}
+                 for l in (1, 24, 48, 168)]
+
+    # --- importancia de variables del modelo campeón (o RF de referencia) ---
+    mdl_imp = ml[est]["xgb"] if nombre == "XGBoost" else ml[est]["rf"]
+    imp = (pd.Series(mdl_imp.feature_importances_, index=ml[est]["X_tr"].columns)
+           .sort_values(ascending=False).head(12))
+    importancia = [{"var": k, "imp": round(float(v), 4)} for k, v in imp.items()]
+
+    # --- naive vs. campeón en horas de cambio de régimen (cuartil alto de |ΔPM2.5|) ---
+    real_te = res["real"].to_numpy()
+    pred_camp = res["pred"].to_numpy()
+    pred_nv = np.asarray(ml[est]["pred"]["Naive (t-1)"], dtype=float)
+    delta = np.abs(np.diff(np.concatenate([[real_te[0]], real_te])))
+    umbral = float(np.percentile(delta, 75))
+    cb = delta >= umbral
+    _m = lambda a, b: float(np.mean(np.abs(np.asarray(a, float) - np.asarray(b, float))))
+    naive_vs_modelo = {
+        "umbral_cambio": round(umbral, 2),
+        "n_horas_cambio": int(cb.sum()),
+        "mae_modelo_cambio": round(_m(real_te[cb], pred_camp[cb]), 2),
+        "mae_naive_cambio": round(_m(real_te[cb], pred_nv[cb]), 2),
+        "mae_modelo_estable": round(_m(real_te[~cb], pred_camp[~cb]), 2),
+        "mae_naive_estable": round(_m(real_te[~cb], pred_nv[~cb]), 2),
+    }
+    naive_vs_modelo["mejora_cambio_pct"] = round(
+        (naive_vs_modelo["mae_naive_cambio"] - naive_vs_modelo["mae_modelo_cambio"])
+        / naive_vs_modelo["mae_naive_cambio"] * 100, 1)
+
+    # --- peor episodio: bloque continuo (>= 48 h) con el pico real más alto,
+    #     ventana de hasta 72 h alrededor del pico (se ignoran picos aislados de
+    #     pocas horas, p. ej. pirotecnia de fin de año) ---
+    se = res.reset_index(names="fecha_hora")
+    se["bloque"] = (se["fecha_hora"].diff() != pd.Timedelta(hours=1)).cumsum()
+    _tam = se.groupby("bloque")["real"].transform("size")
+    _cand = se[_tam >= 48]
+    _cand = _cand if len(_cand) else se
+    blo = se[se["bloque"] == _cand.loc[_cand["real"].idxmax(), "bloque"]].reset_index(drop=True)
+    p0 = int(blo["real"].idxmax())
+    ven = blo.iloc[max(0, p0 - 48): max(0, p0 - 48) + 72].reset_index(drop=True)
+    jp = int(ven["real"].idxmax())
+    pico_real = float(ven["real"].iloc[jp])
+    pron_pico = float(ven["pred"].iloc[jp])
+    _post = ven["pred"].iloc[jp:].to_numpy()
+    _al = np.where(_post >= 0.9 * pico_real)[0]
+    episodio = {
+        "inicio": ven["fecha_hora"].iloc[0].isoformat(),
+        "fin": ven["fecha_hora"].iloc[-1].isoformat(),
+        "horas": int(len(ven)),
+        "pico_real": round(pico_real, 2),
+        "hora_pico": ven["fecha_hora"].iloc[jp].isoformat(),
+        "pronostico_en_pico": round(pron_pico, 2),
+        "subestimacion_pico": round(pico_real - pron_pico, 2),
+        "retraso_h": int(_al[0]) if len(_al) else None,
+        "banda95": [round(float(q_lo), 2), round(float(q_hi), 2)],
+        "serie": [{"fecha_hora": t.isoformat(), "real": round(float(r), 2),
+                   "pronostico": round(float(p), 2)}
+                  for t, r, p in zip(ven["fecha_hora"], ven["real"], ven["pred"])],
+    }
+
     export["estaciones"][est] = {
         "clave": est,
         "nombre": NOMBRE_LARGO[est],
@@ -872,6 +936,19 @@ for est in ESTACIONES:
         "sarimax": {"mae_diario": round(float(sx["MAE_diario"]), 2),
                     "cobertura_ic95": round(float(sx["cobertura_IC95"]), 3)},
         "error_por_nivel": err_nivel,
+        "importancia_variables": importancia,
+        "diagnostico": {
+            "durbin_watson": round(dw, 3),
+            "ljung_box": ljung_web,
+            "acf_residuos": acf_res,
+            "breusch_pagan_p": round(float(df_homo.loc[est, "Breusch-Pagan_p"]), 4),
+            "white_p": round(float(df_homo.loc[est, "White_p"]), 4),
+            "arch_p": round(float(df_homo.loc[est, "ARCH(24)_p"]), 4),
+            "homocedastico": df_homo.loc[est, "homocedástico_5%"],
+            "n": int(len(e_arr)),
+        },
+        "naive_vs_modelo": naive_vs_modelo,
+        "episodio": episodio,
         "ultimo_punto": {
             "fecha_hora": ultimo.name.isoformat(),
             "real": round(float(ultimo["real"]), 2),

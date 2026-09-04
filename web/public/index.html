@@ -198,6 +198,44 @@ figcaption { color: var(--ink-3); font: .7rem/1.5 var(--font-mono); padding: 8px
 .state { padding: 64px 0; text-align: center; color: var(--ink-3); font-family: var(--font-mono); font-size: .9rem; }
 [hidden] { display: none !important; }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+/* ---------- demo: diagnóstico del modelo ---------- */
+.diag-grid { display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr); gap: 18px; }
+@media (max-width: 860px) { .diag-grid { grid-template-columns: 1fr; } }
+.dlv { display: grid; grid-template-columns: 76px 1fr 44px minmax(96px, auto); align-items: center; gap: 10px; margin: 10px 0; font-size: .82rem; }
+.dlv-lab { color: var(--ink-2); }
+.dlv-track { height: 10px; background: var(--panel-2); border-radius: 4px; overflow: hidden; }
+.dlv-fill { display: block; height: 100%; border-radius: 4px; }
+.dlv-val { font-family: var(--font-mono); text-align: right; color: var(--ink); font-variant-numeric: tabular-nums; }
+.dlv-bias { font-size: .72rem; font-weight: 600; text-align: right; }
+.dlv-bias.neg { color: #c9500f; }
+.dlv-bias.pos { color: var(--ink-3); }
+.bigfact { font-family: var(--font-mono); font-size: 1.7rem; font-weight: 600; color: var(--ink); line-height: 1.1; }
+.bigfact small { font-size: .74rem; color: var(--ink-3); font-weight: 500; display: block; margin-top: 4px; font-family: var(--font-sans); line-height: 1.5; }
+.verdict { margin-top: 16px; padding: 13px 15px; border-left: 4px solid var(--accent); background: var(--panel-2); border-radius: 6px; font-size: .88rem; color: var(--ink); }
+.verdict b { color: var(--accent-2); }
+
+/* residual diagnostics + method */
+.rz { width: 100%; border-collapse: collapse; font-size: .84rem; }
+.rz th { text-align: left; font-size: .72rem; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-3); font-weight: 700; padding: 0 10px 8px; }
+.rz td { padding: 9px 10px; border-top: 1px solid var(--line); }
+.rz td.v { font-family: var(--font-mono); text-align: right; font-variant-numeric: tabular-nums; color: var(--ink); }
+.rz .flag { font-weight: 700; }
+.rz .flag.no { color: #c9500f; }
+.rz .flag.ok { color: #2e9e4f; }
+.rz td .sm { display: block; font-size: .74rem; color: var(--ink-3); }
+.fi { margin: 6px 0; display: grid; grid-template-columns: 1fr; gap: 3px; font-size: .8rem; }
+.fi-lab { color: var(--ink-2); display: flex; justify-content: space-between; gap: 10px; }
+.fi-lab b { font-family: var(--font-mono); font-weight: 500; color: var(--ink-3); }
+.fi-bar { height: 9px; background: var(--accent); border-radius: 3px; min-width: 2px; }
+.epi-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(128px, 1fr)); gap: 1px; background: var(--line); border-radius: var(--radius); overflow: hidden; margin-bottom: 14px; }
+.epi-stats .k { background: var(--panel); padding: 13px 15px; }
+.epi-stats .v { font-family: var(--font-mono); font-size: 1.14rem; font-weight: 600; font-variant-numeric: tabular-nums; }
+.epi-stats .v.bad { color: #c9500f; }
+.epi-stats .t { font-size: .72rem; color: var(--ink-3); margin-top: 3px; }
+.s-peak { stroke: var(--aica-muymala); stroke-width: 1; stroke-dasharray: 3 3; }
+.mnote { font-size: .82rem; color: var(--ink-2); margin: 12px 0 0; }
+.mnote code { font-family: var(--font-mono); font-size: .85em; background: var(--panel-2); padding: 1px 5px; border-radius: 4px; }
 </style>
 </head>
 <body>
@@ -256,6 +294,72 @@ figcaption { color: var(--ink-3); font: .7rem/1.5 var(--font-mono); padding: 8px
     <section>
       <h2 class="kick">Comparación entre estaciones</h2>
       <table class="cmp" id="cmp"></table>
+    </section>
+
+    <section>
+      <h2 class="kick">Diagnóstico del modelo · ¿cuándo se equivoca?</h2>
+      <div class="diag-grid">
+        <div class="panel pad">
+          <div style="font-size:.9rem;color:var(--ink-2);margin-bottom:6px">Error típico (MAE) según qué tan contaminado esté el aire</div>
+          <div id="diagLv"></div>
+          <div class="verdict" id="diagVerdict"></div>
+        </div>
+        <div class="panel pad">
+          <div class="bigfact" id="diagFact"></div>
+          <div style="margin-top:18px;font-size:.82rem;color:var(--ink-2)" id="diagNaive"></div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="kick">El peor episodio del periodo de prueba</h2>
+      <div id="epiStats" class="epi-stats"></div>
+      <figure class="panel chart" style="margin:0">
+        <div class="legend" aria-hidden="true">
+          <span><i style="background:var(--c-real)"></i>Medición real</span>
+          <span><i class="dash"></i>Pronóstico del modelo</span>
+        </div>
+        <div id="epiChart"></div>
+        <figcaption id="epiCap"></figcaption>
+      </figure>
+    </section>
+
+    <section>
+      <h2 class="kick">Ficha técnica · residuos del modelo</h2>
+      <div class="diag-grid">
+        <div class="panel pad">
+          <table class="rz">
+            <thead><tr><th>Supuesto clásico</th><th style="text-align:right">Prueba</th><th style="text-align:right">Resultado</th></tr></thead>
+            <tbody id="rzBody"></tbody>
+          </table>
+          <p class="mnote" id="rzNote"></p>
+        </div>
+        <div class="panel chart">
+          <div style="font-size:.82rem;color:var(--ink-2);padding:4px 6px 8px">Autocorrelación de los residuos (ACF, rezagos 1–36 h)</div>
+          <div id="acfChart"></div>
+          <figcaption>Barras fuera de la banda punteada = autocorrelación significativa (95%). Un buen modelo las deja dentro.</figcaption>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="kick">Cómo modelamos · para el equipo técnico de SIMA</h2>
+      <div class="diag-grid">
+        <div class="panel pad">
+          <div style="font-size:.9rem;color:var(--ink-2);margin-bottom:10px">Variables que más pesan en el pronóstico <span id="modeloNom" style="font-family:var(--font-mono);color:var(--accent-2)"></span></div>
+          <div id="fiList"></div>
+        </div>
+        <div class="panel pad prose">
+          <h3>Ficha del modelo</h3>
+          <ul>
+            <li><b>Objetivo:</b> PM2.5 horario a <span class="mono">t+1</span>, un modelo por estación.</li>
+            <li><b>Entradas:</b> rezagos de PM2.5 (1 h a 168 h), medias y desviaciones móviles (24 h, 168 h), meteorología en <span class="mono">t−1</span> (viento, humedad, presión, radiación, lluvia, temperatura), PM10 de contexto y estacionalidad hora/mes (seno–coseno).</li>
+            <li><b>Modelo:</b> Random Forest (300 árboles), comparado contra persistencia, XGBoost, SARIMAX diario y LSTM.</li>
+            <li><b>Validación:</b> partición cronológica, últimos 60 días de prueba; intervalo del MAE por <em>bootstrap</em> de bloques de día.</li>
+            <li><b>Límite:</b> pronóstico a 1 hora. Multi-hora requiere pronóstico meteorológico real, no el último valor observado.</li>
+          </ul>
+        </div>
+      </div>
     </section>
   </main>
 </div>
@@ -345,7 +449,7 @@ async function boot() {
 function buildStatic() {
   const d = state.data;
   $("#stamp").innerHTML =
-    `Datos <b>SIMA / SIMAJ</b> · histórico 2020–2025<br>Cálculo <b>${d.generado.slice(0, 10)}</b> · horizonte ${d.horizonte || "t+1"}`;
+    `Datos <b>SIMA / SIMAJ</b> · histórico 2020–2025<br>Cálculo <b>${d.generado.slice(0, 10)}</b> · horizonte ${d.horizonte || "t+1"}<br>Vista sobre el <b>conjunto de prueba</b> (no es tiempo real)`;
 
   const entradas = Object.entries(d.estaciones);
   $("#tabs").innerHTML = entradas.map(([k, e], i) =>
@@ -394,6 +498,10 @@ function render() {
   drawChart(k, e, U);
   drawCard(k, e);
   drawResumen(k, e, U);
+  drawDiagnostico(k, e, U);
+  drawEpisodio(k, e, U);
+  drawResiduos(k, e);
+  drawModelo(k, e);
 }
 
 function drawHero(k, e, U) {
@@ -411,7 +519,7 @@ function drawHero(k, e, U) {
   h.innerHTML = `
     <div class="band">
       <div class="cell">
-        <div class="lbl">${k} · ${(e.nombre.split("·")[1] || "").trim()} — ahora</div>
+        <div class="lbl">${k} · ${(e.nombre.split("·")[1] || "").trim()} — última hora evaluada</div>
         <div class="cat">${aNow.cat}</div>
         <div class="num">${n1(now)} <small>${U}</small></div>
       </div>
@@ -542,6 +650,141 @@ function drawChart(k, e, U) {
     tip.style.top = Math.max(4, ev.clientY - fb.top - tip.offsetHeight - 12) + "px";
   };
   hit.onmouseleave = () => { xh.style.opacity = 0; tip.style.opacity = 0; };
+}
+
+/* ---------- demo: diagnóstico del modelo ---------- */
+function drawDiagnostico(k, e, U) {
+  const lv = e.error_por_nivel || [];
+  if (!lv.length) { $("#diagLv").innerHTML = ""; $("#diagFact").innerHTML = ""; $("#diagVerdict").innerHTML = ""; $("#diagNaive").innerHTML = ""; return; }
+  const mx = Math.max(...lv.map((x) => x.mae), 1);
+  const COLOR = { bajo: 20, medio: 40, alto: 70, muy_alto: 120 };
+  $("#diagLv").innerHTML = lv.map((x) => {
+    const a = aica(COLOR[x.nivel] ?? 40);
+    const sb = x.sesgo > 0 ? `subestima ${n1(x.sesgo)}` : `sobreestima ${n1(Math.abs(x.sesgo))}`;
+    return `<div class="dlv">
+      <span class="dlv-lab">${NIVEL[x.nivel] || x.nivel}</span>
+      <span class="dlv-track"><span class="dlv-fill" style="width:${Math.round(x.mae / mx * 100)}%;background:var(${a.varc})"></span></span>
+      <span class="dlv-val">${n1(x.mae)}</span>
+      <span class="dlv-bias ${x.sesgo > 0 ? "neg" : "pos"}">${sb}</span>
+    </div>`;
+  }).join("");
+  const lo = lv[0], hi = lv[lv.length - 1];
+  const factor = lo.mae > 0 ? hi.mae / lo.mae : null;
+  $("#diagFact").innerHTML = `×${factor ? factor.toFixed(1) : "—"}
+    <small>el error del pronóstico se multiplica por ${factor ? factor.toFixed(1) : "—"} entre el aire limpio (MAE ${n1(lo.mae)}) y los episodios de contaminación (MAE ${n1(hi.mae)}).</small>`;
+  $("#diagVerdict").innerHTML = `<b>Cómo leerlo:</b> con aire limpio el pronóstico es fiable e incluso tiende a <b>sobreestimar</b>; en episodios altos <b>subestima</b> y llega tarde al pico. En una alerta, trátalo como <b>piso, no como techo</b>.`;
+  const nv = e.naive_vs_modelo;
+  $("#diagNaive").innerHTML = nv ? `<b>¿Dónde aporta el modelo?</b> En las horas de cambio brusco (|ΔPM2.5| ≥ ${n1(nv.umbral_cambio)} ${U}, ${nv.n_horas_cambio} h) baja el error <b>${nv.mejora_cambio_pct}%</b> frente a repetir el último valor (MAE ${n1(nv.mae_modelo_cambio)} vs ${n1(nv.mae_naive_cambio)}). En las horas planas casi da igual (MAE ${n1(nv.mae_modelo_estable)} vs ${n1(nv.mae_naive_estable)}): por eso el promedio general engaña.` : "";
+}
+
+function drawEpisodio(k, e, U) {
+  const ep = e.episodio, host = $("#epiChart");
+  if (!ep || !ep.serie || ep.serie.length < 4) { $("#epiStats").innerHTML = ""; host.innerHTML = ""; $("#epiCap").textContent = ""; return; }
+  const rows = ep.serie, N = rows.length, aPico = aica(ep.pico_real);
+  const retr = ep.retraso_h == null ? "no alcanza el 90% del pico" : ep.retraso_h + " h tarde";
+  $("#epiStats").innerHTML = [
+    { v: n1(ep.pico_real), u: U, t: "Pico real medido", cls: "" },
+    { v: n1(ep.pronostico_en_pico), u: U, t: "Pronóstico en esa hora", cls: "bad" },
+    { v: "−" + n1(ep.subestimacion_pico), u: U, t: "Subestimación en el pico", cls: "bad" },
+    { v: retr, u: "", t: "El pronóstico llega…", cls: "bad" },
+  ].map((c) => `<div class="k"><div class="v ${c.cls}">${c.v}${c.u ? ` <small style="font-size:.6em;color:var(--ink-3)">${c.u}</small>` : ""}</div><div class="t">${c.t}</div></div>`).join("");
+
+  const W = 780, H = 300, m = { t: 14, r: 16, b: 26, l: 40 };
+  const iw = W - m.l - m.r, ih = H - m.t - m.b;
+  const vals = rows.flatMap((r) => [r.real, r.pronostico]);
+  const vmax = Math.max(...vals) * 1.06, vmin = Math.min(0, ...vals);
+  const X = (i) => m.l + (i / (N - 1)) * iw, Y = (v) => m.t + ih - ((v - vmin) / (vmax - vmin)) * ih;
+  let grid = "";
+  for (let q = 0; q <= 4; q++) {
+    const v = vmin + q / 4 * (vmax - vmin);
+    grid += `<line class="gridline" x1="${m.l}" y1="${Y(v).toFixed(1)}" x2="${m.l + iw}" y2="${Y(v).toFixed(1)}"/>` +
+      `<text class="axis" x="${m.l - 8}" y="${(Y(v) + 3).toFixed(1)}" text-anchor="end">${v.toFixed(0)}</text>`;
+  }
+  let xax = "";
+  for (let i = 0; i < N; i += 12) {
+    const dt = new Date(rows[i].fecha_hora);
+    xax += `<text class="axis" x="${X(i).toFixed(1)}" y="${H - 9}" text-anchor="middle">${String(dt.getDate()).padStart(2, "0")}·${String(dt.getHours()).padStart(2, "0")}h</text>`;
+  }
+  const path = (key) => "M" + rows.map((r, i) => `${X(i).toFixed(1)},${Y(r[key]).toFixed(1)}`).join(" L");
+  let jp = 0; rows.forEach((r, i) => { if (r.real > rows[jp].real) jp = i; });
+  host.innerHTML = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="PM2.5 real y pronosticado durante el peor episodio, estación ${k}">
+    ${grid}${xax}
+    <line class="s-peak" x1="${X(jp).toFixed(1)}" y1="${m.t}" x2="${X(jp).toFixed(1)}" y2="${m.t + ih}"/>
+    <path class="s-real" d="${path("real")}"/>
+    <path class="s-fc" d="${path("pronostico")}"/>
+    <circle cx="${X(jp).toFixed(1)}" cy="${Y(rows[jp].real).toFixed(1)}" r="3.8" fill="var(${aPico.varc})" stroke="var(--panel)" stroke-width="2"/>
+    <text class="axis" x="${X(jp).toFixed(1)}" y="${(Y(rows[jp].real) - 9).toFixed(1)}" text-anchor="middle" fill="var(--ink)">pico ${n0(ep.pico_real)}</text>
+  </svg>`;
+  $("#epiCap").textContent = `${fmtDT(ep.inicio)} a ${fmtDT(ep.fin)} · ${ep.horas} h continuas. Línea vertical punteada = hora del pico. PM2.5 en ${U}.`;
+}
+
+function drawResiduos(k, e) {
+  const g = e.diagnostico;
+  if (!g) { $("#rzBody").innerHTML = ""; $("#rzNote").innerHTML = ""; $("#acfChart").innerHTML = ""; return; }
+  const p = (x) => (x == null ? "—" : x < 0.001 ? "< 0.001" : x.toFixed(3));
+  const flag = (bad) => (bad ? `<span class="flag no">NO se cumple</span>` : `<span class="flag ok">OK</span>`);
+  const dw = g.durbin_watson;
+  const lb24 = (g.ljung_box || []).find((r) => r.lag === 24);
+  const homBad = String(g.homocedastico || "").toUpperCase().startsWith("N");
+  $("#rzBody").innerHTML = `
+    <tr><td>Varianza del error constante<span class="sm">no debería crecer con la concentración</span></td><td class="v">Breusch–Pagan · White</td><td class="v">${flag(homBad)}<span class="sm">p ${p(g.breusch_pagan_p)} · ${p(g.white_p)}</span></td></tr>
+    <tr><td>Sin varianza agrupada en el tiempo</td><td class="v">ARCH(24)</td><td class="v">${flag(g.arch_p != null && g.arch_p <= 0.05)}<span class="sm">p ${p(g.arch_p)}</span></td></tr>
+    <tr><td>Residuos sin autocorrelación · rezago 1 h</td><td class="v">Durbin–Watson</td><td class="v">${dw == null ? "—" : dw.toFixed(2)}<span class="sm">${dw != null && dw > 1.7 && dw < 2.3 ? "≈ 2, sin señal a 1 h" : "fuera de ≈ 2"}</span></td></tr>
+    <tr><td>Residuos sin autocorrelación · rezago 24 h</td><td class="v">Ljung–Box</td><td class="v">${flag(lb24 && lb24.p <= 0.05)}<span class="sm">p ${lb24 ? p(lb24.p) : "—"}</span></td></tr>`;
+  $("#rzNote").innerHTML = `Los residuos <b>no son ruido blanco</b>: su varianza crece en los episodios y siguen correlacionados en el ciclo de 24 h. En la práctica, los errores <b>vienen en rachas</b> y el intervalo del 95% se queda corto (cobertura real ${pct(e.cobertura95)}). Siguiente paso: intervalos por nivel de concentración (regresión cuantílica / CQR).`;
+
+  const acfv = g.acf_residuos || [];
+  if (acfv.length > 3) {
+    const W = 440, H = 220, m = { t: 12, r: 10, b: 22, l: 30 };
+    const iw = W - m.l - m.r, ih = H - m.t - m.b, L = acfv.length - 1;
+    const amax = Math.max(0.25, ...acfv.slice(1).map((v) => Math.abs(v))) * 1.15;
+    const X = (i) => m.l + ((i - 1) / (L - 1)) * iw, Y = (v) => m.t + ih / 2 - (v / amax) * (ih / 2);
+    const band = 1.96 / Math.sqrt(g.n || 1000);
+    let stems = "";
+    for (let lag = 1; lag <= L; lag++) {
+      const v = acfv[lag], out = Math.abs(v) > band;
+      stems += `<line x1="${X(lag).toFixed(1)}" y1="${Y(0).toFixed(1)}" x2="${X(lag).toFixed(1)}" y2="${Y(v).toFixed(1)}" stroke="${out ? "var(--aica-mala)" : "var(--accent)"}" stroke-width="2"/>`;
+    }
+    $("#acfChart").innerHTML = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Autocorrelación de los residuos por rezago">
+      <rect x="${m.l}" y="${Y(band).toFixed(1)}" width="${iw}" height="${(Y(-band) - Y(band)).toFixed(1)}" fill="var(--accent)" opacity="0.08"/>
+      <line class="gridline" x1="${m.l}" y1="${Y(0).toFixed(1)}" x2="${m.l + iw}" y2="${Y(0).toFixed(1)}"/>
+      <line x1="${m.l}" y1="${Y(band).toFixed(1)}" x2="${m.l + iw}" y2="${Y(band).toFixed(1)}" stroke="var(--ink-3)" stroke-dasharray="3 3"/>
+      <line x1="${m.l}" y1="${Y(-band).toFixed(1)}" x2="${m.l + iw}" y2="${Y(-band).toFixed(1)}" stroke="var(--ink-3)" stroke-dasharray="3 3"/>
+      ${stems}
+      <text class="axis" x="${m.l}" y="${H - 7}">1</text>
+      <text class="axis" x="${m.l + iw}" y="${H - 7}" text-anchor="end">${L} h</text>
+      <text class="axis" x="${m.l - 6}" y="${(Y(0) + 3).toFixed(1)}" text-anchor="end">0</text>
+    </svg>`;
+  } else $("#acfChart").innerHTML = "";
+}
+
+const VARNAMES = {
+  hora: "Hora del día", dia_semana: "Día de la semana", mes: "Mes del año",
+  hora_sin: "Hora del día (cíclica)", hora_cos: "Hora del día (cíclica)",
+  mes_sin: "Mes del año (cíclico)", mes_cos: "Mes del año (cíclico)",
+};
+const METNAME = { TOUT: "Temperatura", RH: "Humedad relativa", SR: "Radiación solar", WSR: "Velocidad del viento", WDR: "Dirección del viento", RAINF: "Lluvia", PRS: "Presión", PM10: "PM10" };
+function prettyVar(v) {
+  if (VARNAMES[v]) return VARNAMES[v];
+  let m = v.match(/^PM2\.5_lag(\d+)h$/);
+  if (m) return m[1] === "1" ? "PM2.5 hace 1 h (persistencia)" : m[1] === "168" ? "PM2.5 hace 7 días" : `PM2.5 hace ${m[1]} h`;
+  m = v.match(/^PM2\.5_(media|std)(\d+)h$/);
+  if (m) return `PM2.5 ${m[1] === "media" ? "media" : "variabilidad"} ${m[2]} h`;
+  m = v.match(/^([A-Z0-9]+)_lag1h$/);
+  if (m) return `${METNAME[m[1]] || m[1]} (t−1)`;
+  return v;
+}
+function drawModelo(k, e) {
+  $("#modeloNom").textContent = e.modelo ? `· ${e.modelo}` : "";
+  const fi = e.importancia_variables || [];
+  if (!fi.length) { $("#fiList").innerHTML = ""; return; }
+  const mx = Math.max(...fi.map((x) => x.imp), 1e-9);
+  $("#fiList").innerHTML = fi.map((x) => `
+    <div class="fi">
+      <span class="fi-lab">${prettyVar(x.var)} <b>${(x.imp * 100).toFixed(1)}%</b></span>
+      <span class="fi-bar" style="width:${Math.max(2, x.imp / mx * 100).toFixed(1)}%"></span>
+    </div>`).join("") +
+    `<p class="mnote">Una sola variable —el PM2.5 de la hora anterior— explica la mayor parte del pronóstico. El modelo es, sobre todo, <b>persistencia</b> corregida con meteorología: por eso acierta en horas planas y se queda corto cuando la concentración cambia rápido.</p>`;
 }
 
 boot();
