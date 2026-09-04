@@ -9,8 +9,23 @@ handler en `api/` que sirve el pronóstico. Todo corre con Node local.
 
 ## Contenido del dashboard
 
+- **Titular en una frase**: conclusión ya “masticada” (p. ej. *“Puedes hacer tu
+  vida al aire libre con normalidad”*) según la categoría del pronóstico.
+- **Ubicación y compartir**: botón para detectar la estación más cercana por
+  geolocalización del navegador (con permiso) y botón para compartir el resumen
+  (Web Share API, con WhatsApp como respaldo).
+- **¿Es normal?**: posición del pronóstico frente a las 72 observaciones
+  recientes (*“mejor que N de cada 10”*).
 - **Ahora → en 1 hora**: valor medido, pronóstico, categoría del Índice AIRE y
   SALUD y tendencia (mejora / estable / empeora).
+- **Confianza del pronóstico**: semáforo Alta / Media / Baja derivado de la
+  cobertura del intervalo y la mejora vs. ingenuo; el detalle técnico (MAE,
+  RMSE, sesgo, cobertura, error por nivel) queda en un desplegable y en el
+  tooltip.
+- **Recomendaciones con iconos** para población general, grupos sensibles y cada
+  acción sugerida.
+- **Ver detalle técnico**: todo el bloque académico (diagnóstico del modelo,
+  peor episodio, residuos, método) queda colapsado por defecto.
 - **Recomendaciones de salud**: mensajes por categoría para población general y
   grupos sensibles, con acciones sugeridas (base: NOM-172).
 - **Medición vs. pronóstico** (72 observaciones) + tarjeta de confiabilidad

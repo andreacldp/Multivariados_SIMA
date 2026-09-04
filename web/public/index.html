@@ -236,6 +236,63 @@ figcaption { color: var(--ink-3); font: .7rem/1.5 var(--font-mono); padding: 8px
 .s-peak { stroke: var(--aica-muymala); stroke-width: 1; stroke-dasharray: 3 3; }
 .mnote { font-size: .82rem; color: var(--ink-2); margin: 12px 0 0; }
 .mnote code { font-family: var(--font-mono); font-size: .85em; background: var(--panel-2); padding: 1px 5px; border-radius: 4px; }
+
+/* ---------- titular en una frase ---------- */
+.headline { margin-top: 20px; display: flex; gap: 15px; align-items: flex-start; padding: 18px 20px; border-radius: var(--radius); background: var(--panel); border: 1px solid var(--line); border-left: 6px solid var(--line-2); box-shadow: var(--shadow); }
+.headline .ico { flex: none; width: 30px; height: 30px; color: var(--ink); }
+.headline .ico svg { width: 100%; height: 100%; }
+.headline .txt { font-size: 1.24rem; font-weight: 700; line-height: 1.3; letter-spacing: -.01em; color: var(--ink); display: block; }
+.headline .sub { font-size: .84rem; font-weight: 500; color: var(--ink-2); margin-top: 4px; display: block; }
+@media (max-width: 560px) { .headline .txt { font-size: 1.06rem; } }
+
+/* ---------- barra de acciones (ubicación / compartir) ---------- */
+.toolbar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 12px 0 0; }
+.btn { font: inherit; font-size: .82rem; font-weight: 600; display: inline-flex; align-items: center; gap: 7px; padding: 8px 13px; border-radius: 8px; border: 1px solid var(--line-2); background: var(--panel); color: var(--ink); cursor: pointer; transition: background .15s, border-color .15s; }
+.btn:hover { background: var(--panel-2); border-color: var(--accent); }
+.btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.btn svg { width: 16px; height: 16px; flex: none; }
+.geo-note { flex-basis: 100%; font-size: .8rem; color: var(--ink-2); margin-top: 2px; }
+.geo-note b { color: var(--ink); }
+
+/* ---------- comparación contra lo normal ---------- */
+.normal { display: grid; grid-template-columns: auto 1fr; gap: 3px 18px; align-items: center; padding: 18px 20px; }
+.normal .big { grid-row: span 2; font-family: var(--font-mono); font-size: 2.3rem; font-weight: 600; color: var(--accent-2); line-height: 1; }
+.normal .lead { font-size: 1rem; font-weight: 600; color: var(--ink); }
+.normal .meta { font-size: .82rem; color: var(--ink-2); }
+.normbar { grid-column: 1 / -1; height: 10px; border-radius: 5px; margin-top: 12px; position: relative; background: linear-gradient(90deg, var(--aica-buena), var(--aica-aceptable) 45%, var(--aica-mala) 74%, var(--aica-muymala)); }
+.normbar i { position: absolute; top: -4px; width: 3px; height: 18px; background: var(--ink); border-radius: 2px; box-shadow: 0 0 0 2px var(--panel); }
+@media (max-width: 560px) { .normal .big { font-size: 1.9rem; } }
+
+/* ---------- semáforo de confianza ---------- */
+.conf { display: flex; align-items: center; gap: 12px; margin-top: 4px; }
+.conf .dots { display: flex; gap: 5px; flex: none; }
+.conf .dots b { width: 13px; height: 13px; border-radius: 50%; background: var(--line-2); display: block; }
+.conf.alta .dots b:nth-child(-n+3) { background: var(--aica-buena); }
+.conf.media .dots b:nth-child(-n+2) { background: var(--aica-aceptable); }
+.conf.baja .dots b:nth-child(-n+1) { background: var(--aica-mala); }
+.conf .lab { font-size: 1.02rem; font-weight: 700; }
+.conf .lab small { display: block; font-size: .77rem; font-weight: 500; color: var(--ink-2); }
+.card details.tech { margin-top: 15px; border-top: 1px solid var(--line); padding-top: 12px; }
+.card details.tech summary { cursor: pointer; font-size: .8rem; font-weight: 600; color: var(--accent-2); list-style: none; }
+.card details.tech summary::-webkit-details-marker { display: none; }
+.card details.tech summary::before { content: "\25B8  "; }
+.card details.tech[open] summary::before { content: "\25BE  "; }
+.card details.tech dl { margin-top: 14px; }
+
+/* ---------- sección técnica colapsable ---------- */
+details.techwrap { margin-top: 40px; border-top: 1px solid var(--line); }
+details.techwrap > summary { cursor: pointer; padding: 20px 4px; font-size: .95rem; font-weight: 700; color: var(--ink); list-style: none; display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+details.techwrap > summary::-webkit-details-marker { display: none; }
+details.techwrap > summary .chev { color: var(--ink-3); transition: transform .15s; align-self: center; }
+details.techwrap[open] > summary .chev { transform: rotate(90deg); }
+details.techwrap > summary .hint { font-weight: 400; font-size: .82rem; color: var(--ink-3); }
+@media (prefers-reduced-motion: reduce) { details.techwrap > summary .chev { transition: none; } }
+
+/* ---------- iconos en recomendaciones ---------- */
+.rec dt { display: flex; align-items: center; gap: 7px; }
+.rec dt svg { width: 15px; height: 15px; flex: none; color: var(--ink-3); }
+.rec dd .ic-row { display: flex; gap: 9px; align-items: flex-start; margin: 6px 0; }
+.rec dd .ic-row svg { width: 18px; height: 18px; flex: none; margin-top: 1px; color: var(--ink-2); }
 </style>
 </head>
 <body>
@@ -259,9 +316,21 @@ figcaption { color: var(--ink-3); font: .7rem/1.5 var(--font-mono); padding: 8px
 
   <main id="app" hidden>
     <div class="tabs" role="tablist" id="tabs"></div>
+    <div class="toolbar">
+      <button class="btn" id="btnGeo" type="button">Ver mi estación más cercana</button>
+      <button class="btn" id="btnShare" type="button">Compartir este reporte</button>
+      <span class="geo-note" id="geoNote" hidden></span>
+    </div>
+
+    <div id="headline" class="headline"></div>
 
     <div id="hero" class="hero"></div>
     <div id="scale" class="scale"></div>
+
+    <section>
+      <h2 class="kick">¿El aire de ahora es normal para este periodo?</h2>
+      <div id="normal" class="panel normal"></div>
+    </section>
 
     <section>
       <h2 class="kick">Recomendaciones de salud · Índice AIRE y SALUD</h2>
@@ -295,6 +364,9 @@ figcaption { color: var(--ink-3); font: .7rem/1.5 var(--font-mono); padding: 8px
       <h2 class="kick">Comparación entre estaciones</h2>
       <table class="cmp" id="cmp"></table>
     </section>
+
+    <details class="techwrap" id="tech">
+    <summary><span class="chev" aria-hidden="true">▸</span>Ver detalle técnico<span class="hint">— diagnóstico del modelo, peor episodio, residuos y método (para el equipo técnico de SIMA)</span></summary>
 
     <section>
       <h2 class="kick">Diagnóstico del modelo · ¿cuándo se equivoca?</h2>
@@ -361,6 +433,7 @@ figcaption { color: var(--ink-3); font: .7rem/1.5 var(--font-mono); padding: 8px
         </div>
       </div>
     </section>
+    </details>
   </main>
 </div>
 
@@ -429,6 +502,105 @@ const chip = (v) => {
   return `<span class="cat-chip ${a.dark ? "dark" : ""}" style="background:var(${a.varc})">${a.cat}</span>`;
 };
 
+/* --- iconos (trazo, heredan color con currentColor) --- */
+const svgIco = (inner) =>
+  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${inner}</svg>`;
+const ICON = {
+  people: svgIco('<circle cx="9" cy="7" r="3"/><path d="M2 21v-1.5A4.5 4.5 0 0 1 6.5 15h5A4.5 4.5 0 0 1 16 19.5V21"/><path d="M16 7.5a3 3 0 0 1 0 5.8M22 21v-1.5a4.5 4.5 0 0 0-3-4.2"/>'),
+  heart: svgIco('<path d="M12 20S3.8 15 3.8 8.9A4.6 4.6 0 0 1 12 6a4.6 4.6 0 0 1 8.2 2.9C20.2 15 12 20 12 20z"/>'),
+  clock: svgIco('<circle cx="12" cy="12" r="9"/><path d="M12 7.5V12l3 2"/>'),
+  run: svgIco('<circle cx="13.5" cy="4.5" r="1.8"/><path d="M4 16.5l3.6-.7 1.8-3.6 3 2.2.9 4.6"/><path d="M9.4 12.2 7.7 8.3l4.6-2 2.7 2.8 2.8.9"/>'),
+  mask: svgIco('<path d="M3 8.5 7 7m14 1.5L17 7"/><path d="M3 8.5V12a5.5 5.5 0 0 0 5.5 5.5h7A5.5 5.5 0 0 0 21 12V8.5l-4.2-1.8a5.5 5.5 0 0 0-4.8 0z"/><path d="M7 11.5h10M7 14h10"/>'),
+  window: svgIco('<rect x="4" y="3" width="16" height="18" rx="1.5"/><path d="M12 3v18M4 12h16"/>'),
+  wind: svgIco('<path d="M3 8h12a3 3 0 1 0-3-3M3 13h9a3 3 0 1 1-3 3M3 18h5"/>'),
+  home: svgIco('<path d="M3.5 11 12 3.5l8.5 7.5"/><path d="M5.5 9.8V20h13V9.8"/>'),
+  alert: svgIco('<path d="M12 3.5 21 19H3z"/><path d="M12 9.5v4.5M12 17h.01"/>'),
+  pin: svgIco('<path d="M12 21s6.5-5.5 6.5-11A6.5 6.5 0 1 0 5.5 10c0 5.5 6.5 11 6.5 11z"/><circle cx="12" cy="10" r="2.4"/>'),
+  share: svgIco('<circle cx="18" cy="5" r="2.6"/><circle cx="6" cy="12" r="2.6"/><circle cx="18" cy="19" r="2.6"/><path d="M8.4 10.7 15.6 6.3M8.4 13.3l7.2 4.4"/>'),
+};
+
+/* frase-titular por categoría del pronóstico */
+const HEADLINE = {
+  "Buena":                { txt: "Hoy el aire está limpio: puedes salir y hacer ejercicio con normalidad.", ico: ICON.run },
+  "Aceptable":            { txt: "Puedes hacer tu vida al aire libre con normalidad.", ico: ICON.people },
+  "Mala":                 { txt: "Evita el ejercicio intenso al aire libre; los grupos sensibles, mejor en interiores.", ico: ICON.mask },
+  "Muy mala":             { txt: "Evita las actividades al aire libre y mantén las ventanas cerradas.", ico: ICON.home },
+  "Extremadamente mala":  { txt: "Permanece en interiores: la contaminación está en nivel de emergencia.", ico: ICON.alert },
+};
+
+/* icono para cada acción recomendada, según palabras clave */
+function accionIcon(t) {
+  const s = t.toLowerCase();
+  if (/cubrebocas|kn95|n95|mascar/.test(s)) return ICON.mask;
+  if (/ventil|ventana|cierra|sella/.test(s)) return ICON.window;
+  if (/purificador|purifica/.test(s)) return ICON.wind;
+  if (/contingencia|emergencia|avisos|indicaci[oó]n|oficial/.test(s)) return ICON.alert;
+  if (/m[eé]dic|salud|s[ií]ntoma/.test(s)) return ICON.heart;
+  if (/deporte|ejercicio|correr|actividad|clases al aire|exterior/.test(s)) return ICON.run;
+  return ICON.clock;
+}
+
+/* --- geolocalización: coordenadas aproximadas de las estaciones SIMA --- */
+const ESTACION_COORD = {
+  NE: { lat: 25.7458, lon: -100.2553 }, // Noreste · San Nicolás de los Garza
+  SO: { lat: 25.6757, lon: -100.4590 }, // Suroeste · Santa Catarina
+};
+function haversineKm(a, b) {
+  const R = 6371, toR = (x) => (x * Math.PI) / 180;
+  const dLat = toR(b.lat - a.lat), dLon = toR(b.lon - a.lon);
+  const h = Math.sin(dLat / 2) ** 2 +
+    Math.cos(toR(a.lat)) * Math.cos(toR(b.lat)) * Math.sin(dLon / 2) ** 2;
+  return 2 * R * Math.asin(Math.sqrt(h));
+}
+function geolocalizar() {
+  const note = $("#geoNote");
+  note.hidden = false;
+  if (!navigator.geolocation) { note.textContent = "Tu navegador no permite compartir la ubicación. Elige la estación en las pestañas."; return; }
+  note.textContent = "Buscando tu ubicación…";
+  navigator.geolocation.getCurrentPosition(
+    (pos) => {
+      const me = { lat: pos.coords.latitude, lon: pos.coords.longitude };
+      const cand = Object.keys(state.data.estaciones)
+        .filter((k) => ESTACION_COORD[k])
+        .map((k) => ({ k, d: haversineKm(me, ESTACION_COORD[k]) }))
+        .sort((a, b) => a.d - b.d);
+      if (!cand.length) { note.textContent = "No hay estaciones con coordenadas para comparar."; return; }
+      const best = cand[0], e = state.data.estaciones[best.k];
+      state.est = best.k;
+      render();
+      const zona = (e.nombre.split("·")[1] || e.nombre).trim();
+      note.innerHTML = `Estás más cerca de <b>${best.k} · ${zona}</b> (a ${best.d.toFixed(best.d < 10 ? 1 : 0)} km). Mostrando esa estación.`;
+    },
+    (err) => {
+      note.textContent = err && err.code === 1
+        ? "Permiso de ubicación denegado. Elige la estación manualmente en las pestañas."
+        : "No se pudo obtener tu ubicación. Elige la estación manualmente.";
+    },
+    { enableHighAccuracy: false, timeout: 8000, maximumAge: 600000 }
+  );
+}
+
+/* --- compartir: resumen en una frase + enlace --- */
+function resumenFrase() {
+  const e = state.data.estaciones[state.est], k = state.est;
+  const a = aica(e.ultimo_punto.pronostico);
+  const zona = (e.nombre.split("·")[1] || "").trim();
+  const h = HEADLINE[a.cat] || HEADLINE["Aceptable"];
+  return `Calidad del aire ${k}${zona ? " (" + zona + ")" : ""}: ${a.cat} — PM2.5 ${n1(e.ultimo_punto.pronostico)} µg/m³ en 1 h. ${h.txt}`;
+}
+async function compartir() {
+  const texto = resumenFrase();
+  const url = /^https?:/.test(location.href) ? location.href : "";
+  const note = $("#geoNote");
+  try {
+    if (navigator.share) { await navigator.share({ title: "Pronóstico calidad del aire · AMM", text: texto, url: url || undefined }); return; }
+  } catch (e) { if (e && e.name === "AbortError") return; }
+  const wa = "https://wa.me/?text=" + encodeURIComponent(url ? texto + " " + url : texto);
+  window.open(wa, "_blank", "noopener");
+  note.hidden = false;
+  note.textContent = "Abrimos WhatsApp para compartir el resumen.";
+}
+
 async function boot() {
   try {
     if (window.__FORECAST__) state.data = window.__FORECAST__;
@@ -456,6 +628,13 @@ function buildStatic() {
     `<button role="tab" data-est="${k}" aria-selected="${i === 0}">${k} · ${e.nombre.split("·")[0].trim()}</button>`).join("");
   $("#tabs").querySelectorAll("button").forEach((b) =>
     b.addEventListener("click", () => { state.est = b.dataset.est; render(); }));
+
+  // barra de acciones: ubicación + compartir
+  $("#btnGeo").innerHTML = ICON.pin + "<span>Ver mi estación más cercana</span>";
+  $("#btnShare").innerHTML = ICON.share + "<span>Compartir este reporte</span>";
+  $("#btnGeo").addEventListener("click", geolocalizar);
+  $("#btnShare").addEventListener("click", compartir);
+  if (!navigator.share && !navigator.geolocation) $("#btnGeo").hidden = true;
 
   // AICA scale legend
   $("#scale").innerHTML = AICA.map((b) =>
@@ -493,7 +672,9 @@ function buildCmp(entradas) {
 function render() {
   const d = state.data, k = state.est, e = d.estaciones[k], U = d.unidad || "µg/m³";
   $("#tabs").querySelectorAll("button").forEach((b) => b.setAttribute("aria-selected", String(b.dataset.est === k)));
+  drawHeadline(k, e, U);
   drawHero(k, e, U);
+  drawNormal(k, e, U);
   drawRec(e);
   drawChart(k, e, U);
   drawCard(k, e);
@@ -502,6 +683,45 @@ function render() {
   drawEpisodio(k, e, U);
   drawResiduos(k, e);
   drawModelo(k, e);
+}
+
+function drawHeadline(k, e, U) {
+  const now = e.ultimo_punto.real, fc = e.ultimo_punto.pronostico;
+  const a = aica(fc), aNow = aica(now);
+  const diff = fc - now;
+  let word = "estable";
+  if (diff <= -1.5) word = "mejora"; else if (diff >= 1.5) word = "empeora";
+  const h = HEADLINE[a.cat] || HEADLINE["Aceptable"];
+  const zona = (e.nombre.split("·")[1] || "").trim();
+  const cruce = a.cat !== aNow.cat ? ` Cambia de ${aNow.cat} a ${a.cat}.` : "";
+  const el = $("#headline");
+  el.style.borderLeftColor = `var(${a.varc})`;
+  el.innerHTML = `
+    <span class="ico">${h.ico}</span>
+    <span>
+      <span class="txt">${h.txt}</span>
+      <span class="sub">Estación ${k}${zona ? " · " + zona : ""} · pronóstico para dentro de 1 hora. Tendencia: ${word} (${diff >= 0 ? "+" : ""}${n1(diff)} ${U} en 1 h).${cruce}</span>
+    </span>`;
+}
+
+function drawNormal(k, e, U) {
+  const fc = e.ultimo_punto.pronostico;
+  const xs = e.serie_reciente.map((r) => r.real);
+  const n = xs.length;
+  const lo = Math.min(...xs), hi = Math.max(...xs);
+  const peores = xs.filter((v) => v > fc).length;      // observaciones peores que el pronóstico
+  const de10 = Math.round((peores / n) * 10);
+  let lead;
+  if (de10 >= 6) lead = `Hoy el aire está mejor que ${de10} de cada 10 mediciones recientes.`;
+  else if (de10 >= 4) lead = `Hoy el aire está cerca del promedio de las últimas ${n} mediciones.`;
+  else lead = `Hoy el aire está entre lo más contaminado del periodo: peor que ${10 - de10} de cada 10 mediciones recientes.`;
+  const per = e.periodo_prueba ? e.periodo_prueba.map((x) => x.slice(0, 10)).join(" a ") : "";
+  const posPct = Math.max(2, Math.min(98, ((n - peores) / n) * 100)); // percentil del pronóstico
+  $("#normal").innerHTML = `
+    <div class="big">${de10}/10</div>
+    <div class="lead">${lead}</div>
+    <div class="meta">Pronóstico ${n1(fc)} ${U}, comparado con las ${n} observaciones más recientes con datos completos del conjunto de prueba${per ? " (" + per + ")" : ""}. Rango observado en ese periodo: ${n1(lo)}–${n1(hi)} ${U}.</div>
+    <div class="normbar" title="Percentil del pronóstico frente al historial reciente (izquierda = más limpio)"><i style="left:${posPct.toFixed(1)}%"></i></div>`;
 }
 
 function drawHero(k, e, U) {
@@ -546,9 +766,9 @@ function drawRec(e) {
       <span class="for">categoría del pronóstico a 1 h</span>
     </div>
     <dl>
-      <div><dt>Población general</dt><dd>${s.general}</dd></div>
-      <div><dt>Grupos sensibles · niñez, personas mayores, embarazo, asma o enfermedad cardiaca</dt><dd>${s.sensibles}</dd></div>
-      <div><dt>Acciones recomendadas</dt><dd><ul>${s.acciones.map((x) => `<li>${x}</li>`).join("")}</ul></dd></div>
+      <div><dt>${ICON.people}Población general</dt><dd>${s.general}</dd></div>
+      <div><dt>${ICON.heart}Grupos sensibles · niñez, personas mayores, embarazo, asma o enfermedad cardiaca</dt><dd>${s.sensibles}</dd></div>
+      <div><dt>${ICON.clock}Acciones recomendadas</dt><dd>${s.acciones.map((x) => `<span class="ic-row">${accionIcon(x)}<span>${x}</span></span>`).join("")}</dd></div>
     </dl>`;
 }
 
@@ -576,24 +796,44 @@ function drawResumen(k, e, U) {
     `Estación ${k} · ${e.nombre}. Las 72 observaciones son las más recientes con datos completos del periodo de prueba (${e.periodo_prueba ? e.periodo_prueba.map((x) => x.slice(0, 10)).join(" a ") : ""}); pueden no ser 72 horas de reloj consecutivas.`;
 }
 
+/* semáforo: traduce las métricas del modelo a Alta / Media / Baja */
+function confianza(e) {
+  const cob = e.cobertura95 == null ? 0 : e.cobertura95;
+  const mej = e.mae_naive ? (e.mae_naive - e.mae) / e.mae_naive : 0;
+  if (cob >= 0.90 && mej > 0)
+    return { nivel: "alta", lab: "Alta", nota: "El rango probable acierta casi siempre." };
+  if (cob >= 0.82)
+    return { nivel: "media", lab: "Media", nota: "Fiable con aire limpio; en episodios altos el rango se queda corto." };
+  return { nivel: "baja", lab: "Baja", nota: "Buen valor central, pero el rango subestima los picos." };
+}
+
 function drawCard(k, e) {
   const lv = e.error_por_nivel || [];
   const mx = Math.max(...lv.map((x) => x.mae), 1);
   const zona = (e.nombre.split("·")[1] || "").trim();
   const mej = e.mae_naive ? (e.mae_naive - e.mae) / e.mae_naive : null;
+  const c = confianza(e);
+  const titulo = `Confianza del pronóstico: ${c.lab}. ${c.nota} (MAE ${n1(e.mae)} µg/m³, cobertura del rango 95% ${pct(e.cobertura95)}).`;
   $("#card").innerHTML = `
-    <h3>Confiabilidad — ${k}${zona ? " · " + zona : ""}</h3>
-    <div class="mdl">${e.modelo}</div>
-    <dl>
-      <dt>Error típico (MAE)</dt><dd>${n1(e.mae)} µg/m³${ic(e.mae_ic95) ? `<span class="ci">IC 95%: ${ic(e.mae_ic95)}</span>` : ""}</dd>
-      <dt>Error grande habitual (RMSE)</dt><dd>${n1(e.rmse)}</dd>
-      <dt>Sesgo medio</dt><dd>${e.sesgo >= 0 ? "+" : ""}${n1(e.sesgo)}</dd>
-      <dt>Mejora vs. pronóstico ingenuo</dt><dd class="${mej != null && mej > 0 ? "good" : "bad"}">${mej == null ? "—" : (mej * 100).toFixed(1) + "%"}</dd>
-      <dt>Cobertura real del rango 95%</dt><dd class="${e.cobertura95 >= 0.93 ? "good" : "bad"}">${pct(e.cobertura95)}</dd>
-    </dl>
-    ${lv.length ? `<div class="lvhead">Error según qué tan contaminado esté el aire</div>
-      ${lv.map((x) => { const a = aica([25, 45, 79, 200][["bajo", "medio", "alto", "muy_alto"].indexOf(x.nivel)] - 1); return `<div class="lv"><span>${NIVEL[x.nivel] || x.nivel}</span><span class="bar" style="width:${Math.round(x.mae / mx * 100)}%;background:var(${a.varc})"></span><span>${n1(x.mae)}</span></div>`; }).join("")}
-      <p style="font-size:.8rem;color:var(--ink-2);margin:12px 0 0">El pronóstico es más certero con aire limpio; en episodios altos el error crece.</p>` : ""}`;
+    <h3>Confianza del pronóstico — ${k}${zona ? " · " + zona : ""}</h3>
+    <div class="conf ${c.nivel}" title="${titulo}">
+      <span class="dots" aria-hidden="true"><b></b><b></b><b></b></span>
+      <span class="lab">${c.lab}<small>${c.nota}</small></span>
+    </div>
+    <p style="font-size:.82rem;color:var(--ink-2);margin:14px 0 0">${e.modelo} · evaluado sobre ${e.n_prueba ? e.n_prueba + " h" : "el conjunto"} de prueba. Pasa el ratón (o toca) para ver el detalle técnico.</p>
+    <details class="tech">
+      <summary>Detalle técnico (MAE, RMSE, sesgo, cobertura)</summary>
+      <dl>
+        <dt>Error típico (MAE)</dt><dd>${n1(e.mae)} µg/m³${ic(e.mae_ic95) ? `<span class="ci">IC 95%: ${ic(e.mae_ic95)}</span>` : ""}</dd>
+        <dt>Error grande habitual (RMSE)</dt><dd>${n1(e.rmse)}</dd>
+        <dt>Sesgo medio</dt><dd>${e.sesgo >= 0 ? "+" : ""}${n1(e.sesgo)}</dd>
+        <dt>Mejora vs. pronóstico ingenuo</dt><dd class="${mej != null && mej > 0 ? "good" : "bad"}">${mej == null ? "—" : (mej * 100).toFixed(1) + "%"}</dd>
+        <dt>Cobertura real del rango 95%</dt><dd class="${e.cobertura95 >= 0.93 ? "good" : "bad"}">${pct(e.cobertura95)}</dd>
+      </dl>
+      ${lv.length ? `<div class="lvhead">Error según qué tan contaminado esté el aire</div>
+        ${lv.map((x) => { const a = aica([25, 45, 79, 200][["bajo", "medio", "alto", "muy_alto"].indexOf(x.nivel)] - 1); return `<div class="lv"><span>${NIVEL[x.nivel] || x.nivel}</span><span class="bar" style="width:${Math.round(x.mae / mx * 100)}%;background:var(${a.varc})"></span><span>${n1(x.mae)}</span></div>`; }).join("")}
+        <p style="font-size:.8rem;color:var(--ink-2);margin:12px 0 0">El pronóstico es más certero con aire limpio; en episodios altos el error crece.</p>` : ""}
+    </details>`;
 }
 
 function drawChart(k, e, U) {
