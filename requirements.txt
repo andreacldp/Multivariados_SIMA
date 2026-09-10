@@ -1,0 +1,22 @@
+# Dependencias Python del proyecto (limpieza + etapas 2-4).
+# Instalar:  python -m pip install -r requirements.txt
+#
+# El entorno de R se maneja aparte con renv (ver renv.lock).
+
+numpy>=2.0
+pandas>=2.2
+pyarrow>=15
+scipy>=1.12
+statsmodels>=0.14
+scikit-learn>=1.4
+xgboost>=2.0
+torch>=2.2            # CPU basta; el LSTM del proyecto es pequeno
+arch>=7.0             # GARCH(1,1) para los intervalos condicionales de la Etapa 4
+
+matplotlib>=3.8
+seaborn>=0.13
+
+# construccion y ejecucion de los notebooks (build_etapaN.py)
+nbformat>=5.9
+nbclient>=0.9
+ipykernel>=6.29

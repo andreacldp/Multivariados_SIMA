@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Pronóstico calidad del aire · AMM</title>
-<meta name="description" content="Pronóstico de PM2.5 a una hora para las estaciones NE y SO del Área Metropolitana de Monterrey, con datos abiertos del SIMA. Incluye recomendaciones de salud y comparación entre estaciones.">
+<meta name="description" content="Pronóstico de PM2.5 a una hora para 5 estaciones del Área Metropolitana de Monterrey, con datos abiertos del SIMA. Incluye recomendaciones de salud, comparación entre estaciones y el diagnóstico de error y heterocedasticidad de la Etapa 4.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
@@ -279,15 +279,6 @@ figcaption { color: var(--ink-3); font: .7rem/1.5 var(--font-mono); padding: 8px
 .card details.tech[open] summary::before { content: "\25BE  "; }
 .card details.tech dl { margin-top: 14px; }
 
-/* ---------- sección técnica colapsable ---------- */
-details.techwrap { margin-top: 40px; border-top: 1px solid var(--line); }
-details.techwrap > summary { cursor: pointer; padding: 20px 4px; font-size: .95rem; font-weight: 700; color: var(--ink); list-style: none; display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
-details.techwrap > summary::-webkit-details-marker { display: none; }
-details.techwrap > summary .chev { color: var(--ink-3); transition: transform .15s; align-self: center; }
-details.techwrap[open] > summary .chev { transform: rotate(90deg); }
-details.techwrap > summary .hint { font-weight: 400; font-size: .82rem; color: var(--ink-3); }
-@media (prefers-reduced-motion: reduce) { details.techwrap > summary .chev { transition: none; } }
-
 /* ---------- iconos en recomendaciones ---------- */
 .rec dt { display: flex; align-items: center; gap: 7px; }
 .rec dt svg { width: 15px; height: 15px; flex: none; color: var(--ink-3); }
@@ -305,7 +296,7 @@ details.techwrap > summary .hint { font-weight: 400; font-size: .82rem; color: v
     <span class="logo" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M4 21c4 0 4-8 8-8s5 6 9 6 3-9 7-9" stroke="#fff" stroke-width="2.6" fill="none" stroke-linecap="round"/></svg></span>
     <div>
       <h1>Pronóstico de calidad del aire — PM2.5</h1>
-      <div class="org">Área Metropolitana de Monterrey · estaciones NE y SO · horizonte 1 hora</div>
+      <div class="org">Área Metropolitana de Monterrey · 5 estaciones del SIMA · horizonte 1 hora</div>
     </div>
     <span class="spacer"></span>
     <div class="stamp" id="stamp"></div>
@@ -328,6 +319,14 @@ details.techwrap > summary .hint { font-weight: 400; font-size: .82rem; color: v
     <div id="scale" class="scale"></div>
 
     <section>
+      <h2 class="kick">¿Qué significa este número para ti?</h2>
+      <div class="grid">
+        <div class="panel pad" id="guiaRef"></div>
+        <div class="panel pad" id="guiaTend"></div>
+      </div>
+    </section>
+
+    <section>
       <h2 class="kick">¿El aire de ahora es normal para este periodo?</h2>
       <div id="normal" class="panel normal"></div>
     </section>
@@ -338,13 +337,13 @@ details.techwrap > summary .hint { font-weight: 400; font-size: .82rem; color: v
     </section>
 
     <section>
-      <h2 class="kick">Medición vs. pronóstico · 72 observaciones recientes</h2>
+      <h2 class="kick">Cómo viene el aire · últimas horas</h2>
       <div class="grid">
         <figure class="panel chart" style="margin:0">
           <div class="legend" aria-hidden="true">
             <span><i style="background:var(--c-real)"></i>Medición real</span>
             <span><i class="dash"></i>Pronóstico</span>
-            <span><i class="band"></i>Intervalo de predicción 95%</span>
+            <span><i class="band"></i>Rango probable</span>
           </div>
           <div id="chart"></div>
           <div class="tip" id="tip"></div>
@@ -355,7 +354,7 @@ details.techwrap > summary .hint { font-weight: 400; font-size: .82rem; color: v
     </section>
 
     <section>
-      <h2 class="kick">Resumen de las últimas 72 observaciones</h2>
+      <h2 class="kick">Resumen de las últimas horas</h2>
       <div id="sum" class="sum"></div>
       <p class="prose" style="margin-top:10px" id="sumnote"></p>
     </section>
@@ -365,75 +364,6 @@ details.techwrap > summary .hint { font-weight: 400; font-size: .82rem; color: v
       <table class="cmp" id="cmp"></table>
     </section>
 
-    <details class="techwrap" id="tech">
-    <summary><span class="chev" aria-hidden="true">▸</span>Ver detalle técnico<span class="hint">— diagnóstico del modelo, peor episodio, residuos y método (para el equipo técnico de SIMA)</span></summary>
-
-    <section>
-      <h2 class="kick">Diagnóstico del modelo · ¿cuándo se equivoca?</h2>
-      <div class="diag-grid">
-        <div class="panel pad">
-          <div style="font-size:.9rem;color:var(--ink-2);margin-bottom:6px">Error típico (MAE) según qué tan contaminado esté el aire</div>
-          <div id="diagLv"></div>
-          <div class="verdict" id="diagVerdict"></div>
-        </div>
-        <div class="panel pad">
-          <div class="bigfact" id="diagFact"></div>
-          <div style="margin-top:18px;font-size:.82rem;color:var(--ink-2)" id="diagNaive"></div>
-        </div>
-      </div>
-    </section>
-
-    <section>
-      <h2 class="kick">El peor episodio del periodo de prueba</h2>
-      <div id="epiStats" class="epi-stats"></div>
-      <figure class="panel chart" style="margin:0">
-        <div class="legend" aria-hidden="true">
-          <span><i style="background:var(--c-real)"></i>Medición real</span>
-          <span><i class="dash"></i>Pronóstico del modelo</span>
-        </div>
-        <div id="epiChart"></div>
-        <figcaption id="epiCap"></figcaption>
-      </figure>
-    </section>
-
-    <section>
-      <h2 class="kick">Ficha técnica · residuos del modelo</h2>
-      <div class="diag-grid">
-        <div class="panel pad">
-          <table class="rz">
-            <thead><tr><th>Supuesto clásico</th><th style="text-align:right">Prueba</th><th style="text-align:right">Resultado</th></tr></thead>
-            <tbody id="rzBody"></tbody>
-          </table>
-          <p class="mnote" id="rzNote"></p>
-        </div>
-        <div class="panel chart">
-          <div style="font-size:.82rem;color:var(--ink-2);padding:4px 6px 8px">Autocorrelación de los residuos (ACF, rezagos 1–36 h)</div>
-          <div id="acfChart"></div>
-          <figcaption>Barras fuera de la banda punteada = autocorrelación significativa (95%). Un buen modelo las deja dentro.</figcaption>
-        </div>
-      </div>
-    </section>
-
-    <section>
-      <h2 class="kick">Cómo modelamos · para el equipo técnico de SIMA</h2>
-      <div class="diag-grid">
-        <div class="panel pad">
-          <div style="font-size:.9rem;color:var(--ink-2);margin-bottom:10px">Variables que más pesan en el pronóstico <span id="modeloNom" style="font-family:var(--font-mono);color:var(--accent-2)"></span></div>
-          <div id="fiList"></div>
-        </div>
-        <div class="panel pad prose">
-          <h3>Ficha del modelo</h3>
-          <ul>
-            <li><b>Objetivo:</b> PM2.5 horario a <span class="mono">t+1</span>, un modelo por estación.</li>
-            <li><b>Entradas:</b> rezagos de PM2.5 (1 h a 168 h), medias y desviaciones móviles (24 h, 168 h), meteorología en <span class="mono">t−1</span> (viento, humedad, presión, radiación, lluvia, temperatura), PM10 de contexto y estacionalidad hora/mes (seno–coseno).</li>
-            <li><b>Modelo:</b> Random Forest (300 árboles), comparado contra persistencia, XGBoost, SARIMAX diario y LSTM.</li>
-            <li><b>Validación:</b> partición cronológica, últimos 60 días de prueba; intervalo del MAE por <em>bootstrap</em> de bloques de día.</li>
-            <li><b>Límite:</b> pronóstico a 1 hora. Multi-hora requiere pronóstico meteorológico real, no el último valor observado.</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-    </details>
   </main>
 </div>
 
@@ -542,8 +472,11 @@ function accionIcon(t) {
 
 /* --- geolocalización: coordenadas aproximadas de las estaciones SIMA --- */
 const ESTACION_COORD = {
-  NE: { lat: 25.7458, lon: -100.2553 }, // Noreste · San Nicolás de los Garza
-  SO: { lat: 25.6757, lon: -100.4590 }, // Suroeste · Santa Catarina
+  NE:   { lat: 25.7458, lon: -100.2553 }, // Noreste · San Nicolás de los Garza
+  SO:   { lat: 25.6757, lon: -100.4590 }, // Suroeste · Santa Catarina
+  CE:   { lat: 25.6746, lon: -100.3376 }, // Centro · Obispado, Monterrey (aprox.)
+  NTE2: { lat: 25.7900, lon: -100.3170 }, // Norte del AMM (aprox.)
+  SE3:  { lat: 25.6450, lon: -100.0980 }, // Sureste del AMM (aprox.)
 };
 function haversineKm(a, b) {
   const R = 6371, toR = (x) => (x * Math.PI) / 180;
@@ -605,7 +538,7 @@ async function boot() {
   try {
     if (window.__FORECAST__) state.data = window.__FORECAST__;
     else {
-      const r = await fetch("/api/forecast", { headers: { accept: "application/json" } });
+      const r = await fetch("/api/forecast", { headers: { accept: "application/json" }, cache: "no-store" });
       if (!r.ok) throw new Error("HTTP " + r.status);
       state.data = await r.json();
     }
@@ -649,20 +582,18 @@ function buildCmp(entradas) {
   const rows = [
     ["Categoría pronosticada", (e) => chip(e.ultimo_punto.pronostico)],
     ["PM2.5 en 1 hora", (e) => `<span class="val">${n1(e.ultimo_punto.pronostico)}<span class="u">${U}</span></span>`],
-    ["Nivel base (prom. 72 obs.)", (e) => {
+    ["Nivel habitual (últimas horas)", (e) => {
       const m = e.serie_reciente.reduce((s, r) => s + r.real, 0) / e.serie_reciente.length;
       return `<span class="val">${n1(m)}<span class="u">${U}</span></span>`;
     }],
-    ["Rango probable (95%)", (e) => {
+    ["Rango probable", (e) => {
       const lo = Math.max(0, e.ultimo_punto.pronostico + e.banda95[0]);
       return `<span class="val">${n1(lo)} – ${n1(e.ultimo_punto.pronostico + e.banda95[1])}</span>`;
     }],
-    ["Error típico (MAE)", (e) => `<span class="val">${n1(e.mae)}<span class="u">${U}</span>${ic(e.mae_ic95) ? `<span class="sm">IC 95%: ${ic(e.mae_ic95)}</span>` : ""}</span>`],
-    ["Mejora vs. pronóstico ingenuo", (e) => {
-      const mej = e.mae_naive ? (e.mae_naive - e.mae) / e.mae_naive : null;
-      return `<span class="val">${mej == null ? "—" : (mej * 100).toFixed(1) + "%"}</span>`;
+    ["Confianza del pronóstico", (e) => {
+      const c = confianza(e);
+      return `<span class="val">${c.lab}<span class="sm">${c.nota}</span></span>`;
     }],
-    ["Cobertura real del rango 95%", (e) => `<span class="val">${pct(e.cobertura95)}<span class="sm">meta 95%</span></span>`],
   ];
   $("#cmp").innerHTML =
     `<thead><tr><th></th>${entradas.map(([k, e]) => `<th>${k} · ${(e.nombre.split("·")[1] || e.nombre).trim()}</th>`).join("")}</tr></thead>` +
@@ -674,15 +605,80 @@ function render() {
   $("#tabs").querySelectorAll("button").forEach((b) => b.setAttribute("aria-selected", String(b.dataset.est === k)));
   drawHeadline(k, e, U);
   drawHero(k, e, U);
+  drawGuia(k, e, U);
   drawNormal(k, e, U);
   drawRec(e);
   drawChart(k, e, U);
   drawCard(k, e);
   drawResumen(k, e, U);
-  drawDiagnostico(k, e, U);
-  drawEpisodio(k, e, U);
-  drawResiduos(k, e);
-  drawModelo(k, e);
+}
+
+/* --- referencias de salud para PM2.5 (promedio 24 h), como orientación --- */
+const REF_PM25 = [
+  { n: "Guía de la OMS", v: 15, d: "el máximo saludable para un día completo (OMS 2021)" },
+  { n: "Límite en México", v: 41, d: "el máximo permitido en 24 h (NOM-025-SSA1-2021)" },
+];
+
+function drawGuia(k, e, U) {
+  const fc = e.ultimo_punto.pronostico;
+
+  // --- panel 1: comparación con lo recomendable ---
+  const OK = "#2e9e4f", MAL = "#c9500f";
+  const filas = REF_PM25.map((r) => {
+    const bajo = fc <= r.v;
+    const est = bajo
+      ? `<b style="color:${OK}">por debajo</b>`
+      : `<b style="color:${MAL}">+${n1(fc - r.v)} ${U} por encima</b>`;
+    return `<div style="display:flex;align-items:baseline;gap:8px;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--line)">
+      <span>${r.n} <span style="color:var(--ink-3);font-size:.82em">· ${r.d}</span></span>
+      <span style="white-space:nowrap"><b>${r.v}</b> <span style="color:var(--ink-3)">${U}</span> &nbsp; ${est}</span>
+    </div>`;
+  }).join("");
+  const oms = REF_PM25[0], nom = REF_PM25[1];
+  let lead;
+  if (fc <= oms.v) lead = `El pronóstico (${n1(fc)} ${U}) está dentro de lo que la OMS considera saludable para un día completo.`;
+  else if (fc <= nom.v) lead = `El pronóstico (${n1(fc)} ${U}) supera la guía de la OMS para un día (${oms.v}), pero está por debajo del límite mexicano (${nom.v}).`;
+  else lead = `El pronóstico (${n1(fc)} ${U}) supera incluso el límite mexicano para 24 h (${nom.v} ${U}).`;
+  $("#guiaRef").innerHTML = `
+    <div style="font-size:.9rem;color:var(--ink-2);margin-bottom:8px">¿Qué tan limpio está frente a lo recomendable?</div>
+    <p style="margin:0 0 10px">${lead}</p>
+    ${filas}
+    <p style="font-size:.78rem;color:var(--ink-3);margin:10px 0 0">Son promedios de 24 h; aquí se comparan contra el pronóstico de 1 hora solo como referencia rápida.</p>`;
+
+  // --- panel 2: tendencia sobre la racha de horas SEGUIDAS más reciente (mediana, robusta a picos) ---
+  const sr = e.serie_reciente;
+  const t = $("#guiaTend");
+  if (!sr || sr.length < 6) { t.innerHTML = ""; return; }
+  const xs = sr.map((r) => r.real);
+  const ts = sr.map((r) => new Date(r.fecha_hora).getTime());
+  const H = 3.6e6;
+  let ini = xs.length - 1;
+  while (ini > 0 && Math.abs(ts[ini] - ts[ini - 1] - H) < 0.5 * H) ini--;
+  const run = xs.slice(ini);
+  const med = (arr) => { const s = [...arr].sort((a, b) => a - b), n = s.length; return n % 2 ? s[(n - 1) / 2] : (s[n / 2 - 1] + s[n / 2]) / 2; };
+  const wrap = (ico, titulo, col, sub) => `
+    <div style="font-size:.9rem;color:var(--ink-2);margin-bottom:8px">¿Viene mejorando o empeorando?</div>
+    <div style="display:flex;align-items:center;gap:12px">
+      <span style="width:34px;height:34px;flex:0 0 auto;color:var(--accent-2)">${ico}</span>
+      <div>
+        <div style="font-size:1.15rem;font-weight:700;color:${col}">${titulo}</div>
+        <div style="font-size:.86rem;color:var(--ink-2)">${sub}</div>
+      </div>
+    </div>
+    <p style="font-size:.78rem;color:var(--ink-3);margin:12px 0 0">Sobre las observaciones más recientes del histórico (no es tiempo real).</p>`;
+  if (run.length >= 6) {
+    const h = Math.floor(run.length / 3);
+    const a = med(run.slice(0, h)), b = med(run.slice(-h));
+    const d = b - a;
+    let word = "estable", ico = ICON.clock, col = "var(--ink)";
+    if (d <= -2) { word = "mejorando"; ico = ICON.run; col = "#2e9e4f"; }
+    else if (d >= 2) { word = "empeorando"; ico = ICON.mask; col = "#c9500f"; }
+    $("#guiaTend").innerHTML = wrap(ico, `El aire viene ${word}`, col,
+      `En las últimas ${run.length - 1} h seguidas pasó de ~${n1(a)} a ~${n1(b)} ${U}.`);
+  } else {
+    $("#guiaTend").innerHTML = wrap(ICON.clock, "Sin racha reciente de horas seguidas", "var(--ink)",
+      `El histórico tiene huecos aquí. Las últimas mediciones rondan ${n1(med(xs.slice(-8)))} ${U}.`);
+  }
 }
 
 function drawHeadline(k, e, U) {
@@ -808,32 +804,18 @@ function confianza(e) {
 }
 
 function drawCard(k, e) {
-  const lv = e.error_por_nivel || [];
-  const mx = Math.max(...lv.map((x) => x.mae), 1);
   const zona = (e.nombre.split("·")[1] || "").trim();
-  const mej = e.mae_naive ? (e.mae_naive - e.mae) / e.mae_naive : null;
   const c = confianza(e);
-  const titulo = `Confianza del pronóstico: ${c.lab}. ${c.nota} (MAE ${n1(e.mae)} µg/m³, cobertura del rango 95% ${pct(e.cobertura95)}).`;
+  const uso = c.nivel === "alta"
+    ? "Puedes fiarte del rango probable tal cual."
+    : "Con aire limpio es fiable. Si el aire está sucio o subiendo, toma el pronóstico como un <b>mínimo</b>: la realidad puede ser peor.";
   $("#card").innerHTML = `
-    <h3>Confianza del pronóstico — ${k}${zona ? " · " + zona : ""}</h3>
-    <div class="conf ${c.nivel}" title="${titulo}">
+    <h3>¿Se le puede creer al pronóstico? — ${k}${zona ? " · " + zona : ""}</h3>
+    <div class="conf ${c.nivel}" title="${c.lab}: ${c.nota}">
       <span class="dots" aria-hidden="true"><b></b><b></b><b></b></span>
       <span class="lab">${c.lab}<small>${c.nota}</small></span>
     </div>
-    <p style="font-size:.82rem;color:var(--ink-2);margin:14px 0 0">${e.modelo} · evaluado sobre ${e.n_prueba ? e.n_prueba + " h" : "el conjunto"} de prueba. Pasa el ratón (o toca) para ver el detalle técnico.</p>
-    <details class="tech">
-      <summary>Detalle técnico (MAE, RMSE, sesgo, cobertura)</summary>
-      <dl>
-        <dt>Error típico (MAE)</dt><dd>${n1(e.mae)} µg/m³${ic(e.mae_ic95) ? `<span class="ci">IC 95%: ${ic(e.mae_ic95)}</span>` : ""}</dd>
-        <dt>Error grande habitual (RMSE)</dt><dd>${n1(e.rmse)}</dd>
-        <dt>Sesgo medio</dt><dd>${e.sesgo >= 0 ? "+" : ""}${n1(e.sesgo)}</dd>
-        <dt>Mejora vs. pronóstico ingenuo</dt><dd class="${mej != null && mej > 0 ? "good" : "bad"}">${mej == null ? "—" : (mej * 100).toFixed(1) + "%"}</dd>
-        <dt>Cobertura real del rango 95%</dt><dd class="${e.cobertura95 >= 0.93 ? "good" : "bad"}">${pct(e.cobertura95)}</dd>
-      </dl>
-      ${lv.length ? `<div class="lvhead">Error según qué tan contaminado esté el aire</div>
-        ${lv.map((x) => { const a = aica([25, 45, 79, 200][["bajo", "medio", "alto", "muy_alto"].indexOf(x.nivel)] - 1); return `<div class="lv"><span>${NIVEL[x.nivel] || x.nivel}</span><span class="bar" style="width:${Math.round(x.mae / mx * 100)}%;background:var(${a.varc})"></span><span>${n1(x.mae)}</span></div>`; }).join("")}
-        <p style="font-size:.8rem;color:var(--ink-2);margin:12px 0 0">El pronóstico es más certero con aire limpio; en episodios altos el error crece.</p>` : ""}
-    </details>`;
+    <p style="font-size:.9rem;color:var(--ink-2);margin:14px 0 0"><b>Cómo usarlo:</b> ${uso}</p>`;
 }
 
 function drawChart(k, e, U) {
@@ -892,140 +874,6 @@ function drawChart(k, e, U) {
   hit.onmouseleave = () => { xh.style.opacity = 0; tip.style.opacity = 0; };
 }
 
-/* ---------- demo: diagnóstico del modelo ---------- */
-function drawDiagnostico(k, e, U) {
-  const lv = e.error_por_nivel || [];
-  if (!lv.length) { $("#diagLv").innerHTML = ""; $("#diagFact").innerHTML = ""; $("#diagVerdict").innerHTML = ""; $("#diagNaive").innerHTML = ""; return; }
-  const mx = Math.max(...lv.map((x) => x.mae), 1);
-  const COLOR = { bajo: 20, medio: 40, alto: 70, muy_alto: 120 };
-  $("#diagLv").innerHTML = lv.map((x) => {
-    const a = aica(COLOR[x.nivel] ?? 40);
-    const sb = x.sesgo > 0 ? `subestima ${n1(x.sesgo)}` : `sobreestima ${n1(Math.abs(x.sesgo))}`;
-    return `<div class="dlv">
-      <span class="dlv-lab">${NIVEL[x.nivel] || x.nivel}</span>
-      <span class="dlv-track"><span class="dlv-fill" style="width:${Math.round(x.mae / mx * 100)}%;background:var(${a.varc})"></span></span>
-      <span class="dlv-val">${n1(x.mae)}</span>
-      <span class="dlv-bias ${x.sesgo > 0 ? "neg" : "pos"}">${sb}</span>
-    </div>`;
-  }).join("");
-  const lo = lv[0], hi = lv[lv.length - 1];
-  const factor = lo.mae > 0 ? hi.mae / lo.mae : null;
-  $("#diagFact").innerHTML = `×${factor ? factor.toFixed(1) : "—"}
-    <small>el error del pronóstico se multiplica por ${factor ? factor.toFixed(1) : "—"} entre el aire limpio (MAE ${n1(lo.mae)}) y los episodios de contaminación (MAE ${n1(hi.mae)}).</small>`;
-  $("#diagVerdict").innerHTML = `<b>Cómo leerlo:</b> con aire limpio el pronóstico es fiable e incluso tiende a <b>sobreestimar</b>; en episodios altos <b>subestima</b> y llega tarde al pico. En una alerta, trátalo como <b>piso, no como techo</b>.`;
-  const nv = e.naive_vs_modelo;
-  $("#diagNaive").innerHTML = nv ? `<b>¿Dónde aporta el modelo?</b> En las horas de cambio brusco (|ΔPM2.5| ≥ ${n1(nv.umbral_cambio)} ${U}, ${nv.n_horas_cambio} h) baja el error <b>${nv.mejora_cambio_pct}%</b> frente a repetir el último valor (MAE ${n1(nv.mae_modelo_cambio)} vs ${n1(nv.mae_naive_cambio)}). En las horas planas casi da igual (MAE ${n1(nv.mae_modelo_estable)} vs ${n1(nv.mae_naive_estable)}): por eso el promedio general engaña.` : "";
-}
-
-function drawEpisodio(k, e, U) {
-  const ep = e.episodio, host = $("#epiChart");
-  if (!ep || !ep.serie || ep.serie.length < 4) { $("#epiStats").innerHTML = ""; host.innerHTML = ""; $("#epiCap").textContent = ""; return; }
-  const rows = ep.serie, N = rows.length, aPico = aica(ep.pico_real);
-  const retr = ep.retraso_h == null ? "no alcanza el 90% del pico" : ep.retraso_h + " h tarde";
-  $("#epiStats").innerHTML = [
-    { v: n1(ep.pico_real), u: U, t: "Pico real medido", cls: "" },
-    { v: n1(ep.pronostico_en_pico), u: U, t: "Pronóstico en esa hora", cls: "bad" },
-    { v: "−" + n1(ep.subestimacion_pico), u: U, t: "Subestimación en el pico", cls: "bad" },
-    { v: retr, u: "", t: "El pronóstico llega…", cls: "bad" },
-  ].map((c) => `<div class="k"><div class="v ${c.cls}">${c.v}${c.u ? ` <small style="font-size:.6em;color:var(--ink-3)">${c.u}</small>` : ""}</div><div class="t">${c.t}</div></div>`).join("");
-
-  const W = 780, H = 300, m = { t: 14, r: 16, b: 26, l: 40 };
-  const iw = W - m.l - m.r, ih = H - m.t - m.b;
-  const vals = rows.flatMap((r) => [r.real, r.pronostico]);
-  const vmax = Math.max(...vals) * 1.06, vmin = Math.min(0, ...vals);
-  const X = (i) => m.l + (i / (N - 1)) * iw, Y = (v) => m.t + ih - ((v - vmin) / (vmax - vmin)) * ih;
-  let grid = "";
-  for (let q = 0; q <= 4; q++) {
-    const v = vmin + q / 4 * (vmax - vmin);
-    grid += `<line class="gridline" x1="${m.l}" y1="${Y(v).toFixed(1)}" x2="${m.l + iw}" y2="${Y(v).toFixed(1)}"/>` +
-      `<text class="axis" x="${m.l - 8}" y="${(Y(v) + 3).toFixed(1)}" text-anchor="end">${v.toFixed(0)}</text>`;
-  }
-  let xax = "";
-  for (let i = 0; i < N; i += 12) {
-    const dt = new Date(rows[i].fecha_hora);
-    xax += `<text class="axis" x="${X(i).toFixed(1)}" y="${H - 9}" text-anchor="middle">${String(dt.getDate()).padStart(2, "0")}·${String(dt.getHours()).padStart(2, "0")}h</text>`;
-  }
-  const path = (key) => "M" + rows.map((r, i) => `${X(i).toFixed(1)},${Y(r[key]).toFixed(1)}`).join(" L");
-  let jp = 0; rows.forEach((r, i) => { if (r.real > rows[jp].real) jp = i; });
-  host.innerHTML = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="PM2.5 real y pronosticado durante el peor episodio, estación ${k}">
-    ${grid}${xax}
-    <line class="s-peak" x1="${X(jp).toFixed(1)}" y1="${m.t}" x2="${X(jp).toFixed(1)}" y2="${m.t + ih}"/>
-    <path class="s-real" d="${path("real")}"/>
-    <path class="s-fc" d="${path("pronostico")}"/>
-    <circle cx="${X(jp).toFixed(1)}" cy="${Y(rows[jp].real).toFixed(1)}" r="3.8" fill="var(${aPico.varc})" stroke="var(--panel)" stroke-width="2"/>
-    <text class="axis" x="${X(jp).toFixed(1)}" y="${(Y(rows[jp].real) - 9).toFixed(1)}" text-anchor="middle" fill="var(--ink)">pico ${n0(ep.pico_real)}</text>
-  </svg>`;
-  $("#epiCap").textContent = `${fmtDT(ep.inicio)} a ${fmtDT(ep.fin)} · ${ep.horas} h continuas. Línea vertical punteada = hora del pico. PM2.5 en ${U}.`;
-}
-
-function drawResiduos(k, e) {
-  const g = e.diagnostico;
-  if (!g) { $("#rzBody").innerHTML = ""; $("#rzNote").innerHTML = ""; $("#acfChart").innerHTML = ""; return; }
-  const p = (x) => (x == null ? "—" : x < 0.001 ? "< 0.001" : x.toFixed(3));
-  const flag = (bad) => (bad ? `<span class="flag no">NO se cumple</span>` : `<span class="flag ok">OK</span>`);
-  const dw = g.durbin_watson;
-  const lb24 = (g.ljung_box || []).find((r) => r.lag === 24);
-  const homBad = String(g.homocedastico || "").toUpperCase().startsWith("N");
-  $("#rzBody").innerHTML = `
-    <tr><td>Varianza del error constante<span class="sm">no debería crecer con la concentración</span></td><td class="v">Breusch–Pagan · White</td><td class="v">${flag(homBad)}<span class="sm">p ${p(g.breusch_pagan_p)} · ${p(g.white_p)}</span></td></tr>
-    <tr><td>Sin varianza agrupada en el tiempo</td><td class="v">ARCH(24)</td><td class="v">${flag(g.arch_p != null && g.arch_p <= 0.05)}<span class="sm">p ${p(g.arch_p)}</span></td></tr>
-    <tr><td>Residuos sin autocorrelación · rezago 1 h</td><td class="v">Durbin–Watson</td><td class="v">${dw == null ? "—" : dw.toFixed(2)}<span class="sm">${dw != null && dw > 1.7 && dw < 2.3 ? "≈ 2, sin señal a 1 h" : "fuera de ≈ 2"}</span></td></tr>
-    <tr><td>Residuos sin autocorrelación · rezago 24 h</td><td class="v">Ljung–Box</td><td class="v">${flag(lb24 && lb24.p <= 0.05)}<span class="sm">p ${lb24 ? p(lb24.p) : "—"}</span></td></tr>`;
-  $("#rzNote").innerHTML = `Los residuos <b>no son ruido blanco</b>: su varianza crece en los episodios y siguen correlacionados en el ciclo de 24 h. En la práctica, los errores <b>vienen en rachas</b> y el intervalo del 95% se queda corto (cobertura real ${pct(e.cobertura95)}). Siguiente paso: intervalos por nivel de concentración (regresión cuantílica / CQR).`;
-
-  const acfv = g.acf_residuos || [];
-  if (acfv.length > 3) {
-    const W = 440, H = 220, m = { t: 12, r: 10, b: 22, l: 30 };
-    const iw = W - m.l - m.r, ih = H - m.t - m.b, L = acfv.length - 1;
-    const amax = Math.max(0.25, ...acfv.slice(1).map((v) => Math.abs(v))) * 1.15;
-    const X = (i) => m.l + ((i - 1) / (L - 1)) * iw, Y = (v) => m.t + ih / 2 - (v / amax) * (ih / 2);
-    const band = 1.96 / Math.sqrt(g.n || 1000);
-    let stems = "";
-    for (let lag = 1; lag <= L; lag++) {
-      const v = acfv[lag], out = Math.abs(v) > band;
-      stems += `<line x1="${X(lag).toFixed(1)}" y1="${Y(0).toFixed(1)}" x2="${X(lag).toFixed(1)}" y2="${Y(v).toFixed(1)}" stroke="${out ? "var(--aica-mala)" : "var(--accent)"}" stroke-width="2"/>`;
-    }
-    $("#acfChart").innerHTML = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Autocorrelación de los residuos por rezago">
-      <rect x="${m.l}" y="${Y(band).toFixed(1)}" width="${iw}" height="${(Y(-band) - Y(band)).toFixed(1)}" fill="var(--accent)" opacity="0.08"/>
-      <line class="gridline" x1="${m.l}" y1="${Y(0).toFixed(1)}" x2="${m.l + iw}" y2="${Y(0).toFixed(1)}"/>
-      <line x1="${m.l}" y1="${Y(band).toFixed(1)}" x2="${m.l + iw}" y2="${Y(band).toFixed(1)}" stroke="var(--ink-3)" stroke-dasharray="3 3"/>
-      <line x1="${m.l}" y1="${Y(-band).toFixed(1)}" x2="${m.l + iw}" y2="${Y(-band).toFixed(1)}" stroke="var(--ink-3)" stroke-dasharray="3 3"/>
-      ${stems}
-      <text class="axis" x="${m.l}" y="${H - 7}">1</text>
-      <text class="axis" x="${m.l + iw}" y="${H - 7}" text-anchor="end">${L} h</text>
-      <text class="axis" x="${m.l - 6}" y="${(Y(0) + 3).toFixed(1)}" text-anchor="end">0</text>
-    </svg>`;
-  } else $("#acfChart").innerHTML = "";
-}
-
-const VARNAMES = {
-  hora: "Hora del día", dia_semana: "Día de la semana", mes: "Mes del año",
-  hora_sin: "Hora del día (cíclica)", hora_cos: "Hora del día (cíclica)",
-  mes_sin: "Mes del año (cíclico)", mes_cos: "Mes del año (cíclico)",
-};
-const METNAME = { TOUT: "Temperatura", RH: "Humedad relativa", SR: "Radiación solar", WSR: "Velocidad del viento", WDR: "Dirección del viento", RAINF: "Lluvia", PRS: "Presión", PM10: "PM10" };
-function prettyVar(v) {
-  if (VARNAMES[v]) return VARNAMES[v];
-  let m = v.match(/^PM2\.5_lag(\d+)h$/);
-  if (m) return m[1] === "1" ? "PM2.5 hace 1 h (persistencia)" : m[1] === "168" ? "PM2.5 hace 7 días" : `PM2.5 hace ${m[1]} h`;
-  m = v.match(/^PM2\.5_(media|std)(\d+)h$/);
-  if (m) return `PM2.5 ${m[1] === "media" ? "media" : "variabilidad"} ${m[2]} h`;
-  m = v.match(/^([A-Z0-9]+)_lag1h$/);
-  if (m) return `${METNAME[m[1]] || m[1]} (t−1)`;
-  return v;
-}
-function drawModelo(k, e) {
-  $("#modeloNom").textContent = e.modelo ? `· ${e.modelo}` : "";
-  const fi = e.importancia_variables || [];
-  if (!fi.length) { $("#fiList").innerHTML = ""; return; }
-  const mx = Math.max(...fi.map((x) => x.imp), 1e-9);
-  $("#fiList").innerHTML = fi.map((x) => `
-    <div class="fi">
-      <span class="fi-lab">${prettyVar(x.var)} <b>${(x.imp * 100).toFixed(1)}%</b></span>
-      <span class="fi-bar" style="width:${Math.max(2, x.imp / mx * 100).toFixed(1)}%"></span>
-    </div>`).join("") +
-    `<p class="mnote">Una sola variable —el PM2.5 de la hora anterior— explica la mayor parte del pronóstico. El modelo es, sobre todo, <b>persistencia</b> corregida con meteorología: por eso acierta en horas planas y se queda corto cuando la concentración cambia rápido.</p>`;
-}
 
 boot();
 </script>

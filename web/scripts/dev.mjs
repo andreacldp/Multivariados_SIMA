@@ -32,6 +32,10 @@ const servidor = createServer(async (req, res) => {
     // adaptador mínimo: añade res.status()/res.json() al objeto http nativo
     res.status = (c) => (res.statusCode = c, res);
     res.json = (o) => (res.setHeader("Content-Type", "application/json"), res.end(JSON.stringify(o)));
+    // en local siempre datos frescos: ignora el Cache-Control de CDN del handler
+    const _setHeader = res.setHeader.bind(res);
+    res.setHeader = (k, v) => _setHeader(k, /^cache-control$/i.test(k) ? "no-store" : v);
+    res.setHeader("Cache-Control", "no-store");
     return forecastHandler(req, res);
   }
 

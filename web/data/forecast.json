@@ -1,57 +1,62 @@
 {
-  "generado": "2026-09-03T20:59:57",
+  "generado": "2026-09-09T22:39:05",
+  "etapa": 4,
   "contaminante": "PM2.5",
   "unidad": "µg/m³",
   "horizonte": "t+1 (1 hora)",
   "fuente": "SIMA / SIMAJ 2020-2025 (base limpia del proyecto)",
   "particion_prueba_dias": 60,
+  "rolling_origin": {
+    "n_folds": 5,
+    "dias_por_fold": 30
+  },
   "estaciones": {
     "NE": {
       "clave": "NE",
       "nombre": "Noreste · San Nicolás",
       "modelo": "Random Forest",
-      "mae": 3.03,
-      "mae_ic95": "[2.64, 3.55]",
-      "mae_naive": 3.14,
-      "rmse": 7.42,
-      "sesgo": -0.03,
-      "n_prueba": 1440,
+      "mae": 3.39,
+      "mae_ic95": "[2.65, 4.14]",
+      "mae_naive": 3.49,
+      "rmse": 8.57,
+      "sesgo": 0.05,
+      "n_prueba": 1024,
       "periodo_prueba": [
-        "2024-04-20T00:00:00",
-        "2025-03-11T03:00:00"
+        "2024-05-22T07:00:00",
+        "2025-03-11T02:00:00"
       ],
       "banda95": [
-        -8.41,
-        8.63
+        -9.41,
+        9.66
       ],
-      "cobertura95": 0.854,
-      "cobertura80": 0.597,
+      "cobertura95": 0.943,
+      "cobertura80": 0.793,
       "homocedastico": "NO",
       "ljung_box_p_lag24": 0,
       "sarimax": {
-        "mae_diario": 5.83,
+        "mae_diario": 5.73,
         "cobertura_ic95": 1
       },
       "error_por_nivel": [
         {
           "nivel": "bajo",
-          "mae": 2.12,
-          "sesgo": -1.33
+          "mae": 2.14,
+          "sesgo": -1.36
         },
         {
           "nivel": "medio",
-          "mae": 2.77,
-          "sesgo": -0.6
+          "mae": 3.07,
+          "sesgo": -0.63
         },
         {
           "nivel": "alto",
-          "mae": 2.7,
-          "sesgo": 0.19
+          "mae": 3.1,
+          "sesgo": 0.46
         },
         {
           "nivel": "muy_alto",
-          "mae": 4.59,
-          "sesgo": 1.69
+          "mae": 5.27,
+          "sesgo": 1.73
         }
       ],
       "importancia_variables": [
@@ -105,7 +110,7 @@
         }
       ],
       "diagnostico": {
-        "durbin_watson": 2.219,
+        "durbin_watson": 2.276,
         "ljung_box": [
           {
             "lag": 1,
@@ -121,61 +126,351 @@
           },
           {
             "lag": 168,
-            "p": 0.9686
+            "p": 0.9949
           }
         ],
         "acf_residuos": [
           1,
-          -0.11,
-          -0.219,
-          0.036,
-          0.03,
-          -0.04,
-          -0.035,
-          0.051,
-          -0.009,
-          -0.005,
-          0.008,
-          -0.005,
-          0.005,
-          -0.014,
-          0.033,
+          -0.138,
+          -0.24,
+          0.091,
           -0.023,
-          -0.021,
-          -0.003,
-          -0.012,
-          0.002,
-          -0.006,
-          0.006,
-          -0.01,
-          -0.003,
-          0.014,
-          0.004,
-          -0.022,
-          -0.011,
-          -0.003,
-          0.003,
+          -0.061,
+          0.06,
           0,
-          -0.01,
+          -0.021,
+          0.014,
+          -0.011,
+          0.008,
+          0.017,
+          0.006,
           -0.002,
-          0.033,
-          -0.026,
+          -0.021,
+          -0.022,
+          0.001,
+          0.007,
+          -0.023,
+          0.005,
+          0.007,
+          -0.014,
+          0.006,
+          0.01,
+          -0.013,
+          -0.006,
+          -0.008,
+          -0.003,
+          0.002,
+          -0.008,
+          0.003,
+          0.032,
+          -0.029,
+          0,
           0.016,
-          0.016
+          0.01
         ],
         "breusch_pagan_p": 0,
         "white_p": 0,
         "arch_p": 0,
         "homocedastico": "NO",
-        "n": 1440
+        "n": 1024
+      },
+      "etapa4": {
+        "rolling_origin": {
+          "folds": [
+            {
+              "fold": 1,
+              "inicio": "2023-12-24T08:00:00",
+              "fin": "2024-01-30T09:00:00",
+              "mae": {
+                "Naive (t-1)": 5.35,
+                "Random Forest": 5.09,
+                "XGBoost": 5.2
+              }
+            },
+            {
+              "fold": 2,
+              "inicio": "2024-01-30T10:00:00",
+              "fin": "2024-03-13T05:00:00",
+              "mae": {
+                "Naive (t-1)": 3.94,
+                "Random Forest": 3.6,
+                "XGBoost": 3.58
+              }
+            },
+            {
+              "fold": 3,
+              "inicio": "2024-03-13T06:00:00",
+              "fin": "2024-04-19T23:00:00",
+              "mae": {
+                "Naive (t-1)": 3.05,
+                "Random Forest": 2.81,
+                "XGBoost": 2.78
+              }
+            },
+            {
+              "fold": 4,
+              "inicio": "2024-04-20T00:00:00",
+              "fin": "2024-06-04T04:00:00",
+              "mae": {
+                "Naive (t-1)": 2.73,
+                "Random Forest": 2.7,
+                "XGBoost": 2.83
+              }
+            },
+            {
+              "fold": 5,
+              "inicio": "2024-06-04T05:00:00",
+              "fin": "2025-03-11T03:00:00",
+              "mae": {
+                "Naive (t-1)": 3.54,
+                "Random Forest": 3.33,
+                "XGBoost": 3.43
+              }
+            }
+          ],
+          "resumen": {
+            "Random Forest": {
+              "mae_mean": 3.51,
+              "mae_sd": 0.96,
+              "rank_medio": 1.4
+            },
+            "XGBoost": {
+              "mae_mean": 3.56,
+              "mae_sd": 0.98,
+              "rank_medio": 1.8
+            },
+            "Naive (t-1)": {
+              "mae_mean": 3.72,
+              "mae_sd": 1.02,
+              "rank_medio": 2.8
+            }
+          }
+        },
+        "calculo_error": {
+          "mae": 3.39,
+          "se_iid": 0.246,
+          "se_hac": 0.38,
+          "razon_hac_iid": 1.55,
+          "hac_lags": 6,
+          "ic95_iid": [
+            2.91,
+            3.87
+          ],
+          "ic95_hac": [
+            2.65,
+            4.14
+          ],
+          "ic95_boot": [
+            2.88,
+            4.12
+          ],
+          "n": 1024,
+          "n_eff": 386.6,
+          "rho1_abs_e": 0.452,
+          "mse": 73.45,
+          "sesgo2": 0.002,
+          "var_error": 73.45,
+          "theil_um_sesgo": 0,
+          "theil_us_varianza": 0.004,
+          "theil_uc_covarianza": 0.996,
+          "theil_u2_vs_naive": 0.909
+        },
+        "heterocedasticidad_modelos": [
+          {
+            "modelo": "Naive (t-1)",
+            "breusch_pagan_p": 0,
+            "white_p": 0,
+            "arch_p": 0,
+            "goldfeld_quandt_p": 0,
+            "homocedastico": "NO"
+          },
+          {
+            "modelo": "Random Forest",
+            "breusch_pagan_p": 0,
+            "white_p": 0,
+            "arch_p": 0,
+            "goldfeld_quandt_p": 0,
+            "homocedastico": "NO"
+          },
+          {
+            "modelo": "XGBoost",
+            "breusch_pagan_p": 0,
+            "white_p": 0,
+            "arch_p": 0,
+            "goldfeld_quandt_p": 0,
+            "homocedastico": "NO"
+          },
+          {
+            "modelo": "LSTM",
+            "breusch_pagan_p": 0,
+            "white_p": 0,
+            "arch_p": 0.9906,
+            "goldfeld_quandt_p": 0,
+            "homocedastico": "NO"
+          }
+        ],
+        "varianza_vs_nivel": {
+          "bins": [
+            {
+              "pred_medio": 8.1,
+              "std_e": 1.79,
+              "mae": 1.44,
+              "n": 103
+            },
+            {
+              "pred_medio": 12.9,
+              "std_e": 3.21,
+              "mae": 2.22,
+              "n": 102
+            },
+            {
+              "pred_medio": 16,
+              "std_e": 3.6,
+              "mae": 2.48,
+              "n": 102
+            },
+            {
+              "pred_medio": 19.1,
+              "std_e": 3.78,
+              "mae": 2.82,
+              "n": 103
+            },
+            {
+              "pred_medio": 22.3,
+              "std_e": 4.55,
+              "mae": 3.31,
+              "n": 102
+            },
+            {
+              "pred_medio": 26.6,
+              "std_e": 4,
+              "mae": 2.9,
+              "n": 102
+            },
+            {
+              "pred_medio": 30.4,
+              "std_e": 4.86,
+              "mae": 3.48,
+              "n": 103
+            },
+            {
+              "pred_medio": 35.2,
+              "std_e": 4.09,
+              "mae": 3.05,
+              "n": 102
+            },
+            {
+              "pred_medio": 41,
+              "std_e": 6.51,
+              "mae": 4.3,
+              "n": 102
+            },
+            {
+              "pred_medio": 54,
+              "std_e": 24.02,
+              "mae": 7.89,
+              "n": 103
+            }
+          ],
+          "pendiente_log_e2_por_ugm3": 0.03073,
+          "r2": 0.135,
+          "factor_degradacion_q4_q1": 5.5
+        },
+        "intervalos": {
+          "metodos": [
+            {
+              "metodo": "empírico_global",
+              "cob95": 0.827,
+              "ancho95": 10.099,
+              "cob95_q4": 0.757,
+              "cob80": 0.559,
+              "ancho80": 4.752,
+              "cob80_q4": 0.435
+            },
+            {
+              "metodo": "por_nivel",
+              "cob95": 0.858,
+              "ancho95": 11.809,
+              "cob95_q4": 0.894,
+              "cob80": 0.619,
+              "ancho80": 5.806,
+              "cob80_q4": 0.58
+            },
+            {
+              "metodo": "GARCH(1,1)",
+              "cob95": 0.939,
+              "ancho95": 19.289,
+              "cob95_q4": 0.914,
+              "cob80": 0.823,
+              "ancho80": 12.613,
+              "cob80_q4": 0.796
+            },
+            {
+              "metodo": "CQR",
+              "cob95": 0.943,
+              "ancho95": 21.126,
+              "cob95_q4": 0.949,
+              "cob80": 0.793,
+              "ancho80": 11.677,
+              "cob80_q4": 0.812
+            }
+          ],
+          "elegido": "CQR",
+          "garch": {
+            "omega": 0.8378,
+            "alpha": 0.3083,
+            "beta": 0.6917,
+            "persistencia": 1,
+            "sig2_0": 9.3691
+          }
+        },
+        "diebold_mariano": {
+          "vs_naive": {
+            "dm": -1.16,
+            "p": 0.2448,
+            "sig": false
+          },
+          "campeon_vs_segundo": {
+            "segundo": "XGBoost",
+            "dm": 0.4,
+            "p": 0.6916,
+            "empate_tecnico": true
+          },
+          "matriz_p": {
+            "Naive (t-1)": {
+              "Naive (t-1)": null,
+              "Random Forest": 0.2448,
+              "XGBoost": 0.3455,
+              "LSTM": 0.1501
+            },
+            "Random Forest": {
+              "Naive (t-1)": 0.2448,
+              "Random Forest": null,
+              "XGBoost": 0.6916,
+              "LSTM": 0.1225
+            },
+            "XGBoost": {
+              "Naive (t-1)": 0.3455,
+              "Random Forest": 0.6916,
+              "XGBoost": null,
+              "LSTM": 0.2299
+            },
+            "LSTM": {
+              "Naive (t-1)": 0.1501,
+              "Random Forest": 0.1225,
+              "XGBoost": 0.2299,
+              "LSTM": null
+            }
+          }
+        }
       },
       "naive_vs_modelo": {
-        "umbral_cambio": 3.95,
-        "n_horas_cambio": 360,
-        "mae_modelo_cambio": 7.13,
-        "mae_naive_cambio": 8.09,
-        "mae_modelo_estable": 1.66,
-        "mae_naive_estable": 1.49,
+        "umbral_cambio": 4,
+        "n_horas_cambio": 269,
+        "mae_modelo_cambio": 7.84,
+        "mae_naive_cambio": 8.9,
+        "mae_modelo_estable": 1.81,
+        "mae_naive_estable": 1.57,
         "mejora_cambio_pct": 11.9
       },
       "episodio": {
@@ -187,10 +482,6 @@
         "pronostico_en_pico": 52.52,
         "subestimacion_pico": 11.48,
         "retraso_h": 1,
-        "banda95": [
-          -8.41,
-          8.63
-        ],
         "serie": [
           {
             "fecha_hora": "2024-05-25T10:00:00",
@@ -555,11 +846,31 @@
         ]
       },
       "ultimo_punto": {
-        "fecha_hora": "2025-03-11T03:00:00",
-        "real": 27.93,
-        "pronostico": 28.72
+        "fecha_hora": "2025-03-11T02:00:00",
+        "real": 29.07,
+        "pronostico": 23.91
       },
       "serie_reciente": [
+        {
+          "fecha_hora": "2024-07-31T15:00:00",
+          "real": 31.15,
+          "pronostico": 32.6
+        },
+        {
+          "fecha_hora": "2024-07-31T16:00:00",
+          "real": 25.62,
+          "pronostico": 28.85
+        },
+        {
+          "fecha_hora": "2024-07-31T17:00:00",
+          "real": 25.14,
+          "pronostico": 24.01
+        },
+        {
+          "fecha_hora": "2024-07-31T18:00:00",
+          "real": 28.21,
+          "pronostico": 24.69
+        },
         {
           "fecha_hora": "2024-07-31T19:00:00",
           "real": 29.67,
@@ -599,11 +910,6 @@
           "fecha_hora": "2024-08-01T02:00:00",
           "real": 31.61,
           "pronostico": 30.16
-        },
-        {
-          "fecha_hora": "2024-08-01T03:00:00",
-          "real": 31.38,
-          "pronostico": 30.23
         },
         {
           "fecha_hora": "2024-08-28T09:00:00",
@@ -781,11 +1087,6 @@
           "pronostico": 20.03
         },
         {
-          "fecha_hora": "2024-08-29T20:00:00",
-          "real": 17.59,
-          "pronostico": 12.58
-        },
-        {
           "fecha_hora": "2024-12-31T22:00:00",
           "real": 194.76,
           "pronostico": 108.86
@@ -814,11 +1115,6 @@
           "fecha_hora": "2025-01-01T03:00:00",
           "real": 40.4,
           "pronostico": 58.89
-        },
-        {
-          "fecha_hora": "2025-01-01T04:00:00",
-          "real": 28.77,
-          "pronostico": 37.43
         },
         {
           "fecha_hora": "2025-03-10T08:00:00",
@@ -914,11 +1210,6 @@
           "fecha_hora": "2025-03-11T02:00:00",
           "real": 29.07,
           "pronostico": 23.91
-        },
-        {
-          "fecha_hora": "2025-03-11T03:00:00",
-          "real": 27.93,
-          "pronostico": 28.72
         }
       ]
     },
@@ -926,48 +1217,48 @@
       "clave": "SO",
       "nombre": "Suroeste · Santa Catarina",
       "modelo": "Random Forest",
-      "mae": 5.8,
-      "mae_ic95": "[4.94, 6.72]",
-      "mae_naive": 6.25,
-      "rmse": 10.35,
-      "sesgo": -0.25,
-      "n_prueba": 1440,
+      "mae": 3.7,
+      "mae_ic95": "[2.75, 4.65]",
+      "mae_naive": 3.72,
+      "rmse": 8.25,
+      "sesgo": -0.54,
+      "n_prueba": 585,
       "periodo_prueba": [
-        "2024-11-22T18:00:00",
-        "2025-03-31T03:00:00"
+        "2025-01-18T10:00:00",
+        "2025-03-31T02:00:00"
       ],
       "banda95": [
-        -17.02,
-        21.51
+        -10.89,
+        10.03
       ],
-      "cobertura95": 0.787,
-      "cobertura80": 0.577,
+      "cobertura95": 0.971,
+      "cobertura80": 0.785,
       "homocedastico": "NO",
-      "ljung_box_p_lag24": 0.0077,
+      "ljung_box_p_lag24": 0.1517,
       "sarimax": {
-        "mae_diario": 8.02,
+        "mae_diario": 8.3,
         "cobertura_ic95": 1
       },
       "error_por_nivel": [
         {
           "nivel": "bajo",
-          "mae": 2.26,
-          "sesgo": -1.85
+          "mae": 2.46,
+          "sesgo": -2.22
         },
         {
           "nivel": "medio",
-          "mae": 3.31,
-          "sesgo": -1.6
+          "mae": 2.22,
+          "sesgo": -1.51
         },
         {
           "nivel": "alto",
-          "mae": 5.48,
-          "sesgo": -1.83
+          "mae": 2.6,
+          "sesgo": -1.03
         },
         {
           "nivel": "muy_alto",
-          "mae": 12.14,
-          "sesgo": 4.3
+          "mae": 7.52,
+          "sesgo": 2.61
         }
       ],
       "importancia_variables": [
@@ -1021,461 +1312,712 @@
         }
       ],
       "diagnostico": {
-        "durbin_watson": 1.993,
+        "durbin_watson": 1.729,
         "ljung_box": [
           {
             "lag": 1,
-            "p": 0.9167
+            "p": 0.0014
           },
           {
             "lag": 24,
-            "p": 0.0077
+            "p": 0.1517
           },
           {
             "lag": 48,
-            "p": 0.0199
+            "p": 0.8707
           },
           {
             "lag": 168,
-            "p": 0.0262
+            "p": 1
           }
         ],
         "acf_residuos": [
           1,
-          0.003,
-          -0.089,
-          0.009,
-          0.001,
-          -0.017,
-          0.088,
-          0.07,
-          -0.006,
-          0.022,
-          -0.005,
-          -0.001,
-          0.015,
-          0.018,
-          -0.03,
-          -0.008,
-          0.011,
-          0.053,
-          0.008,
-          -0.017,
-          0.026,
-          -0.009,
-          0.002,
-          -0.004,
-          0.056,
-          0.038,
-          -0.008,
-          -0.05,
-          0.001,
+          0.131,
+          -0.135,
+          0.042,
           0.007,
-          -0.013,
-          -0.02,
+          0.032,
+          0.067,
+          0.024,
+          0.017,
+          0.036,
+          0.006,
           0.015,
-          -0.04,
+          -0.017,
           -0.018,
+          -0.056,
+          0.005,
+          0.011,
+          0.035,
           0.015,
-          0.001
+          -0.011,
+          -0.004,
+          -0.014,
+          0.01,
+          -0.037,
+          0.014,
+          0.033,
+          0.029,
+          0.028,
+          -0.02,
+          -0.017,
+          0.023,
+          -0.001,
+          -0.006,
+          0.006,
+          -0.04,
+          0.003,
+          0.031
         ],
         "breusch_pagan_p": 0,
         "white_p": 0,
         "arch_p": 0,
         "homocedastico": "NO",
-        "n": 1440
+        "n": 585
+      },
+      "etapa4": {
+        "rolling_origin": {
+          "folds": [
+            {
+              "fold": 1,
+              "inicio": "2024-05-02T22:00:00",
+              "fin": "2024-08-15T06:00:00",
+              "mae": {
+                "Naive (t-1)": 2.14,
+                "Random Forest": 2.04,
+                "XGBoost": 2.01
+              }
+            },
+            {
+              "fold": 2,
+              "inicio": "2024-08-15T07:00:00",
+              "fin": "2024-09-14T06:00:00",
+              "mae": {
+                "Naive (t-1)": 2.81,
+                "Random Forest": 2.53,
+                "XGBoost": 2.42
+              }
+            },
+            {
+              "fold": 3,
+              "inicio": "2024-09-14T07:00:00",
+              "fin": "2024-11-22T17:00:00",
+              "mae": {
+                "Naive (t-1)": 5.02,
+                "Random Forest": 4.47,
+                "XGBoost": 4.4
+              }
+            },
+            {
+              "fold": 4,
+              "inicio": "2024-11-22T18:00:00",
+              "fin": "2025-01-02T17:00:00",
+              "mae": {
+                "Naive (t-1)": 8.47,
+                "Random Forest": 7.67,
+                "XGBoost": 7.62
+              }
+            },
+            {
+              "fold": 5,
+              "inicio": "2025-01-02T18:00:00",
+              "fin": "2025-03-31T03:00:00",
+              "mae": {
+                "Naive (t-1)": 4.02,
+                "Random Forest": 3.92,
+                "XGBoost": 4.24
+              }
+            }
+          ],
+          "resumen": {
+            "Random Forest": {
+              "mae_mean": 4.13,
+              "mae_sd": 2.22,
+              "rank_medio": 1.8
+            },
+            "XGBoost": {
+              "mae_mean": 4.14,
+              "mae_sd": 2.22,
+              "rank_medio": 1.4
+            },
+            "Naive (t-1)": {
+              "mae_mean": 4.49,
+              "mae_sd": 2.49,
+              "rank_medio": 2.8
+            }
+          }
+        },
+        "calculo_error": {
+          "mae": 3.7,
+          "se_iid": 0.305,
+          "se_hac": 0.485,
+          "razon_hac_iid": 1.59,
+          "hac_lags": 5,
+          "ic95_iid": [
+            3.1,
+            4.3
+          ],
+          "ic95_hac": [
+            2.75,
+            4.65
+          ],
+          "ic95_boot": [
+            2.71,
+            4.91
+          ],
+          "n": 585,
+          "n_eff": 153.8,
+          "rho1_abs_e": 0.584,
+          "mse": 68.14,
+          "sesgo2": 0.293,
+          "var_error": 67.85,
+          "theil_um_sesgo": 0.004,
+          "theil_us_varianza": 0.056,
+          "theil_uc_covarianza": 0.94,
+          "theil_u2_vs_naive": 1.02
+        },
+        "heterocedasticidad_modelos": [
+          {
+            "modelo": "Naive (t-1)",
+            "breusch_pagan_p": 0,
+            "white_p": 0,
+            "arch_p": 0,
+            "goldfeld_quandt_p": 0,
+            "homocedastico": "NO"
+          },
+          {
+            "modelo": "Random Forest",
+            "breusch_pagan_p": 0,
+            "white_p": 0,
+            "arch_p": 0,
+            "goldfeld_quandt_p": 0,
+            "homocedastico": "NO"
+          },
+          {
+            "modelo": "XGBoost",
+            "breusch_pagan_p": 0,
+            "white_p": 0,
+            "arch_p": 0,
+            "goldfeld_quandt_p": 0,
+            "homocedastico": "NO"
+          },
+          {
+            "modelo": "LSTM",
+            "breusch_pagan_p": 0,
+            "white_p": 0,
+            "arch_p": 0,
+            "goldfeld_quandt_p": 0,
+            "homocedastico": "NO"
+          }
+        ],
+        "varianza_vs_nivel": {
+          "bins": [
+            {
+              "pred_medio": 6.1,
+              "std_e": 2.31,
+              "mae": 1.61,
+              "n": 59
+            },
+            {
+              "pred_medio": 8.8,
+              "std_e": 2.08,
+              "mae": 1.77,
+              "n": 58
+            },
+            {
+              "pred_medio": 11.1,
+              "std_e": 2.73,
+              "mae": 1.83,
+              "n": 59
+            },
+            {
+              "pred_medio": 12.9,
+              "std_e": 3.6,
+              "mae": 2.05,
+              "n": 58
+            },
+            {
+              "pred_medio": 14.5,
+              "std_e": 3.24,
+              "mae": 2.1,
+              "n": 59
+            },
+            {
+              "pred_medio": 16.3,
+              "std_e": 3.37,
+              "mae": 2.61,
+              "n": 58
+            },
+            {
+              "pred_medio": 18.4,
+              "std_e": 4.36,
+              "mae": 3.31,
+              "n": 58
+            },
+            {
+              "pred_medio": 21.2,
+              "std_e": 11.78,
+              "mae": 5.58,
+              "n": 59
+            },
+            {
+              "pred_medio": 25.9,
+              "std_e": 4.65,
+              "mae": 3.81,
+              "n": 58
+            },
+            {
+              "pred_medio": 48.7,
+              "std_e": 21.24,
+              "mae": 12.2,
+              "n": 59
+            }
+          ],
+          "pendiente_log_e2_por_ugm3": 0.09029,
+          "r2": 0.257,
+          "factor_degradacion_q4_q1": 6.01
+        },
+        "intervalos": {
+          "metodos": [
+            {
+              "metodo": "empírico_global",
+              "cob95": 0.901,
+              "ancho95": 17.085,
+              "cob95_q4": 0.781,
+              "cob80": 0.735,
+              "ancho80": 8.043,
+              "cob80_q4": 0.473
+            },
+            {
+              "metodo": "por_nivel",
+              "cob95": 0.791,
+              "ancho95": 10.155,
+              "cob95_q4": 0.747,
+              "cob80": 0.6,
+              "ancho80": 5.196,
+              "cob80_q4": 0.486
+            },
+            {
+              "metodo": "GARCH(1,1)",
+              "cob95": 0.921,
+              "ancho95": 19.732,
+              "cob95_q4": 0.829,
+              "cob80": 0.836,
+              "ancho80": 12.902,
+              "cob80_q4": 0.685
+            },
+            {
+              "metodo": "CQR",
+              "cob95": 0.971,
+              "ancho95": 21.65,
+              "cob95_q4": 0.966,
+              "cob80": 0.785,
+              "ancho80": 10.583,
+              "cob80_q4": 0.74
+            }
+          ],
+          "elegido": "CQR",
+          "garch": {
+            "omega": 2.5417,
+            "alpha": 0.6472,
+            "beta": 0.3528,
+            "persistencia": 1,
+            "sig2_0": 8.8264
+          }
+        },
+        "diebold_mariano": {
+          "vs_naive": {
+            "dm": 0.22,
+            "p": 0.8222,
+            "sig": false
+          },
+          "campeon_vs_segundo": {
+            "segundo": "XGBoost",
+            "dm": -1.43,
+            "p": 0.154,
+            "empate_tecnico": true
+          },
+          "matriz_p": {
+            "Naive (t-1)": {
+              "Naive (t-1)": null,
+              "Random Forest": 0.8222,
+              "XGBoost": 0.1784,
+              "LSTM": 0.6259
+            },
+            "Random Forest": {
+              "Naive (t-1)": 0.8222,
+              "Random Forest": null,
+              "XGBoost": 0.154,
+              "LSTM": 0.2966
+            },
+            "XGBoost": {
+              "Naive (t-1)": 0.1784,
+              "Random Forest": 0.154,
+              "XGBoost": null,
+              "LSTM": 0.1273
+            },
+            "LSTM": {
+              "Naive (t-1)": 0.6259,
+              "Random Forest": 0.2966,
+              "XGBoost": 0.1273,
+              "LSTM": null
+            }
+          }
+        }
       },
       "naive_vs_modelo": {
-        "umbral_cambio": 7.47,
-        "n_horas_cambio": 360,
-        "mae_modelo_cambio": 14.31,
-        "mae_naive_cambio": 17.65,
-        "mae_modelo_estable": 2.96,
-        "mae_naive_estable": 2.44,
-        "mejora_cambio_pct": 18.9
+        "umbral_cambio": 4.44,
+        "n_horas_cambio": 147,
+        "mae_modelo_cambio": 9.05,
+        "mae_naive_cambio": 10.75,
+        "mae_modelo_estable": 1.9,
+        "mae_naive_estable": 1.36,
+        "mejora_cambio_pct": 15.8
       },
       "episodio": {
-        "inicio": "2024-11-26T01:00:00",
-        "fin": "2024-11-29T00:00:00",
-        "horas": 72,
-        "pico_real": 193.62,
-        "hora_pico": "2024-11-28T01:00:00",
-        "pronostico_en_pico": 98.55,
-        "subestimacion_pico": 95.07,
-        "retraso_h": null,
-        "banda95": [
-          -17.02,
-          21.51
-        ],
+        "inicio": "2025-03-17T11:00:00",
+        "fin": "2025-03-20T02:00:00",
+        "horas": 64,
+        "pico_real": 175.82,
+        "hora_pico": "2025-03-19T11:00:00",
+        "pronostico_en_pico": 64.37,
+        "subestimacion_pico": 111.45,
+        "retraso_h": 1,
         "serie": [
           {
-            "fecha_hora": "2024-11-26T01:00:00",
-            "real": 58.22,
-            "pronostico": 48.43
+            "fecha_hora": "2025-03-17T11:00:00",
+            "real": 17.95,
+            "pronostico": 18.16
           },
           {
-            "fecha_hora": "2024-11-26T02:00:00",
-            "real": 105.37,
-            "pronostico": 55.81
+            "fecha_hora": "2025-03-17T12:00:00",
+            "real": 16.98,
+            "pronostico": 17.6
           },
           {
-            "fecha_hora": "2024-11-26T03:00:00",
-            "real": 89.88,
-            "pronostico": 97.97
+            "fecha_hora": "2025-03-17T13:00:00",
+            "real": 16.02,
+            "pronostico": 16.61
           },
           {
-            "fecha_hora": "2024-11-26T04:00:00",
-            "real": 74.1,
-            "pronostico": 82.06
+            "fecha_hora": "2025-03-17T14:00:00",
+            "real": 14.8,
+            "pronostico": 14.68
           },
           {
-            "fecha_hora": "2024-11-26T05:00:00",
-            "real": 39.28,
-            "pronostico": 62.3
+            "fecha_hora": "2025-03-17T15:00:00",
+            "real": 14.05,
+            "pronostico": 14.53
           },
           {
-            "fecha_hora": "2024-11-26T06:00:00",
-            "real": 23.86,
-            "pronostico": 36.97
+            "fecha_hora": "2025-03-17T16:00:00",
+            "real": 13.3,
+            "pronostico": 14.39
           },
           {
-            "fecha_hora": "2024-11-26T07:00:00",
-            "real": 20.32,
-            "pronostico": 25.06
+            "fecha_hora": "2025-03-17T17:00:00",
+            "real": 12.76,
+            "pronostico": 13.54
           },
           {
-            "fecha_hora": "2024-11-26T08:00:00",
-            "real": 23.85,
-            "pronostico": 21.91
+            "fecha_hora": "2025-03-17T18:00:00",
+            "real": 12.59,
+            "pronostico": 13.02
           },
           {
-            "fecha_hora": "2024-11-26T09:00:00",
-            "real": 23.72,
-            "pronostico": 27.36
+            "fecha_hora": "2025-03-17T19:00:00",
+            "real": 12.36,
+            "pronostico": 12.91
           },
           {
-            "fecha_hora": "2024-11-26T10:00:00",
-            "real": 22.81,
-            "pronostico": 24.76
+            "fecha_hora": "2025-03-17T20:00:00",
+            "real": 13.74,
+            "pronostico": 12.93
           },
           {
-            "fecha_hora": "2024-11-26T11:00:00",
-            "real": 22.12,
-            "pronostico": 22.34
+            "fecha_hora": "2025-03-17T21:00:00",
+            "real": 13.84,
+            "pronostico": 14.57
           },
           {
-            "fecha_hora": "2024-11-26T12:00:00",
-            "real": 26.79,
-            "pronostico": 22.12
+            "fecha_hora": "2025-03-17T22:00:00",
+            "real": 15.22,
+            "pronostico": 14.37
           },
           {
-            "fecha_hora": "2024-11-26T13:00:00",
-            "real": 30.25,
-            "pronostico": 26.36
+            "fecha_hora": "2025-03-17T23:00:00",
+            "real": 12.98,
+            "pronostico": 16.12
           },
           {
-            "fecha_hora": "2024-11-26T14:00:00",
-            "real": 36.17,
-            "pronostico": 30.61
+            "fecha_hora": "2025-03-18T00:00:00",
+            "real": 12.18,
+            "pronostico": 14.07
           },
           {
-            "fecha_hora": "2024-11-26T15:00:00",
-            "real": 39.57,
-            "pronostico": 33.75
+            "fecha_hora": "2025-03-18T01:00:00",
+            "real": 11.53,
+            "pronostico": 14.05
           },
           {
-            "fecha_hora": "2024-11-26T16:00:00",
-            "real": 35.1,
-            "pronostico": 36.43
+            "fecha_hora": "2025-03-18T02:00:00",
+            "real": 10.72,
+            "pronostico": 12.01
           },
           {
-            "fecha_hora": "2024-11-26T17:00:00",
-            "real": 34.22,
-            "pronostico": 32.21
+            "fecha_hora": "2025-03-18T03:00:00",
+            "real": 11.1,
+            "pronostico": 12.52
           },
           {
-            "fecha_hora": "2024-11-26T18:00:00",
-            "real": 36.33,
-            "pronostico": 34.24
+            "fecha_hora": "2025-03-18T04:00:00",
+            "real": 12.12,
+            "pronostico": 13.6
           },
           {
-            "fecha_hora": "2024-11-26T19:00:00",
-            "real": 38.61,
-            "pronostico": 37.54
+            "fecha_hora": "2025-03-18T05:00:00",
+            "real": 15.25,
+            "pronostico": 15.47
           },
           {
-            "fecha_hora": "2024-11-26T20:00:00",
-            "real": 42.16,
-            "pronostico": 38.22
+            "fecha_hora": "2025-03-18T06:00:00",
+            "real": 20.14,
+            "pronostico": 17.25
           },
           {
-            "fecha_hora": "2024-11-26T21:00:00",
-            "real": 42.7,
-            "pronostico": 43.19
+            "fecha_hora": "2025-03-18T07:00:00",
+            "real": 29.67,
+            "pronostico": 25.43
           },
           {
-            "fecha_hora": "2024-11-26T22:00:00",
-            "real": 42.98,
-            "pronostico": 46.27
+            "fecha_hora": "2025-03-18T08:00:00",
+            "real": 42.84,
+            "pronostico": 34.14
           },
           {
-            "fecha_hora": "2024-11-26T23:00:00",
-            "real": 52.99,
-            "pronostico": 47.55
+            "fecha_hora": "2025-03-18T09:00:00",
+            "real": 36.29,
+            "pronostico": 40.85
           },
           {
-            "fecha_hora": "2024-11-27T00:00:00",
-            "real": 66.74,
-            "pronostico": 50.38
+            "fecha_hora": "2025-03-18T10:00:00",
+            "real": 29.32,
+            "pronostico": 27.48
           },
           {
-            "fecha_hora": "2024-11-27T01:00:00",
-            "real": 90.29,
-            "pronostico": 65.21
+            "fecha_hora": "2025-03-18T11:00:00",
+            "real": 18.65,
+            "pronostico": 23.78
           },
           {
-            "fecha_hora": "2024-11-27T02:00:00",
-            "real": 86.96,
-            "pronostico": 84
+            "fecha_hora": "2025-03-18T12:00:00",
+            "real": 17.75,
+            "pronostico": 20.2
           },
           {
-            "fecha_hora": "2024-11-27T03:00:00",
-            "real": 93.84,
-            "pronostico": 81.83
+            "fecha_hora": "2025-03-18T13:00:00",
+            "real": 24.14,
+            "pronostico": 19.67
           },
           {
-            "fecha_hora": "2024-11-27T04:00:00",
-            "real": 67.61,
-            "pronostico": 81.91
+            "fecha_hora": "2025-03-18T14:00:00",
+            "real": 16.84,
+            "pronostico": 24.38
           },
           {
-            "fecha_hora": "2024-11-27T05:00:00",
-            "real": 63.22,
-            "pronostico": 63.83
+            "fecha_hora": "2025-03-18T15:00:00",
+            "real": 14.37,
+            "pronostico": 14.97
           },
           {
-            "fecha_hora": "2024-11-27T06:00:00",
-            "real": 66.19,
-            "pronostico": 64.04
+            "fecha_hora": "2025-03-18T16:00:00",
+            "real": 13.93,
+            "pronostico": 14.56
           },
           {
-            "fecha_hora": "2024-11-27T07:00:00",
-            "real": 83.8,
-            "pronostico": 69.07
+            "fecha_hora": "2025-03-18T17:00:00",
+            "real": 13.48,
+            "pronostico": 14.74
           },
           {
-            "fecha_hora": "2024-11-27T08:00:00",
-            "real": 95.61,
-            "pronostico": 83.36
+            "fecha_hora": "2025-03-18T18:00:00",
+            "real": 12.82,
+            "pronostico": 14.81
           },
           {
-            "fecha_hora": "2024-11-27T09:00:00",
-            "real": 76.7,
-            "pronostico": 84.29
+            "fecha_hora": "2025-03-18T19:00:00",
+            "real": 11.77,
+            "pronostico": 14.3
           },
           {
-            "fecha_hora": "2024-11-27T10:00:00",
-            "real": 42.31,
-            "pronostico": 54.79
+            "fecha_hora": "2025-03-18T20:00:00",
+            "real": 11.42,
+            "pronostico": 11.93
           },
           {
-            "fecha_hora": "2024-11-27T11:00:00",
-            "real": 31.31,
-            "pronostico": 39.33
+            "fecha_hora": "2025-03-18T21:00:00",
+            "real": 11.36,
+            "pronostico": 12.15
           },
           {
-            "fecha_hora": "2024-11-27T12:00:00",
-            "real": 32.86,
-            "pronostico": 27.05
+            "fecha_hora": "2025-03-18T22:00:00",
+            "real": 26.94,
+            "pronostico": 14.59
           },
           {
-            "fecha_hora": "2024-11-27T13:00:00",
-            "real": 36.41,
-            "pronostico": 31.52
+            "fecha_hora": "2025-03-18T23:00:00",
+            "real": 22.8,
+            "pronostico": 31.97
           },
           {
-            "fecha_hora": "2024-11-27T14:00:00",
-            "real": 53.15,
-            "pronostico": 38.45
+            "fecha_hora": "2025-03-19T00:00:00",
+            "real": 28.71,
+            "pronostico": 23.83
           },
           {
-            "fecha_hora": "2024-11-27T15:00:00",
-            "real": 88.59,
-            "pronostico": 51.58
+            "fecha_hora": "2025-03-19T01:00:00",
+            "real": 30.88,
+            "pronostico": 30.17
           },
           {
-            "fecha_hora": "2024-11-27T16:00:00",
-            "real": 90.64,
-            "pronostico": 75.49
+            "fecha_hora": "2025-03-19T02:00:00",
+            "real": 31.01,
+            "pronostico": 35.12
           },
           {
-            "fecha_hora": "2024-11-27T17:00:00",
-            "real": 66.96,
-            "pronostico": 78.12
+            "fecha_hora": "2025-03-19T03:00:00",
+            "real": 30.04,
+            "pronostico": 35
           },
           {
-            "fecha_hora": "2024-11-27T18:00:00",
-            "real": 64.52,
-            "pronostico": 57.77
+            "fecha_hora": "2025-03-19T04:00:00",
+            "real": 29.32,
+            "pronostico": 31.29
           },
           {
-            "fecha_hora": "2024-11-27T19:00:00",
-            "real": 64.02,
-            "pronostico": 57.7
+            "fecha_hora": "2025-03-19T05:00:00",
+            "real": 14.2,
+            "pronostico": 25.61
           },
           {
-            "fecha_hora": "2024-11-27T20:00:00",
-            "real": 58.93,
-            "pronostico": 63.83
+            "fecha_hora": "2025-03-19T06:00:00",
+            "real": 9.35,
+            "pronostico": 16.28
           },
           {
-            "fecha_hora": "2024-11-27T21:00:00",
-            "real": 71.68,
-            "pronostico": 61.5
+            "fecha_hora": "2025-03-19T07:00:00",
+            "real": 9.48,
+            "pronostico": 10.93
           },
           {
-            "fecha_hora": "2024-11-27T22:00:00",
-            "real": 117.37,
-            "pronostico": 81.26
+            "fecha_hora": "2025-03-19T08:00:00",
+            "real": 11.88,
+            "pronostico": 11.68
           },
           {
-            "fecha_hora": "2024-11-27T23:00:00",
-            "real": 106.89,
-            "pronostico": 110.13
+            "fecha_hora": "2025-03-19T09:00:00",
+            "real": 16.51,
+            "pronostico": 13.42
           },
           {
-            "fecha_hora": "2024-11-28T00:00:00",
-            "real": 124.32,
-            "pronostico": 96.24
+            "fecha_hora": "2025-03-19T10:00:00",
+            "real": 99.58,
+            "pronostico": 19.98
           },
           {
-            "fecha_hora": "2024-11-28T01:00:00",
-            "real": 193.62,
-            "pronostico": 98.55
+            "fecha_hora": "2025-03-19T11:00:00",
+            "real": 175.82,
+            "pronostico": 64.37
           },
           {
-            "fecha_hora": "2024-11-28T02:00:00",
-            "real": 97.51,
-            "pronostico": 162.34
+            "fecha_hora": "2025-03-19T12:00:00",
+            "real": 125.33,
+            "pronostico": 188.37
           },
           {
-            "fecha_hora": "2024-11-28T03:00:00",
-            "real": 81.2,
-            "pronostico": 81
+            "fecha_hora": "2025-03-19T13:00:00",
+            "real": 92,
+            "pronostico": 95.36
           },
           {
-            "fecha_hora": "2024-11-28T04:00:00",
-            "real": 79.7,
-            "pronostico": 70.19
+            "fecha_hora": "2025-03-19T14:00:00",
+            "real": 68.94,
+            "pronostico": 55.41
           },
           {
-            "fecha_hora": "2024-11-28T05:00:00",
-            "real": 57.13,
-            "pronostico": 67.32
+            "fecha_hora": "2025-03-19T15:00:00",
+            "real": 58.98,
+            "pronostico": 46.95
           },
           {
-            "fecha_hora": "2024-11-28T06:00:00",
-            "real": 54.79,
-            "pronostico": 57.06
+            "fecha_hora": "2025-03-19T16:00:00",
+            "real": 56.36,
+            "pronostico": 39.69
           },
           {
-            "fecha_hora": "2024-11-28T07:00:00",
-            "real": 104,
-            "pronostico": 59.56
+            "fecha_hora": "2025-03-19T17:00:00",
+            "real": 56.16,
+            "pronostico": 38.98
           },
           {
-            "fecha_hora": "2024-11-28T08:00:00",
-            "real": 110.03,
-            "pronostico": 97.38
+            "fecha_hora": "2025-03-19T18:00:00",
+            "real": 55.49,
+            "pronostico": 39.65
           },
           {
-            "fecha_hora": "2024-11-28T09:00:00",
-            "real": 44.64,
-            "pronostico": 99.75
+            "fecha_hora": "2025-03-19T19:00:00",
+            "real": 55.15,
+            "pronostico": 43.2
           },
           {
-            "fecha_hora": "2024-11-28T10:00:00",
-            "real": 36.95,
-            "pronostico": 37.95
+            "fecha_hora": "2025-03-19T20:00:00",
+            "real": 44.49,
+            "pronostico": 43.73
           },
           {
-            "fecha_hora": "2024-11-28T11:00:00",
-            "real": 41.59,
-            "pronostico": 32.68
+            "fecha_hora": "2025-03-19T21:00:00",
+            "real": 39.81,
+            "pronostico": 41.44
           },
           {
-            "fecha_hora": "2024-11-28T12:00:00",
-            "real": 41.26,
-            "pronostico": 43.9
+            "fecha_hora": "2025-03-19T22:00:00",
+            "real": 39.66,
+            "pronostico": 38.69
           },
           {
-            "fecha_hora": "2024-11-28T13:00:00",
-            "real": 35.83,
-            "pronostico": 40.17
+            "fecha_hora": "2025-03-19T23:00:00",
+            "real": 32.22,
+            "pronostico": 42.08
           },
           {
-            "fecha_hora": "2024-11-28T14:00:00",
-            "real": 32.5,
-            "pronostico": 32.52
+            "fecha_hora": "2025-03-20T00:00:00",
+            "real": 18.21,
+            "pronostico": 29.06
           },
           {
-            "fecha_hora": "2024-11-28T15:00:00",
-            "real": 29.16,
-            "pronostico": 31.88
+            "fecha_hora": "2025-03-20T01:00:00",
+            "real": 13.17,
+            "pronostico": 16.3
           },
           {
-            "fecha_hora": "2024-11-28T16:00:00",
-            "real": 27.02,
-            "pronostico": 27.08
-          },
-          {
-            "fecha_hora": "2024-11-28T17:00:00",
-            "real": 25.99,
-            "pronostico": 25.74
-          },
-          {
-            "fecha_hora": "2024-11-28T18:00:00",
-            "real": 25.33,
-            "pronostico": 24.75
-          },
-          {
-            "fecha_hora": "2024-11-28T19:00:00",
-            "real": 25.3,
-            "pronostico": 24.86
-          },
-          {
-            "fecha_hora": "2024-11-28T20:00:00",
-            "real": 18.83,
-            "pronostico": 25.2
-          },
-          {
-            "fecha_hora": "2024-11-28T21:00:00",
-            "real": 16.73,
-            "pronostico": 18.3
-          },
-          {
-            "fecha_hora": "2024-11-28T22:00:00",
-            "real": 17.84,
-            "pronostico": 16.24
-          },
-          {
-            "fecha_hora": "2024-11-28T23:00:00",
-            "real": 15.93,
-            "pronostico": 19.09
-          },
-          {
-            "fecha_hora": "2024-11-29T00:00:00",
-            "real": 15.62,
-            "pronostico": 15.55
+            "fecha_hora": "2025-03-20T02:00:00",
+            "real": 22.36,
+            "pronostico": 14.18
           }
         ]
       },
       "ultimo_punto": {
-        "fecha_hora": "2025-03-31T03:00:00",
-        "real": 11.03,
-        "pronostico": 10.99
+        "fecha_hora": "2025-03-31T02:00:00",
+        "real": 10.51,
+        "pronostico": 11.15
       },
       "serie_reciente": [
+        {
+          "fecha_hora": "2025-03-28T03:00:00",
+          "real": 9.32,
+          "pronostico": 10.78
+        },
         {
           "fecha_hora": "2025-03-28T04:00:00",
           "real": 7.16,
@@ -1830,11 +2372,3612 @@
           "fecha_hora": "2025-03-31T02:00:00",
           "real": 10.51,
           "pronostico": 11.15
+        }
+      ]
+    },
+    "CE": {
+      "clave": "CE",
+      "nombre": "Centro · Monterrey",
+      "modelo": "Random Forest",
+      "mae": 2.22,
+      "mae_ic95": "[2.00, 2.44]",
+      "mae_naive": 2.26,
+      "rmse": 3.29,
+      "sesgo": 0,
+      "n_prueba": 942,
+      "periodo_prueba": [
+        "2025-05-08T15:00:00",
+        "2025-06-30T23:00:00"
+      ],
+      "banda95": [
+        -6.24,
+        6.34
+      ],
+      "cobertura95": 0.966,
+      "cobertura80": 0.881,
+      "homocedastico": "NO",
+      "ljung_box_p_lag24": 0.1142,
+      "sarimax": {
+        "mae_diario": 10.93,
+        "cobertura_ic95": 0.967
+      },
+      "error_por_nivel": [
+        {
+          "nivel": "bajo",
+          "mae": 1.53,
+          "sesgo": -1.12
         },
         {
-          "fecha_hora": "2025-03-31T03:00:00",
-          "real": 11.03,
-          "pronostico": 10.99
+          "nivel": "medio",
+          "mae": 1.79,
+          "sesgo": -0.49
+        },
+        {
+          "nivel": "alto",
+          "mae": 2.28,
+          "sesgo": -0.11
+        },
+        {
+          "nivel": "muy_alto",
+          "mae": 3.26,
+          "sesgo": 1.73
+        }
+      ],
+      "importancia_variables": [
+        {
+          "var": "PM2.5_lag1h",
+          "imp": 0.901
+        },
+        {
+          "var": "WSR_lag1h",
+          "imp": 0.0111
+        },
+        {
+          "var": "PM2.5_lag2h",
+          "imp": 0.0105
+        },
+        {
+          "var": "RH_lag1h",
+          "imp": 0.0067
+        },
+        {
+          "var": "PM2.5_lag3h",
+          "imp": 0.0052
+        },
+        {
+          "var": "PM2.5_lag24h",
+          "imp": 0.0049
+        },
+        {
+          "var": "PM2.5_lag168h",
+          "imp": 0.0044
+        },
+        {
+          "var": "PM2.5_lag6h",
+          "imp": 0.0044
+        },
+        {
+          "var": "PM2.5_std24h",
+          "imp": 0.0043
+        },
+        {
+          "var": "PM2.5_lag48h",
+          "imp": 0.0041
+        },
+        {
+          "var": "WDR_lag1h",
+          "imp": 0.0041
+        },
+        {
+          "var": "PM2.5_media24h",
+          "imp": 0.004
+        }
+      ],
+      "diagnostico": {
+        "durbin_watson": 1.867,
+        "ljung_box": [
+          {
+            "lag": 1,
+            "p": 0.0414
+          },
+          {
+            "lag": 24,
+            "p": 0.1142
+          },
+          {
+            "lag": 48,
+            "p": 0.0004
+          },
+          {
+            "lag": 168,
+            "p": 0.0013
+          }
+        ],
+        "acf_residuos": [
+          1,
+          0.066,
+          -0.015,
+          0.112,
+          0.042,
+          -0.014,
+          0.077,
+          0.023,
+          0.015,
+          -0.019,
+          -0.022,
+          0.009,
+          -0.008,
+          -0.011,
+          0.012,
+          0.002,
+          -0.02,
+          0.027,
+          0.028,
+          -0.025,
+          0.011,
+          -0.045,
+          -0.031,
+          -0.005,
+          0.037,
+          0.043,
+          0.011,
+          0.003,
+          -0.033,
+          -0.032,
+          0.058,
+          0.019,
+          0.017,
+          0.01,
+          -0.021,
+          -0.006,
+          0.043
+        ],
+        "breusch_pagan_p": 0,
+        "white_p": 0.0001,
+        "arch_p": 0,
+        "homocedastico": "NO",
+        "n": 942
+      },
+      "etapa4": {
+        "rolling_origin": {
+          "folds": [
+            {
+              "fold": 1,
+              "inicio": "2024-10-29T12:00:00",
+              "fin": "2024-11-28T20:00:00",
+              "mae": {
+                "Naive (t-1)": 3.46,
+                "Random Forest": 3.35,
+                "XGBoost": 3.45
+              }
+            },
+            {
+              "fold": 2,
+              "inicio": "2024-11-28T21:00:00",
+              "fin": "2025-01-12T14:00:00",
+              "mae": {
+                "Naive (t-1)": 3.87,
+                "Random Forest": 3.8,
+                "XGBoost": 3.9
+              }
+            },
+            {
+              "fold": 3,
+              "inicio": "2025-01-12T15:00:00",
+              "fin": "2025-03-14T01:00:00",
+              "mae": {
+                "Naive (t-1)": 4.82,
+                "Random Forest": 4.61,
+                "XGBoost": 4.71
+              }
+            },
+            {
+              "fold": 4,
+              "inicio": "2025-03-14T02:00:00",
+              "fin": "2025-05-17T20:00:00",
+              "mae": {
+                "Naive (t-1)": 3.89,
+                "Random Forest": 3.92,
+                "XGBoost": 4.17
+              }
+            },
+            {
+              "fold": 5,
+              "inicio": "2025-05-17T21:00:00",
+              "fin": "2025-06-30T23:00:00",
+              "mae": {
+                "Naive (t-1)": 2.2,
+                "Random Forest": 2.1,
+                "XGBoost": 2.1
+              }
+            }
+          ],
+          "resumen": {
+            "Random Forest": {
+              "mae_mean": 3.56,
+              "mae_sd": 0.93,
+              "rank_medio": 1.4
+            },
+            "Naive (t-1)": {
+              "mae_mean": 3.65,
+              "mae_sd": 0.95,
+              "rank_medio": 2.4
+            },
+            "XGBoost": {
+              "mae_mean": 3.67,
+              "mae_sd": 0.99,
+              "rank_medio": 2.2
+            }
+          }
+        },
+        "calculo_error": {
+          "mae": 2.22,
+          "se_iid": 0.079,
+          "se_hac": 0.112,
+          "razon_hac_iid": 1.42,
+          "hac_lags": 6,
+          "ic95_iid": [
+            2.06,
+            2.37
+          ],
+          "ic95_hac": [
+            2,
+            2.44
+          ],
+          "ic95_boot": [
+            1.95,
+            2.49
+          ],
+          "n": 942,
+          "n_eff": 537.8,
+          "rho1_abs_e": 0.273,
+          "mse": 10.85,
+          "sesgo2": 0,
+          "var_error": 10.85,
+          "theil_um_sesgo": 0,
+          "theil_us_varianza": 0.048,
+          "theil_uc_covarianza": 0.952,
+          "theil_u2_vs_naive": 0.948
+        },
+        "heterocedasticidad_modelos": [
+          {
+            "modelo": "Naive (t-1)",
+            "breusch_pagan_p": 0,
+            "white_p": 0,
+            "arch_p": 0,
+            "goldfeld_quandt_p": 0,
+            "homocedastico": "NO"
+          },
+          {
+            "modelo": "Random Forest",
+            "breusch_pagan_p": 0,
+            "white_p": 0.0001,
+            "arch_p": 0,
+            "goldfeld_quandt_p": 0,
+            "homocedastico": "NO"
+          },
+          {
+            "modelo": "XGBoost",
+            "breusch_pagan_p": 0,
+            "white_p": 0.0001,
+            "arch_p": 0.0203,
+            "goldfeld_quandt_p": 0,
+            "homocedastico": "NO"
+          },
+          {
+            "modelo": "LSTM",
+            "breusch_pagan_p": 0.0001,
+            "white_p": 0.0005,
+            "arch_p": 0,
+            "goldfeld_quandt_p": 0,
+            "homocedastico": "NO"
+          }
+        ],
+        "varianza_vs_nivel": {
+          "bins": [
+            {
+              "pred_medio": 5.8,
+              "std_e": 0.95,
+              "mae": 0.78,
+              "n": 95
+            },
+            {
+              "pred_medio": 9,
+              "std_e": 1.65,
+              "mae": 1.24,
+              "n": 94
+            },
+            {
+              "pred_medio": 12.3,
+              "std_e": 2.14,
+              "mae": 1.76,
+              "n": 94
+            },
+            {
+              "pred_medio": 15.7,
+              "std_e": 2.18,
+              "mae": 1.65,
+              "n": 94
+            },
+            {
+              "pred_medio": 19.3,
+              "std_e": 4.31,
+              "mae": 2.56,
+              "n": 94
+            },
+            {
+              "pred_medio": 22.9,
+              "std_e": 3.52,
+              "mae": 2.39,
+              "n": 94
+            },
+            {
+              "pred_medio": 27.5,
+              "std_e": 2.97,
+              "mae": 2.33,
+              "n": 94
+            },
+            {
+              "pred_medio": 31.2,
+              "std_e": 4.29,
+              "mae": 2.94,
+              "n": 94
+            },
+            {
+              "pred_medio": 36,
+              "std_e": 3.89,
+              "mae": 2.83,
+              "n": 94
+            },
+            {
+              "pred_medio": 43.2,
+              "std_e": 4.64,
+              "mae": 3.69,
+              "n": 95
+            }
+          ],
+          "pendiente_log_e2_por_ugm3": 0.06731,
+          "r2": 0.144,
+          "factor_degradacion_q4_q1": 2.8
+        },
+        "intervalos": {
+          "metodos": [
+            {
+              "metodo": "empírico_global",
+              "cob95": 0.962,
+              "ancho95": 14.295,
+              "cob95_q4": 0.907,
+              "cob80": 0.818,
+              "ancho80": 7.496,
+              "cob80_q4": 0.653
+            },
+            {
+              "metodo": "por_nivel",
+              "cob95": 0.92,
+              "ancho95": 11.535,
+              "cob95_q4": 0.953,
+              "cob80": 0.729,
+              "ancho80": 5.826,
+              "cob80_q4": 0.708
+            },
+            {
+              "metodo": "GARCH(1,1)",
+              "cob95": 0.966,
+              "ancho95": 13.716,
+              "cob95_q4": 0.936,
+              "cob80": 0.881,
+              "ancho80": 8.969,
+              "cob80_q4": 0.792
+            },
+            {
+              "metodo": "CQR",
+              "cob95": 0.985,
+              "ancho95": 17.253,
+              "cob95_q4": 0.996,
+              "cob80": 0.86,
+              "ancho80": 8.41,
+              "cob80_q4": 0.835
+            }
+          ],
+          "elegido": "GARCH(1,1)",
+          "garch": {
+            "omega": 1.8915,
+            "alpha": 0.2145,
+            "beta": 0.688,
+            "persistencia": 0.9026,
+            "sig2_0": 8.3017
+          }
+        },
+        "diebold_mariano": {
+          "vs_naive": {
+            "dm": -2.45,
+            "p": 0.0144,
+            "sig": true
+          },
+          "campeon_vs_segundo": {
+            "segundo": "Naive (t-1)",
+            "dm": -2.45,
+            "p": 0.0144,
+            "empate_tecnico": false
+          },
+          "matriz_p": {
+            "Naive (t-1)": {
+              "Naive (t-1)": null,
+              "Random Forest": 0.0144,
+              "XGBoost": 0.0066,
+              "LSTM": 0.0026
+            },
+            "Random Forest": {
+              "Naive (t-1)": 0.0144,
+              "Random Forest": null,
+              "XGBoost": 0.1627,
+              "LSTM": 0.6396
+            },
+            "XGBoost": {
+              "Naive (t-1)": 0.0066,
+              "Random Forest": 0.1627,
+              "XGBoost": null,
+              "LSTM": 0.4198
+            },
+            "LSTM": {
+              "Naive (t-1)": 0.0026,
+              "Random Forest": 0.6396,
+              "XGBoost": 0.4198,
+              "LSTM": null
+            }
+          }
+        }
+      },
+      "naive_vs_modelo": {
+        "umbral_cambio": 3.03,
+        "n_horas_cambio": 236,
+        "mae_modelo_cambio": 4.71,
+        "mae_naive_cambio": 5.6,
+        "mae_modelo_estable": 1.38,
+        "mae_naive_estable": 1.14,
+        "mejora_cambio_pct": 15.9
+      },
+      "episodio": {
+        "inicio": "2025-05-15T14:00:00",
+        "fin": "2025-05-18T13:00:00",
+        "horas": 72,
+        "pico_real": 57.64,
+        "hora_pico": "2025-05-17T14:00:00",
+        "pronostico_en_pico": 54.16,
+        "subestimacion_pico": 3.48,
+        "retraso_h": 0,
+        "serie": [
+          {
+            "fecha_hora": "2025-05-15T14:00:00",
+            "real": 26.67,
+            "pronostico": 34.52
+          },
+          {
+            "fecha_hora": "2025-05-15T15:00:00",
+            "real": 21.46,
+            "pronostico": 26.66
+          },
+          {
+            "fecha_hora": "2025-05-15T16:00:00",
+            "real": 31.08,
+            "pronostico": 20.13
+          },
+          {
+            "fecha_hora": "2025-05-15T17:00:00",
+            "real": 34.9,
+            "pronostico": 30.31
+          },
+          {
+            "fecha_hora": "2025-05-15T18:00:00",
+            "real": 30.75,
+            "pronostico": 33.63
+          },
+          {
+            "fecha_hora": "2025-05-15T19:00:00",
+            "real": 32.03,
+            "pronostico": 27.87
+          },
+          {
+            "fecha_hora": "2025-05-15T20:00:00",
+            "real": 31.38,
+            "pronostico": 31.88
+          },
+          {
+            "fecha_hora": "2025-05-15T21:00:00",
+            "real": 29.58,
+            "pronostico": 29.74
+          },
+          {
+            "fecha_hora": "2025-05-15T22:00:00",
+            "real": 28.07,
+            "pronostico": 28.94
+          },
+          {
+            "fecha_hora": "2025-05-15T23:00:00",
+            "real": 28.24,
+            "pronostico": 27.8
+          },
+          {
+            "fecha_hora": "2025-05-16T00:00:00",
+            "real": 28.01,
+            "pronostico": 28.02
+          },
+          {
+            "fecha_hora": "2025-05-16T01:00:00",
+            "real": 25.63,
+            "pronostico": 28.27
+          },
+          {
+            "fecha_hora": "2025-05-16T02:00:00",
+            "real": 23.63,
+            "pronostico": 25.68
+          },
+          {
+            "fecha_hora": "2025-05-16T03:00:00",
+            "real": 25.1,
+            "pronostico": 24.42
+          },
+          {
+            "fecha_hora": "2025-05-16T04:00:00",
+            "real": 27.65,
+            "pronostico": 27.91
+          },
+          {
+            "fecha_hora": "2025-05-16T05:00:00",
+            "real": 28.99,
+            "pronostico": 28.87
+          },
+          {
+            "fecha_hora": "2025-05-16T06:00:00",
+            "real": 30.44,
+            "pronostico": 29.43
+          },
+          {
+            "fecha_hora": "2025-05-16T07:00:00",
+            "real": 33.27,
+            "pronostico": 31.42
+          },
+          {
+            "fecha_hora": "2025-05-16T08:00:00",
+            "real": 35.34,
+            "pronostico": 34.75
+          },
+          {
+            "fecha_hora": "2025-05-16T09:00:00",
+            "real": 37.49,
+            "pronostico": 37.06
+          },
+          {
+            "fecha_hora": "2025-05-16T10:00:00",
+            "real": 42.45,
+            "pronostico": 39.46
+          },
+          {
+            "fecha_hora": "2025-05-16T11:00:00",
+            "real": 47.71,
+            "pronostico": 42.27
+          },
+          {
+            "fecha_hora": "2025-05-16T12:00:00",
+            "real": 49.95,
+            "pronostico": 44.95
+          },
+          {
+            "fecha_hora": "2025-05-16T13:00:00",
+            "real": 50.44,
+            "pronostico": 45.44
+          },
+          {
+            "fecha_hora": "2025-05-16T14:00:00",
+            "real": 47.66,
+            "pronostico": 43.94
+          },
+          {
+            "fecha_hora": "2025-05-16T15:00:00",
+            "real": 48.64,
+            "pronostico": 39.63
+          },
+          {
+            "fecha_hora": "2025-05-16T16:00:00",
+            "real": 49.91,
+            "pronostico": 41.33
+          },
+          {
+            "fecha_hora": "2025-05-16T17:00:00",
+            "real": 51.26,
+            "pronostico": 43.08
+          },
+          {
+            "fecha_hora": "2025-05-16T18:00:00",
+            "real": 41.51,
+            "pronostico": 45.64
+          },
+          {
+            "fecha_hora": "2025-05-16T19:00:00",
+            "real": 39.91,
+            "pronostico": 34.95
+          },
+          {
+            "fecha_hora": "2025-05-16T20:00:00",
+            "real": 39.78,
+            "pronostico": 39.07
+          },
+          {
+            "fecha_hora": "2025-05-16T21:00:00",
+            "real": 42.87,
+            "pronostico": 41
+          },
+          {
+            "fecha_hora": "2025-05-16T22:00:00",
+            "real": 48.46,
+            "pronostico": 43.48
+          },
+          {
+            "fecha_hora": "2025-05-16T23:00:00",
+            "real": 47.27,
+            "pronostico": 48.26
+          },
+          {
+            "fecha_hora": "2025-05-17T00:00:00",
+            "real": 49.42,
+            "pronostico": 46.51
+          },
+          {
+            "fecha_hora": "2025-05-17T01:00:00",
+            "real": 43.93,
+            "pronostico": 48.97
+          },
+          {
+            "fecha_hora": "2025-05-17T02:00:00",
+            "real": 34.06,
+            "pronostico": 42.5
+          },
+          {
+            "fecha_hora": "2025-05-17T03:00:00",
+            "real": 28.13,
+            "pronostico": 29.45
+          },
+          {
+            "fecha_hora": "2025-05-17T04:00:00",
+            "real": 27.2,
+            "pronostico": 28.05
+          },
+          {
+            "fecha_hora": "2025-05-17T05:00:00",
+            "real": 30.44,
+            "pronostico": 27.73
+          },
+          {
+            "fecha_hora": "2025-05-17T06:00:00",
+            "real": 33.73,
+            "pronostico": 31.01
+          },
+          {
+            "fecha_hora": "2025-05-17T07:00:00",
+            "real": 34,
+            "pronostico": 35.79
+          },
+          {
+            "fecha_hora": "2025-05-17T08:00:00",
+            "real": 33.41,
+            "pronostico": 35.12
+          },
+          {
+            "fecha_hora": "2025-05-17T09:00:00",
+            "real": 37.24,
+            "pronostico": 34.97
+          },
+          {
+            "fecha_hora": "2025-05-17T10:00:00",
+            "real": 48.36,
+            "pronostico": 41.51
+          },
+          {
+            "fecha_hora": "2025-05-17T11:00:00",
+            "real": 53.21,
+            "pronostico": 49.18
+          },
+          {
+            "fecha_hora": "2025-05-17T12:00:00",
+            "real": 52.82,
+            "pronostico": 51.22
+          },
+          {
+            "fecha_hora": "2025-05-17T13:00:00",
+            "real": 55.3,
+            "pronostico": 49
+          },
+          {
+            "fecha_hora": "2025-05-17T14:00:00",
+            "real": 57.64,
+            "pronostico": 54.16
+          },
+          {
+            "fecha_hora": "2025-05-17T15:00:00",
+            "real": 53.36,
+            "pronostico": 53.14
+          },
+          {
+            "fecha_hora": "2025-05-17T16:00:00",
+            "real": 51.88,
+            "pronostico": 50.16
+          },
+          {
+            "fecha_hora": "2025-05-17T17:00:00",
+            "real": 43.11,
+            "pronostico": 48.43
+          },
+          {
+            "fecha_hora": "2025-05-17T18:00:00",
+            "real": 44.34,
+            "pronostico": 38.62
+          },
+          {
+            "fecha_hora": "2025-05-17T19:00:00",
+            "real": 42.2,
+            "pronostico": 45.81
+          },
+          {
+            "fecha_hora": "2025-05-17T20:00:00",
+            "real": 37.95,
+            "pronostico": 40.25
+          },
+          {
+            "fecha_hora": "2025-05-17T21:00:00",
+            "real": 31.19,
+            "pronostico": 35.46
+          },
+          {
+            "fecha_hora": "2025-05-17T22:00:00",
+            "real": 34.98,
+            "pronostico": 29.44
+          },
+          {
+            "fecha_hora": "2025-05-17T23:00:00",
+            "real": 33.74,
+            "pronostico": 35.55
+          },
+          {
+            "fecha_hora": "2025-05-18T00:00:00",
+            "real": 31.41,
+            "pronostico": 33.2
+          },
+          {
+            "fecha_hora": "2025-05-18T01:00:00",
+            "real": 34.64,
+            "pronostico": 30.39
+          },
+          {
+            "fecha_hora": "2025-05-18T02:00:00",
+            "real": 36.91,
+            "pronostico": 35.56
+          },
+          {
+            "fecha_hora": "2025-05-18T03:00:00",
+            "real": 44.03,
+            "pronostico": 36.92
+          },
+          {
+            "fecha_hora": "2025-05-18T04:00:00",
+            "real": 40.69,
+            "pronostico": 43.03
+          },
+          {
+            "fecha_hora": "2025-05-18T05:00:00",
+            "real": 42.2,
+            "pronostico": 41.04
+          },
+          {
+            "fecha_hora": "2025-05-18T06:00:00",
+            "real": 41.01,
+            "pronostico": 42.03
+          },
+          {
+            "fecha_hora": "2025-05-18T07:00:00",
+            "real": 37.42,
+            "pronostico": 41.24
+          },
+          {
+            "fecha_hora": "2025-05-18T08:00:00",
+            "real": 37.21,
+            "pronostico": 36.91
+          },
+          {
+            "fecha_hora": "2025-05-18T09:00:00",
+            "real": 37,
+            "pronostico": 38.35
+          },
+          {
+            "fecha_hora": "2025-05-18T10:00:00",
+            "real": 43,
+            "pronostico": 39.59
+          },
+          {
+            "fecha_hora": "2025-05-18T11:00:00",
+            "real": 49,
+            "pronostico": 44.88
+          },
+          {
+            "fecha_hora": "2025-05-18T12:00:00",
+            "real": 45,
+            "pronostico": 47.6
+          },
+          {
+            "fecha_hora": "2025-05-18T13:00:00",
+            "real": 52,
+            "pronostico": 44.86
+          }
+        ]
+      },
+      "ultimo_punto": {
+        "fecha_hora": "2025-06-30T23:00:00",
+        "real": 3.83,
+        "pronostico": 3.9
+      },
+      "serie_reciente": [
+        {
+          "fecha_hora": "2025-06-20T23:00:00",
+          "real": 4.3,
+          "pronostico": 4.95
+        },
+        {
+          "fecha_hora": "2025-06-21T00:00:00",
+          "real": 4.74,
+          "pronostico": 4.72
+        },
+        {
+          "fecha_hora": "2025-06-21T01:00:00",
+          "real": 4.68,
+          "pronostico": 6.17
+        },
+        {
+          "fecha_hora": "2025-06-21T02:00:00",
+          "real": 4.54,
+          "pronostico": 5.98
+        },
+        {
+          "fecha_hora": "2025-06-21T03:00:00",
+          "real": 4.8,
+          "pronostico": 5.94
+        },
+        {
+          "fecha_hora": "2025-06-21T04:00:00",
+          "real": 4.19,
+          "pronostico": 6
+        },
+        {
+          "fecha_hora": "2025-06-21T05:00:00",
+          "real": 4.54,
+          "pronostico": 4.47
+        },
+        {
+          "fecha_hora": "2025-06-21T06:00:00",
+          "real": 3.87,
+          "pronostico": 5.56
+        },
+        {
+          "fecha_hora": "2025-06-21T07:00:00",
+          "real": 4.3,
+          "pronostico": 4.3
+        },
+        {
+          "fecha_hora": "2025-06-21T08:00:00",
+          "real": 4.78,
+          "pronostico": 4.69
+        },
+        {
+          "fecha_hora": "2025-06-21T09:00:00",
+          "real": 5.53,
+          "pronostico": 5.49
+        },
+        {
+          "fecha_hora": "2025-06-21T10:00:00",
+          "real": 5.96,
+          "pronostico": 6.54
+        },
+        {
+          "fecha_hora": "2025-06-21T11:00:00",
+          "real": 5.4,
+          "pronostico": 6.33
+        },
+        {
+          "fecha_hora": "2025-06-21T12:00:00",
+          "real": 6.3,
+          "pronostico": 5.69
+        },
+        {
+          "fecha_hora": "2025-06-21T13:00:00",
+          "real": 6.08,
+          "pronostico": 7.07
+        },
+        {
+          "fecha_hora": "2025-06-21T14:00:00",
+          "real": 5.43,
+          "pronostico": 6.33
+        },
+        {
+          "fecha_hora": "2025-06-21T15:00:00",
+          "real": 5.39,
+          "pronostico": 5.67
+        },
+        {
+          "fecha_hora": "2025-06-21T16:00:00",
+          "real": 4.54,
+          "pronostico": 5.74
+        },
+        {
+          "fecha_hora": "2025-06-21T17:00:00",
+          "real": 4.85,
+          "pronostico": 5.35
+        },
+        {
+          "fecha_hora": "2025-06-21T18:00:00",
+          "real": 5.89,
+          "pronostico": 5.68
+        },
+        {
+          "fecha_hora": "2025-06-21T19:00:00",
+          "real": 6.08,
+          "pronostico": 6.73
+        },
+        {
+          "fecha_hora": "2025-06-21T20:00:00",
+          "real": 4.86,
+          "pronostico": 6.93
+        },
+        {
+          "fecha_hora": "2025-06-21T21:00:00",
+          "real": 4.11,
+          "pronostico": 5.88
+        },
+        {
+          "fecha_hora": "2025-06-21T22:00:00",
+          "real": 6.9,
+          "pronostico": 4.67
+        },
+        {
+          "fecha_hora": "2025-06-21T23:00:00",
+          "real": 6.78,
+          "pronostico": 7.56
+        },
+        {
+          "fecha_hora": "2025-06-22T00:00:00",
+          "real": 7,
+          "pronostico": 6.88
+        },
+        {
+          "fecha_hora": "2025-06-22T01:00:00",
+          "real": 6.65,
+          "pronostico": 6.72
+        },
+        {
+          "fecha_hora": "2025-06-22T02:00:00",
+          "real": 6.63,
+          "pronostico": 6.61
+        },
+        {
+          "fecha_hora": "2025-06-22T03:00:00",
+          "real": 6.8,
+          "pronostico": 6.76
+        },
+        {
+          "fecha_hora": "2025-06-22T04:00:00",
+          "real": 9.14,
+          "pronostico": 7.55
+        },
+        {
+          "fecha_hora": "2025-06-22T05:00:00",
+          "real": 8.03,
+          "pronostico": 11.31
+        },
+        {
+          "fecha_hora": "2025-06-22T06:00:00",
+          "real": 7.45,
+          "pronostico": 9.6
+        },
+        {
+          "fecha_hora": "2025-06-22T07:00:00",
+          "real": 7.47,
+          "pronostico": 7.94
+        },
+        {
+          "fecha_hora": "2025-06-22T08:00:00",
+          "real": 7.36,
+          "pronostico": 7.8
+        },
+        {
+          "fecha_hora": "2025-06-22T09:00:00",
+          "real": 7.38,
+          "pronostico": 8.01
+        },
+        {
+          "fecha_hora": "2025-06-22T10:00:00",
+          "real": 10.23,
+          "pronostico": 7.75
+        },
+        {
+          "fecha_hora": "2025-06-22T11:00:00",
+          "real": 6.64,
+          "pronostico": 11.18
+        },
+        {
+          "fecha_hora": "2025-06-22T12:00:00",
+          "real": 6.35,
+          "pronostico": 7.4
+        },
+        {
+          "fecha_hora": "2025-06-22T13:00:00",
+          "real": 6.73,
+          "pronostico": 7
+        },
+        {
+          "fecha_hora": "2025-06-22T14:00:00",
+          "real": 6.84,
+          "pronostico": 6.9
+        },
+        {
+          "fecha_hora": "2025-06-22T15:00:00",
+          "real": 7.65,
+          "pronostico": 6.64
+        },
+        {
+          "fecha_hora": "2025-06-22T16:00:00",
+          "real": 6.04,
+          "pronostico": 7.6
+        },
+        {
+          "fecha_hora": "2025-06-22T17:00:00",
+          "real": 5.62,
+          "pronostico": 6.62
+        },
+        {
+          "fecha_hora": "2025-06-22T18:00:00",
+          "real": 6.46,
+          "pronostico": 6.45
+        },
+        {
+          "fecha_hora": "2025-06-22T19:00:00",
+          "real": 5.81,
+          "pronostico": 6.67
+        },
+        {
+          "fecha_hora": "2025-06-22T20:00:00",
+          "real": 5.1,
+          "pronostico": 6.4
+        },
+        {
+          "fecha_hora": "2025-06-22T21:00:00",
+          "real": 4.34,
+          "pronostico": 6.7
+        },
+        {
+          "fecha_hora": "2025-06-22T22:00:00",
+          "real": 4.88,
+          "pronostico": 4.71
+        },
+        {
+          "fecha_hora": "2025-06-22T23:00:00",
+          "real": 5.69,
+          "pronostico": 5.93
+        },
+        {
+          "fecha_hora": "2025-06-23T00:00:00",
+          "real": 6.81,
+          "pronostico": 6.41
+        },
+        {
+          "fecha_hora": "2025-06-23T01:00:00",
+          "real": 8.38,
+          "pronostico": 6.91
+        },
+        {
+          "fecha_hora": "2025-06-23T02:00:00",
+          "real": 9.56,
+          "pronostico": 8.35
+        },
+        {
+          "fecha_hora": "2025-06-23T03:00:00",
+          "real": 9.39,
+          "pronostico": 10.57
+        },
+        {
+          "fecha_hora": "2025-06-23T04:00:00",
+          "real": 9.96,
+          "pronostico": 10.49
+        },
+        {
+          "fecha_hora": "2025-06-23T05:00:00",
+          "real": 10.1,
+          "pronostico": 11.47
+        },
+        {
+          "fecha_hora": "2025-06-23T06:00:00",
+          "real": 10.07,
+          "pronostico": 11.76
+        },
+        {
+          "fecha_hora": "2025-06-23T07:00:00",
+          "real": 14.18,
+          "pronostico": 12.12
+        },
+        {
+          "fecha_hora": "2025-06-23T08:00:00",
+          "real": 14.63,
+          "pronostico": 14.08
+        },
+        {
+          "fecha_hora": "2025-06-23T09:00:00",
+          "real": 11.97,
+          "pronostico": 13.92
+        },
+        {
+          "fecha_hora": "2025-06-23T10:00:00",
+          "real": 12.21,
+          "pronostico": 11.76
+        },
+        {
+          "fecha_hora": "2025-06-23T11:00:00",
+          "real": 12.03,
+          "pronostico": 12.41
+        },
+        {
+          "fecha_hora": "2025-06-23T12:00:00",
+          "real": 11.86,
+          "pronostico": 12.78
+        },
+        {
+          "fecha_hora": "2025-06-23T13:00:00",
+          "real": 11.68,
+          "pronostico": 13.11
+        },
+        {
+          "fecha_hora": "2025-06-30T15:00:00",
+          "real": 5.95,
+          "pronostico": 7.13
+        },
+        {
+          "fecha_hora": "2025-06-30T16:00:00",
+          "real": 6.15,
+          "pronostico": 6.24
+        },
+        {
+          "fecha_hora": "2025-06-30T17:00:00",
+          "real": 7.81,
+          "pronostico": 6.72
+        },
+        {
+          "fecha_hora": "2025-06-30T18:00:00",
+          "real": 5.96,
+          "pronostico": 7.58
+        },
+        {
+          "fecha_hora": "2025-06-30T19:00:00",
+          "real": 5.68,
+          "pronostico": 7.29
+        },
+        {
+          "fecha_hora": "2025-06-30T20:00:00",
+          "real": 7.41,
+          "pronostico": 6.33
+        },
+        {
+          "fecha_hora": "2025-06-30T21:00:00",
+          "real": 3.49,
+          "pronostico": 8.2
+        },
+        {
+          "fecha_hora": "2025-06-30T22:00:00",
+          "real": 3.24,
+          "pronostico": 4.01
+        },
+        {
+          "fecha_hora": "2025-06-30T23:00:00",
+          "real": 3.83,
+          "pronostico": 3.9
+        }
+      ]
+    },
+    "NTE2": {
+      "clave": "NTE2",
+      "nombre": "Norte del AMM",
+      "modelo": "XGBoost",
+      "mae": 5.68,
+      "mae_ic95": "[5.28, 6.08]",
+      "mae_naive": 6.78,
+      "rmse": 7.66,
+      "sesgo": -0.07,
+      "n_prueba": 1190,
+      "periodo_prueba": [
+        "2025-05-04T22:00:00",
+        "2025-06-30T23:00:00"
+      ],
+      "banda95": [
+        -14.47,
+        15.27
+      ],
+      "cobertura95": 0.95,
+      "cobertura80": 0.761,
+      "homocedastico": "NO",
+      "ljung_box_p_lag24": 0.0035,
+      "sarimax": {
+        "mae_diario": 5.99,
+        "cobertura_ic95": 1
+      },
+      "error_por_nivel": [
+        {
+          "nivel": "bajo",
+          "mae": 5.77,
+          "sesgo": -5.53
+        },
+        {
+          "nivel": "medio",
+          "mae": 4.15,
+          "sesgo": -2.06
+        },
+        {
+          "nivel": "alto",
+          "mae": 4.3,
+          "sesgo": 1.08
+        },
+        {
+          "nivel": "muy_alto",
+          "mae": 8.48,
+          "sesgo": 7.44
+        }
+      ],
+      "importancia_variables": [
+        {
+          "var": "PM2.5_lag1h",
+          "imp": 0.2584
+        },
+        {
+          "var": "PM2.5_lag2h",
+          "imp": 0.1013
+        },
+        {
+          "var": "PM10_lag1h",
+          "imp": 0.0733
+        },
+        {
+          "var": "hora",
+          "imp": 0.0522
+        },
+        {
+          "var": "hora_cos",
+          "imp": 0.0522
+        },
+        {
+          "var": "PM2.5_std24h",
+          "imp": 0.0462
+        },
+        {
+          "var": "PM2.5_lag3h",
+          "imp": 0.0328
+        },
+        {
+          "var": "PM2.5_media24h",
+          "imp": 0.0322
+        },
+        {
+          "var": "SR_lag1h",
+          "imp": 0.0278
+        },
+        {
+          "var": "WSR_lag1h",
+          "imp": 0.026
+        },
+        {
+          "var": "RH_lag1h",
+          "imp": 0.0257
+        },
+        {
+          "var": "mes_sin",
+          "imp": 0.0235
+        }
+      ],
+      "diagnostico": {
+        "durbin_watson": 2.173,
+        "ljung_box": [
+          {
+            "lag": 1,
+            "p": 0.0028
+          },
+          {
+            "lag": 24,
+            "p": 0.0035
+          },
+          {
+            "lag": 48,
+            "p": 0.1141
+          },
+          {
+            "lag": 168,
+            "p": 0.0177
+          }
+        ],
+        "acf_residuos": [
+          1,
+          -0.087,
+          0.055,
+          0.008,
+          0.107,
+          -0.016,
+          -0.054,
+          -0.003,
+          -0.055,
+          -0.049,
+          0.001,
+          -0.002,
+          0.024,
+          0.009,
+          0.02,
+          -0.014,
+          0.037,
+          0.05,
+          0.008,
+          -0.036,
+          -0.019,
+          0.003,
+          0.025,
+          -0.01,
+          -0.029,
+          0.001,
+          -0.002,
+          -0.005,
+          -0.007,
+          0.039,
+          0.008,
+          0.009,
+          0.004,
+          0.023,
+          -0.003,
+          -0.004,
+          0.017
+        ],
+        "breusch_pagan_p": 0,
+        "white_p": 0,
+        "arch_p": 0,
+        "homocedastico": "NO",
+        "n": 1190
+      },
+      "etapa4": {
+        "rolling_origin": {
+          "folds": [
+            {
+              "fold": 1,
+              "inicio": "2024-12-25T00:00:00",
+              "fin": "2025-01-31T12:00:00",
+              "mae": {
+                "Naive (t-1)": 6.48,
+                "Random Forest": 6.22,
+                "XGBoost": 5.87
+              }
+            },
+            {
+              "fold": 2,
+              "inicio": "2025-01-31T13:00:00",
+              "fin": "2025-03-17T17:00:00",
+              "mae": {
+                "Naive (t-1)": 7.49,
+                "Random Forest": 6.8,
+                "XGBoost": 6.65
+              }
+            },
+            {
+              "fold": 3,
+              "inicio": "2025-03-17T18:00:00",
+              "fin": "2025-04-16T17:00:00",
+              "mae": {
+                "Naive (t-1)": 6.58,
+                "Random Forest": 5.94,
+                "XGBoost": 5.74
+              }
+            },
+            {
+              "fold": 4,
+              "inicio": "2025-04-16T18:00:00",
+              "fin": "2025-05-31T23:00:00",
+              "mae": {
+                "Naive (t-1)": 7.19,
+                "Random Forest": 6.22,
+                "XGBoost": 6.12
+              }
+            },
+            {
+              "fold": 5,
+              "inicio": "2025-06-01T00:00:00",
+              "fin": "2025-06-30T23:00:00",
+              "mae": {
+                "Naive (t-1)": 6.5,
+                "Random Forest": 5.64,
+                "XGBoost": 5.38
+              }
+            }
+          ],
+          "resumen": {
+            "XGBoost": {
+              "mae_mean": 5.95,
+              "mae_sd": 0.47,
+              "rank_medio": 1
+            },
+            "Random Forest": {
+              "mae_mean": 6.16,
+              "mae_sd": 0.43,
+              "rank_medio": 2
+            },
+            "Naive (t-1)": {
+              "mae_mean": 6.85,
+              "mae_sd": 0.46,
+              "rank_medio": 3
+            }
+          }
+        },
+        "calculo_error": {
+          "mae": 5.68,
+          "se_iid": 0.149,
+          "se_hac": 0.203,
+          "razon_hac_iid": 1.37,
+          "hac_lags": 6,
+          "ic95_iid": [
+            5.39,
+            5.97
+          ],
+          "ic95_hac": [
+            5.28,
+            6.08
+          ],
+          "ic95_boot": [
+            5.21,
+            6.22
+          ],
+          "n": 1190,
+          "n_eff": 726.7,
+          "rho1_abs_e": 0.242,
+          "mse": 58.62,
+          "sesgo2": 0.004,
+          "var_error": 58.62,
+          "theil_um_sesgo": 0,
+          "theil_us_varianza": 0.169,
+          "theil_uc_covarianza": 0.831,
+          "theil_u2_vs_naive": 0.807
+        },
+        "heterocedasticidad_modelos": [
+          {
+            "modelo": "Naive (t-1)",
+            "breusch_pagan_p": 0,
+            "white_p": 0,
+            "arch_p": 0,
+            "goldfeld_quandt_p": 0,
+            "homocedastico": "NO"
+          },
+          {
+            "modelo": "Random Forest",
+            "breusch_pagan_p": 0,
+            "white_p": 0,
+            "arch_p": 0,
+            "goldfeld_quandt_p": 0,
+            "homocedastico": "NO"
+          },
+          {
+            "modelo": "XGBoost",
+            "breusch_pagan_p": 0,
+            "white_p": 0,
+            "arch_p": 0,
+            "goldfeld_quandt_p": 0,
+            "homocedastico": "NO"
+          },
+          {
+            "modelo": "LSTM",
+            "breusch_pagan_p": 0,
+            "white_p": 0,
+            "arch_p": 0,
+            "goldfeld_quandt_p": 0,
+            "homocedastico": "NO"
+          }
+        ],
+        "varianza_vs_nivel": {
+          "bins": [
+            {
+              "pred_medio": 6.7,
+              "std_e": 3.73,
+              "mae": 2.85,
+              "n": 119
+            },
+            {
+              "pred_medio": 9.1,
+              "std_e": 4.47,
+              "mae": 3.8,
+              "n": 119
+            },
+            {
+              "pred_medio": 11.1,
+              "std_e": 5.2,
+              "mae": 4.22,
+              "n": 119
+            },
+            {
+              "pred_medio": 13.3,
+              "std_e": 6.23,
+              "mae": 4.93,
+              "n": 119
+            },
+            {
+              "pred_medio": 15.3,
+              "std_e": 9.09,
+              "mae": 6.7,
+              "n": 119
+            },
+            {
+              "pred_medio": 17.4,
+              "std_e": 7.33,
+              "mae": 5.99,
+              "n": 119
+            },
+            {
+              "pred_medio": 19.3,
+              "std_e": 7.45,
+              "mae": 6.03,
+              "n": 119
+            },
+            {
+              "pred_medio": 21.7,
+              "std_e": 8.37,
+              "mae": 6.4,
+              "n": 119
+            },
+            {
+              "pred_medio": 25,
+              "std_e": 8.19,
+              "mae": 6.45,
+              "n": 119
+            },
+            {
+              "pred_medio": 32.3,
+              "std_e": 12.49,
+              "mae": 9.45,
+              "n": 119
+            }
+          ],
+          "pendiente_log_e2_por_ugm3": 0.11846,
+          "r2": 0.088,
+          "factor_degradacion_q4_q1": 2.31
+        },
+        "intervalos": {
+          "metodos": [
+            {
+              "metodo": "empírico_global",
+              "cob95": 0.874,
+              "ancho95": 21.41,
+              "cob95_q4": 0.752,
+              "cob80": 0.668,
+              "ancho80": 13.26,
+              "cob80_q4": 0.433
+            },
+            {
+              "metodo": "por_nivel",
+              "cob95": 0.839,
+              "ancho95": 19.918,
+              "cob95_q4": 0.798,
+              "cob80": 0.645,
+              "ancho80": 12.555,
+              "cob80_q4": 0.521
+            },
+            {
+              "metodo": "GARCH(1,1)",
+              "cob95": 0.912,
+              "ancho95": 23.953,
+              "cob95_q4": 0.809,
+              "cob80": 0.742,
+              "ancho80": 15.662,
+              "cob80_q4": 0.546
+            },
+            {
+              "metodo": "CQR",
+              "cob95": 0.95,
+              "ancho95": 29.538,
+              "cob95_q4": 0.918,
+              "cob80": 0.761,
+              "ancho80": 17.255,
+              "cob80_q4": 0.677
+            }
+          ],
+          "elegido": "CQR",
+          "garch": {
+            "omega": 12.1337,
+            "alpha": 0.194,
+            "beta": 0.4173,
+            "persistencia": 0.6113,
+            "sig2_0": 29.9712
+          }
+        },
+        "diebold_mariano": {
+          "vs_naive": {
+            "dm": -7.63,
+            "p": 0,
+            "sig": true
+          },
+          "campeon_vs_segundo": {
+            "segundo": "Random Forest",
+            "dm": -1.63,
+            "p": 0.103,
+            "empate_tecnico": true
+          },
+          "matriz_p": {
+            "Naive (t-1)": {
+              "Naive (t-1)": null,
+              "Random Forest": 0,
+              "XGBoost": 0,
+              "LSTM": 0
+            },
+            "Random Forest": {
+              "Naive (t-1)": 0,
+              "Random Forest": null,
+              "XGBoost": 0.103,
+              "LSTM": 0.6262
+            },
+            "XGBoost": {
+              "Naive (t-1)": 0,
+              "Random Forest": 0.103,
+              "XGBoost": null,
+              "LSTM": 0.3778
+            },
+            "LSTM": {
+              "Naive (t-1)": 0,
+              "Random Forest": 0.6262,
+              "XGBoost": 0.3778,
+              "LSTM": null
+            }
+          }
+        }
+      },
+      "naive_vs_modelo": {
+        "umbral_cambio": 9,
+        "n_horas_cambio": 344,
+        "mae_modelo_cambio": 9.98,
+        "mae_naive_cambio": 14.88,
+        "mae_modelo_estable": 3.93,
+        "mae_naive_estable": 3.49,
+        "mejora_cambio_pct": 32.9
+      },
+      "episodio": {
+        "inicio": "2025-05-11T14:00:00",
+        "fin": "2025-05-14T13:00:00",
+        "horas": 72,
+        "pico_real": 84,
+        "hora_pico": "2025-05-13T14:00:00",
+        "pronostico_en_pico": 37.31,
+        "subestimacion_pico": 46.69,
+        "retraso_h": null,
+        "serie": [
+          {
+            "fecha_hora": "2025-05-11T14:00:00",
+            "real": 9,
+            "pronostico": 8.3
+          },
+          {
+            "fecha_hora": "2025-05-11T15:00:00",
+            "real": 10,
+            "pronostico": 9.95
+          },
+          {
+            "fecha_hora": "2025-05-11T16:00:00",
+            "real": 13,
+            "pronostico": 9.8
+          },
+          {
+            "fecha_hora": "2025-05-11T17:00:00",
+            "real": 8,
+            "pronostico": 11.69
+          },
+          {
+            "fecha_hora": "2025-05-11T18:00:00",
+            "real": 16,
+            "pronostico": 12.92
+          },
+          {
+            "fecha_hora": "2025-05-11T19:00:00",
+            "real": 11,
+            "pronostico": 13.44
+          },
+          {
+            "fecha_hora": "2025-05-11T20:00:00",
+            "real": 13,
+            "pronostico": 7.62
+          },
+          {
+            "fecha_hora": "2025-05-11T21:00:00",
+            "real": 3,
+            "pronostico": 9.15
+          },
+          {
+            "fecha_hora": "2025-05-11T22:00:00",
+            "real": 3,
+            "pronostico": 8.46
+          },
+          {
+            "fecha_hora": "2025-05-11T23:00:00",
+            "real": 5,
+            "pronostico": 7.81
+          },
+          {
+            "fecha_hora": "2025-05-12T00:00:00",
+            "real": 4,
+            "pronostico": 9.26
+          },
+          {
+            "fecha_hora": "2025-05-12T01:00:00",
+            "real": 17,
+            "pronostico": 8.49
+          },
+          {
+            "fecha_hora": "2025-05-12T02:00:00",
+            "real": 14,
+            "pronostico": 13.93
+          },
+          {
+            "fecha_hora": "2025-05-12T03:00:00",
+            "real": 8,
+            "pronostico": 14.77
+          },
+          {
+            "fecha_hora": "2025-05-12T04:00:00",
+            "real": 21,
+            "pronostico": 13.27
+          },
+          {
+            "fecha_hora": "2025-05-12T05:00:00",
+            "real": 21,
+            "pronostico": 20.21
+          },
+          {
+            "fecha_hora": "2025-05-12T06:00:00",
+            "real": 22,
+            "pronostico": 19.06
+          },
+          {
+            "fecha_hora": "2025-05-12T07:00:00",
+            "real": 15,
+            "pronostico": 20.75
+          },
+          {
+            "fecha_hora": "2025-05-12T08:00:00",
+            "real": 5,
+            "pronostico": 13.95
+          },
+          {
+            "fecha_hora": "2025-05-12T09:00:00",
+            "real": 24,
+            "pronostico": 16.04
+          },
+          {
+            "fecha_hora": "2025-05-12T10:00:00",
+            "real": 43,
+            "pronostico": 29.36
+          },
+          {
+            "fecha_hora": "2025-05-12T11:00:00",
+            "real": 19,
+            "pronostico": 29.9
+          },
+          {
+            "fecha_hora": "2025-05-12T12:00:00",
+            "real": 21,
+            "pronostico": 21.22
+          },
+          {
+            "fecha_hora": "2025-05-12T13:00:00",
+            "real": 25,
+            "pronostico": 18.99
+          },
+          {
+            "fecha_hora": "2025-05-12T14:00:00",
+            "real": 18,
+            "pronostico": 15.94
+          },
+          {
+            "fecha_hora": "2025-05-12T15:00:00",
+            "real": 21,
+            "pronostico": 17.39
+          },
+          {
+            "fecha_hora": "2025-05-12T16:00:00",
+            "real": 20,
+            "pronostico": 19.47
+          },
+          {
+            "fecha_hora": "2025-05-12T17:00:00",
+            "real": 23,
+            "pronostico": 18.21
+          },
+          {
+            "fecha_hora": "2025-05-12T18:00:00",
+            "real": 22,
+            "pronostico": 19.34
+          },
+          {
+            "fecha_hora": "2025-05-12T19:00:00",
+            "real": 21,
+            "pronostico": 18.91
+          },
+          {
+            "fecha_hora": "2025-05-12T20:00:00",
+            "real": 14,
+            "pronostico": 15.24
+          },
+          {
+            "fecha_hora": "2025-05-12T21:00:00",
+            "real": 4,
+            "pronostico": 13.16
+          },
+          {
+            "fecha_hora": "2025-05-12T22:00:00",
+            "real": 2,
+            "pronostico": 10.36
+          },
+          {
+            "fecha_hora": "2025-05-12T23:00:00",
+            "real": 15,
+            "pronostico": 8.94
+          },
+          {
+            "fecha_hora": "2025-05-13T00:00:00",
+            "real": 17,
+            "pronostico": 14.3
+          },
+          {
+            "fecha_hora": "2025-05-13T01:00:00",
+            "real": 9,
+            "pronostico": 17.71
+          },
+          {
+            "fecha_hora": "2025-05-13T02:00:00",
+            "real": 11,
+            "pronostico": 14.43
+          },
+          {
+            "fecha_hora": "2025-05-13T03:00:00",
+            "real": 18,
+            "pronostico": 14.47
+          },
+          {
+            "fecha_hora": "2025-05-13T04:00:00",
+            "real": 12,
+            "pronostico": 17.95
+          },
+          {
+            "fecha_hora": "2025-05-13T05:00:00",
+            "real": 17,
+            "pronostico": 14.81
+          },
+          {
+            "fecha_hora": "2025-05-13T06:00:00",
+            "real": 25,
+            "pronostico": 19.82
+          },
+          {
+            "fecha_hora": "2025-05-13T07:00:00",
+            "real": 23,
+            "pronostico": 22.79
+          },
+          {
+            "fecha_hora": "2025-05-13T08:00:00",
+            "real": 15,
+            "pronostico": 17.48
+          },
+          {
+            "fecha_hora": "2025-05-13T09:00:00",
+            "real": 25,
+            "pronostico": 21.58
+          },
+          {
+            "fecha_hora": "2025-05-13T10:00:00",
+            "real": 40,
+            "pronostico": 31.27
+          },
+          {
+            "fecha_hora": "2025-05-13T11:00:00",
+            "real": 34,
+            "pronostico": 34.82
+          },
+          {
+            "fecha_hora": "2025-05-13T12:00:00",
+            "real": 43,
+            "pronostico": 31.38
+          },
+          {
+            "fecha_hora": "2025-05-13T13:00:00",
+            "real": 50,
+            "pronostico": 34.68
+          },
+          {
+            "fecha_hora": "2025-05-13T14:00:00",
+            "real": 84,
+            "pronostico": 37.31
+          },
+          {
+            "fecha_hora": "2025-05-13T15:00:00",
+            "real": 62,
+            "pronostico": 55.88
+          },
+          {
+            "fecha_hora": "2025-05-13T16:00:00",
+            "real": 66,
+            "pronostico": 41.6
+          },
+          {
+            "fecha_hora": "2025-05-13T17:00:00",
+            "real": 54,
+            "pronostico": 57.11
+          },
+          {
+            "fecha_hora": "2025-05-13T18:00:00",
+            "real": 38,
+            "pronostico": 42.83
+          },
+          {
+            "fecha_hora": "2025-05-13T19:00:00",
+            "real": 2,
+            "pronostico": 33.49
+          },
+          {
+            "fecha_hora": "2025-05-13T20:00:00",
+            "real": 2.25,
+            "pronostico": 23.6
+          },
+          {
+            "fecha_hora": "2025-05-13T21:00:00",
+            "real": 2.5,
+            "pronostico": 14.53
+          },
+          {
+            "fecha_hora": "2025-05-13T22:00:00",
+            "real": 2.75,
+            "pronostico": 17.53
+          },
+          {
+            "fecha_hora": "2025-05-13T23:00:00",
+            "real": 3,
+            "pronostico": 17.55
+          },
+          {
+            "fecha_hora": "2025-05-14T00:00:00",
+            "real": 10,
+            "pronostico": 13.79
+          },
+          {
+            "fecha_hora": "2025-05-14T01:00:00",
+            "real": 17,
+            "pronostico": 17.54
+          },
+          {
+            "fecha_hora": "2025-05-14T02:00:00",
+            "real": 25,
+            "pronostico": 20.3
+          },
+          {
+            "fecha_hora": "2025-05-14T03:00:00",
+            "real": 51,
+            "pronostico": 21.25
+          },
+          {
+            "fecha_hora": "2025-05-14T04:00:00",
+            "real": 22,
+            "pronostico": 40.43
+          },
+          {
+            "fecha_hora": "2025-05-14T05:00:00",
+            "real": 22,
+            "pronostico": 22.55
+          },
+          {
+            "fecha_hora": "2025-05-14T06:00:00",
+            "real": 23,
+            "pronostico": 27.39
+          },
+          {
+            "fecha_hora": "2025-05-14T07:00:00",
+            "real": 42,
+            "pronostico": 29.24
+          },
+          {
+            "fecha_hora": "2025-05-14T08:00:00",
+            "real": 14,
+            "pronostico": 29.09
+          },
+          {
+            "fecha_hora": "2025-05-14T09:00:00",
+            "real": 22,
+            "pronostico": 24.91
+          },
+          {
+            "fecha_hora": "2025-05-14T10:00:00",
+            "real": 44,
+            "pronostico": 37.44
+          },
+          {
+            "fecha_hora": "2025-05-14T11:00:00",
+            "real": 25,
+            "pronostico": 46.23
+          },
+          {
+            "fecha_hora": "2025-05-14T12:00:00",
+            "real": 40,
+            "pronostico": 31.69
+          },
+          {
+            "fecha_hora": "2025-05-14T13:00:00",
+            "real": 34,
+            "pronostico": 37.9
+          }
+        ]
+      },
+      "ultimo_punto": {
+        "fecha_hora": "2025-06-30T23:00:00",
+        "real": 9,
+        "pronostico": 7.27
+      },
+      "serie_reciente": [
+        {
+          "fecha_hora": "2025-06-28T00:00:00",
+          "real": 7,
+          "pronostico": 10.4
+        },
+        {
+          "fecha_hora": "2025-06-28T01:00:00",
+          "real": 8,
+          "pronostico": 10.25
+        },
+        {
+          "fecha_hora": "2025-06-28T02:00:00",
+          "real": 6,
+          "pronostico": 9.27
+        },
+        {
+          "fecha_hora": "2025-06-28T03:00:00",
+          "real": 7,
+          "pronostico": 7.39
+        },
+        {
+          "fecha_hora": "2025-06-28T04:00:00",
+          "real": 8,
+          "pronostico": 7.05
+        },
+        {
+          "fecha_hora": "2025-06-28T05:00:00",
+          "real": 12,
+          "pronostico": 7.81
+        },
+        {
+          "fecha_hora": "2025-06-28T06:00:00",
+          "real": 8,
+          "pronostico": 9.14
+        },
+        {
+          "fecha_hora": "2025-06-28T07:00:00",
+          "real": 7,
+          "pronostico": 8.8
+        },
+        {
+          "fecha_hora": "2025-06-28T08:00:00",
+          "real": 4,
+          "pronostico": 5.34
+        },
+        {
+          "fecha_hora": "2025-06-28T09:00:00",
+          "real": 9,
+          "pronostico": 6.39
+        },
+        {
+          "fecha_hora": "2025-06-28T10:00:00",
+          "real": 11,
+          "pronostico": 12.27
+        },
+        {
+          "fecha_hora": "2025-06-28T11:00:00",
+          "real": 25,
+          "pronostico": 19.14
+        },
+        {
+          "fecha_hora": "2025-06-28T12:00:00",
+          "real": 18,
+          "pronostico": 18.81
+        },
+        {
+          "fecha_hora": "2025-06-28T13:00:00",
+          "real": 14,
+          "pronostico": 17
+        },
+        {
+          "fecha_hora": "2025-06-28T14:00:00",
+          "real": 16,
+          "pronostico": 13.83
+        },
+        {
+          "fecha_hora": "2025-06-28T15:00:00",
+          "real": 5,
+          "pronostico": 15.46
+        },
+        {
+          "fecha_hora": "2025-06-28T16:00:00",
+          "real": 16,
+          "pronostico": 12.24
+        },
+        {
+          "fecha_hora": "2025-06-28T17:00:00",
+          "real": 14,
+          "pronostico": 18.5
+        },
+        {
+          "fecha_hora": "2025-06-28T18:00:00",
+          "real": 7,
+          "pronostico": 14.6
+        },
+        {
+          "fecha_hora": "2025-06-28T19:00:00",
+          "real": 2,
+          "pronostico": 10.88
+        },
+        {
+          "fecha_hora": "2025-06-28T20:00:00",
+          "real": 20,
+          "pronostico": 9.16
+        },
+        {
+          "fecha_hora": "2025-06-28T21:00:00",
+          "real": 11,
+          "pronostico": 13.05
+        },
+        {
+          "fecha_hora": "2025-06-28T22:00:00",
+          "real": 9,
+          "pronostico": 13.07
+        },
+        {
+          "fecha_hora": "2025-06-28T23:00:00",
+          "real": 8,
+          "pronostico": 10.22
+        },
+        {
+          "fecha_hora": "2025-06-29T00:00:00",
+          "real": 21,
+          "pronostico": 8.78
+        },
+        {
+          "fecha_hora": "2025-06-29T01:00:00",
+          "real": 17,
+          "pronostico": 15.05
+        },
+        {
+          "fecha_hora": "2025-06-29T02:00:00",
+          "real": 11,
+          "pronostico": 12.58
+        },
+        {
+          "fecha_hora": "2025-06-29T03:00:00",
+          "real": 10,
+          "pronostico": 9.29
+        },
+        {
+          "fecha_hora": "2025-06-29T04:00:00",
+          "real": 8,
+          "pronostico": 7.79
+        },
+        {
+          "fecha_hora": "2025-06-29T05:00:00",
+          "real": 10,
+          "pronostico": 7.59
+        },
+        {
+          "fecha_hora": "2025-06-29T06:00:00",
+          "real": 7,
+          "pronostico": 7.85
+        },
+        {
+          "fecha_hora": "2025-06-29T07:00:00",
+          "real": 5,
+          "pronostico": 7.43
+        },
+        {
+          "fecha_hora": "2025-06-29T08:00:00",
+          "real": 2,
+          "pronostico": 4.85
+        },
+        {
+          "fecha_hora": "2025-06-29T09:00:00",
+          "real": 2,
+          "pronostico": 5.21
+        },
+        {
+          "fecha_hora": "2025-06-29T10:00:00",
+          "real": 2,
+          "pronostico": 10.84
+        },
+        {
+          "fecha_hora": "2025-06-29T11:00:00",
+          "real": 15,
+          "pronostico": 12.92
+        },
+        {
+          "fecha_hora": "2025-06-29T12:00:00",
+          "real": 14,
+          "pronostico": 16.24
+        },
+        {
+          "fecha_hora": "2025-06-29T13:00:00",
+          "real": 10,
+          "pronostico": 12.5
+        },
+        {
+          "fecha_hora": "2025-06-29T14:00:00",
+          "real": 4,
+          "pronostico": 10.69
+        },
+        {
+          "fecha_hora": "2025-06-29T15:00:00",
+          "real": 10,
+          "pronostico": 9.59
+        },
+        {
+          "fecha_hora": "2025-06-29T16:00:00",
+          "real": 23,
+          "pronostico": 12.86
+        },
+        {
+          "fecha_hora": "2025-06-29T17:00:00",
+          "real": 36,
+          "pronostico": 17.82
+        },
+        {
+          "fecha_hora": "2025-06-29T18:00:00",
+          "real": 25.33,
+          "pronostico": 25.54
+        },
+        {
+          "fecha_hora": "2025-06-29T19:00:00",
+          "real": 14.67,
+          "pronostico": 14.85
+        },
+        {
+          "fecha_hora": "2025-06-29T20:00:00",
+          "real": 4,
+          "pronostico": 10.2
+        },
+        {
+          "fecha_hora": "2025-06-29T21:00:00",
+          "real": 13,
+          "pronostico": 6.83
+        },
+        {
+          "fecha_hora": "2025-06-29T22:00:00",
+          "real": 4,
+          "pronostico": 9.99
+        },
+        {
+          "fecha_hora": "2025-06-29T23:00:00",
+          "real": 10,
+          "pronostico": 6.86
+        },
+        {
+          "fecha_hora": "2025-06-30T00:00:00",
+          "real": 2,
+          "pronostico": 9.49
+        },
+        {
+          "fecha_hora": "2025-06-30T01:00:00",
+          "real": 3,
+          "pronostico": 7.36
+        },
+        {
+          "fecha_hora": "2025-06-30T02:00:00",
+          "real": 4,
+          "pronostico": 6.8
+        },
+        {
+          "fecha_hora": "2025-06-30T03:00:00",
+          "real": 7,
+          "pronostico": 6.4
+        },
+        {
+          "fecha_hora": "2025-06-30T04:00:00",
+          "real": 2,
+          "pronostico": 7.24
+        },
+        {
+          "fecha_hora": "2025-06-30T05:00:00",
+          "real": 4,
+          "pronostico": 6.55
+        },
+        {
+          "fecha_hora": "2025-06-30T06:00:00",
+          "real": 6,
+          "pronostico": 6.36
+        },
+        {
+          "fecha_hora": "2025-06-30T07:00:00",
+          "real": 3,
+          "pronostico": 6.47
+        },
+        {
+          "fecha_hora": "2025-06-30T08:00:00",
+          "real": 3.5,
+          "pronostico": 4.32
+        },
+        {
+          "fecha_hora": "2025-06-30T09:00:00",
+          "real": 4,
+          "pronostico": 4.8
+        },
+        {
+          "fecha_hora": "2025-06-30T10:00:00",
+          "real": 16,
+          "pronostico": 6.06
+        },
+        {
+          "fecha_hora": "2025-06-30T11:00:00",
+          "real": 7,
+          "pronostico": 13.86
+        },
+        {
+          "fecha_hora": "2025-06-30T12:00:00",
+          "real": 13,
+          "pronostico": 11.14
+        },
+        {
+          "fecha_hora": "2025-06-30T13:00:00",
+          "real": 4,
+          "pronostico": 11.39
+        },
+        {
+          "fecha_hora": "2025-06-30T14:00:00",
+          "real": 15,
+          "pronostico": 11.05
+        },
+        {
+          "fecha_hora": "2025-06-30T15:00:00",
+          "real": 11,
+          "pronostico": 11.88
+        },
+        {
+          "fecha_hora": "2025-06-30T16:00:00",
+          "real": 8,
+          "pronostico": 13.38
+        },
+        {
+          "fecha_hora": "2025-06-30T17:00:00",
+          "real": 5,
+          "pronostico": 11.58
+        },
+        {
+          "fecha_hora": "2025-06-30T18:00:00",
+          "real": 14,
+          "pronostico": 9.35
+        },
+        {
+          "fecha_hora": "2025-06-30T19:00:00",
+          "real": 10.5,
+          "pronostico": 11.19
+        },
+        {
+          "fecha_hora": "2025-06-30T20:00:00",
+          "real": 7,
+          "pronostico": 6.49
+        },
+        {
+          "fecha_hora": "2025-06-30T21:00:00",
+          "real": 8,
+          "pronostico": 6.14
+        },
+        {
+          "fecha_hora": "2025-06-30T22:00:00",
+          "real": 7,
+          "pronostico": 6.77
+        },
+        {
+          "fecha_hora": "2025-06-30T23:00:00",
+          "real": 9,
+          "pronostico": 7.27
+        }
+      ]
+    },
+    "SE3": {
+      "clave": "SE3",
+      "nombre": "Sureste del AMM",
+      "modelo": "XGBoost",
+      "mae": 4.94,
+      "mae_ic95": "[4.49, 5.38]",
+      "mae_naive": 5.26,
+      "rmse": 6.81,
+      "sesgo": 1.17,
+      "n_prueba": 780,
+      "periodo_prueba": [
+        "2025-05-01T13:00:00",
+        "2025-06-03T05:00:00"
+      ],
+      "banda95": [
+        -12.42,
+        15.91
+      ],
+      "cobertura95": 0.965,
+      "cobertura80": 0.815,
+      "homocedastico": "NO",
+      "ljung_box_p_lag24": 0,
+      "sarimax": {
+        "mae_diario": 5.98,
+        "cobertura_ic95": 1
+      },
+      "error_por_nivel": [
+        {
+          "nivel": "bajo",
+          "mae": 3.5,
+          "sesgo": -2.67
+        },
+        {
+          "nivel": "medio",
+          "mae": 3.94,
+          "sesgo": -0.63
+        },
+        {
+          "nivel": "alto",
+          "mae": 4.79,
+          "sesgo": 2.24
+        },
+        {
+          "nivel": "muy_alto",
+          "mae": 7.78,
+          "sesgo": 6.2
+        }
+      ],
+      "importancia_variables": [
+        {
+          "var": "PM2.5_lag1h",
+          "imp": 0.308
+        },
+        {
+          "var": "PM2.5_lag2h",
+          "imp": 0.1309
+        },
+        {
+          "var": "PM10_lag1h",
+          "imp": 0.0977
+        },
+        {
+          "var": "PM2.5_std24h",
+          "imp": 0.0469
+        },
+        {
+          "var": "PM2.5_std168h",
+          "imp": 0.0407
+        },
+        {
+          "var": "PM2.5_lag3h",
+          "imp": 0.0337
+        },
+        {
+          "var": "WSR_lag1h",
+          "imp": 0.0316
+        },
+        {
+          "var": "hora",
+          "imp": 0.0218
+        },
+        {
+          "var": "PM2.5_media24h",
+          "imp": 0.0201
+        },
+        {
+          "var": "hora_cos",
+          "imp": 0.0198
+        },
+        {
+          "var": "PM2.5_lag12h",
+          "imp": 0.0197
+        },
+        {
+          "var": "SR_lag1h",
+          "imp": 0.0192
+        }
+      ],
+      "diagnostico": {
+        "durbin_watson": 1.561,
+        "ljung_box": [
+          {
+            "lag": 1,
+            "p": 0
+          },
+          {
+            "lag": 24,
+            "p": 0
+          },
+          {
+            "lag": 48,
+            "p": 0
+          },
+          {
+            "lag": 168,
+            "p": 0
+          }
+        ],
+        "acf_residuos": [
+          1,
+          0.195,
+          0.12,
+          0.079,
+          0.044,
+          0.035,
+          0.025,
+          -0.002,
+          -0.025,
+          -0.075,
+          -0.147,
+          -0.091,
+          -0.047,
+          -0.128,
+          -0.133,
+          -0.051,
+          -0.025,
+          -0.062,
+          -0.069,
+          0.014,
+          0.048,
+          0.066,
+          0.071,
+          0.116,
+          0.065,
+          0.072,
+          0.005,
+          0.076,
+          0.098,
+          -0.004,
+          0.004,
+          -0.029,
+          -0.009,
+          -0.1,
+          -0.04,
+          -0.049,
+          -0.055
+        ],
+        "breusch_pagan_p": 0,
+        "white_p": 0,
+        "arch_p": 0,
+        "homocedastico": "NO",
+        "n": 780
+      },
+      "etapa4": {
+        "rolling_origin": {
+          "folds": [
+            {
+              "fold": 1,
+              "inicio": "2024-11-05T05:00:00",
+              "fin": "2024-12-20T00:00:00",
+              "mae": {
+                "Naive (t-1)": 4.71,
+                "Random Forest": 4.33,
+                "XGBoost": 4.36
+              }
+            },
+            {
+              "fold": 2,
+              "inicio": "2024-12-20T01:00:00",
+              "fin": "2025-01-20T04:00:00",
+              "mae": {
+                "Naive (t-1)": 5.57,
+                "Random Forest": 4.98,
+                "XGBoost": 5.13
+              }
+            },
+            {
+              "fold": 3,
+              "inicio": "2025-01-20T05:00:00",
+              "fin": "2025-02-19T04:00:00",
+              "mae": {
+                "Naive (t-1)": 6.1,
+                "Random Forest": 5.47,
+                "XGBoost": 5.34
+              }
+            },
+            {
+              "fold": 4,
+              "inicio": "2025-02-19T05:00:00",
+              "fin": "2025-05-04T02:00:00",
+              "mae": {
+                "Naive (t-1)": 5.14,
+                "Random Forest": 4.8,
+                "XGBoost": 4.8
+              }
+            },
+            {
+              "fold": 5,
+              "inicio": "2025-05-04T03:00:00",
+              "fin": "2025-06-03T06:00:00",
+              "mae": {
+                "Naive (t-1)": 5.37,
+                "Random Forest": 5.12,
+                "XGBoost": 5.01
+              }
+            }
+          ],
+          "resumen": {
+            "XGBoost": {
+              "mae_mean": 4.93,
+              "mae_sd": 0.37,
+              "rank_medio": 1.4
+            },
+            "Random Forest": {
+              "mae_mean": 4.94,
+              "mae_sd": 0.42,
+              "rank_medio": 1.6
+            },
+            "Naive (t-1)": {
+              "mae_mean": 5.38,
+              "mae_sd": 0.51,
+              "rank_medio": 3
+            }
+          }
+        },
+        "calculo_error": {
+          "mae": 4.94,
+          "se_iid": 0.168,
+          "se_hac": 0.228,
+          "razon_hac_iid": 1.36,
+          "hac_lags": 6,
+          "ic95_iid": [
+            4.61,
+            5.27
+          ],
+          "ic95_hac": [
+            4.49,
+            5.38
+          ],
+          "ic95_boot": [
+            4.37,
+            5.48
+          ],
+          "n": 780,
+          "n_eff": 480.3,
+          "rho1_abs_e": 0.238,
+          "mse": 46.35,
+          "sesgo2": 1.378,
+          "var_error": 44.97,
+          "theil_um_sesgo": 0.03,
+          "theil_us_varianza": 0.118,
+          "theil_uc_covarianza": 0.853,
+          "theil_u2_vs_naive": 0.904
+        },
+        "heterocedasticidad_modelos": [
+          {
+            "modelo": "Naive (t-1)",
+            "breusch_pagan_p": 0,
+            "white_p": 0,
+            "arch_p": 0,
+            "goldfeld_quandt_p": 0,
+            "homocedastico": "NO"
+          },
+          {
+            "modelo": "Random Forest",
+            "breusch_pagan_p": 0,
+            "white_p": 0,
+            "arch_p": 0,
+            "goldfeld_quandt_p": 0,
+            "homocedastico": "NO"
+          },
+          {
+            "modelo": "XGBoost",
+            "breusch_pagan_p": 0,
+            "white_p": 0,
+            "arch_p": 0,
+            "goldfeld_quandt_p": 0,
+            "homocedastico": "NO"
+          },
+          {
+            "modelo": "LSTM",
+            "breusch_pagan_p": 0,
+            "white_p": 0,
+            "arch_p": 0,
+            "goldfeld_quandt_p": 0,
+            "homocedastico": "NO"
+          }
+        ],
+        "varianza_vs_nivel": {
+          "bins": [
+            {
+              "pred_medio": 5.1,
+              "std_e": 2.81,
+              "mae": 2.19,
+              "n": 78
+            },
+            {
+              "pred_medio": 8,
+              "std_e": 4.82,
+              "mae": 3.4,
+              "n": 78
+            },
+            {
+              "pred_medio": 10.4,
+              "std_e": 4.93,
+              "mae": 3.76,
+              "n": 78
+            },
+            {
+              "pred_medio": 13,
+              "std_e": 6,
+              "mae": 4.64,
+              "n": 78
+            },
+            {
+              "pred_medio": 16.2,
+              "std_e": 6.38,
+              "mae": 4.71,
+              "n": 78
+            },
+            {
+              "pred_medio": 19.1,
+              "std_e": 5.69,
+              "mae": 4.38,
+              "n": 78
+            },
+            {
+              "pred_medio": 22.8,
+              "std_e": 7.42,
+              "mae": 5.77,
+              "n": 78
+            },
+            {
+              "pred_medio": 27.6,
+              "std_e": 8.41,
+              "mae": 6.22,
+              "n": 78
+            },
+            {
+              "pred_medio": 33,
+              "std_e": 8.53,
+              "mae": 6.52,
+              "n": 78
+            },
+            {
+              "pred_medio": 47.7,
+              "std_e": 9.08,
+              "mae": 7.79,
+              "n": 78
+            }
+          ],
+          "pendiente_log_e2_por_ugm3": 0.08357,
+          "r2": 0.108,
+          "factor_degradacion_q4_q1": 2.15
+        },
+        "intervalos": {
+          "metodos": [
+            {
+              "metodo": "empírico_global",
+              "cob95": 0.871,
+              "ancho95": 19.259,
+              "cob95_q4": 0.757,
+              "cob80": 0.659,
+              "ancho80": 10.786,
+              "cob80_q4": 0.459
+            },
+            {
+              "metodo": "por_nivel",
+              "cob95": 0.838,
+              "ancho95": 17.38,
+              "cob95_q4": 0.801,
+              "cob80": 0.653,
+              "ancho80": 11.002,
+              "cob80_q4": 0.63
+            },
+            {
+              "metodo": "GARCH(1,1)",
+              "cob95": 0.885,
+              "ancho95": 20.852,
+              "cob95_q4": 0.779,
+              "cob80": 0.745,
+              "ancho80": 13.635,
+              "cob80_q4": 0.608
+            },
+            {
+              "metodo": "CQR",
+              "cob95": 0.965,
+              "ancho95": 28.244,
+              "cob95_q4": 0.912,
+              "cob80": 0.815,
+              "ancho80": 17.24,
+              "cob80_q4": 0.735
+            }
+          ],
+          "elegido": "CQR",
+          "garch": {
+            "omega": 14.7261,
+            "alpha": 0.3779,
+            "beta": 0.0153,
+            "persistencia": 0.3932,
+            "sig2_0": 21.1211
+          }
+        },
+        "diebold_mariano": {
+          "vs_naive": {
+            "dm": -3.22,
+            "p": 0.0013,
+            "sig": true
+          },
+          "campeon_vs_segundo": {
+            "segundo": "Random Forest",
+            "dm": -1.11,
+            "p": 0.2686,
+            "empate_tecnico": true
+          },
+          "matriz_p": {
+            "Naive (t-1)": {
+              "Naive (t-1)": null,
+              "Random Forest": 0.0012,
+              "XGBoost": 0.0013,
+              "LSTM": 0.0013
+            },
+            "Random Forest": {
+              "Naive (t-1)": 0.0012,
+              "Random Forest": null,
+              "XGBoost": 0.2686,
+              "LSTM": 0.528
+            },
+            "XGBoost": {
+              "Naive (t-1)": 0.0013,
+              "Random Forest": 0.2686,
+              "XGBoost": null,
+              "LSTM": 0.75
+            },
+            "LSTM": {
+              "Naive (t-1)": 0.0013,
+              "Random Forest": 0.528,
+              "XGBoost": 0.75,
+              "LSTM": null
+            }
+          }
+        }
+      },
+      "naive_vs_modelo": {
+        "umbral_cambio": 7,
+        "n_horas_cambio": 225,
+        "mae_modelo_cambio": 8.93,
+        "mae_naive_cambio": 11.92,
+        "mae_modelo_estable": 3.32,
+        "mae_naive_estable": 2.56,
+        "mejora_cambio_pct": 25.1
+      },
+      "episodio": {
+        "inicio": "2025-05-04T15:00:00",
+        "fin": "2025-05-07T14:00:00",
+        "horas": 72,
+        "pico_real": 82,
+        "hora_pico": "2025-05-06T15:00:00",
+        "pronostico_en_pico": 59.02,
+        "subestimacion_pico": 22.98,
+        "retraso_h": null,
+        "serie": [
+          {
+            "fecha_hora": "2025-05-04T15:00:00",
+            "real": 14,
+            "pronostico": 15.08
+          },
+          {
+            "fecha_hora": "2025-05-04T16:00:00",
+            "real": 8,
+            "pronostico": 11.02
+          },
+          {
+            "fecha_hora": "2025-05-04T17:00:00",
+            "real": 8,
+            "pronostico": 8.01
+          },
+          {
+            "fecha_hora": "2025-05-04T18:00:00",
+            "real": 9.33,
+            "pronostico": 7.62
+          },
+          {
+            "fecha_hora": "2025-05-04T19:00:00",
+            "real": 10.67,
+            "pronostico": 8.91
+          },
+          {
+            "fecha_hora": "2025-05-04T20:00:00",
+            "real": 12,
+            "pronostico": 10.07
+          },
+          {
+            "fecha_hora": "2025-05-04T21:00:00",
+            "real": 11,
+            "pronostico": 11.18
+          },
+          {
+            "fecha_hora": "2025-05-04T22:00:00",
+            "real": 13,
+            "pronostico": 9.42
+          },
+          {
+            "fecha_hora": "2025-05-04T23:00:00",
+            "real": 9,
+            "pronostico": 9.99
+          },
+          {
+            "fecha_hora": "2025-05-05T00:00:00",
+            "real": 5,
+            "pronostico": 8.43
+          },
+          {
+            "fecha_hora": "2025-05-05T01:00:00",
+            "real": 9,
+            "pronostico": 6.41
+          },
+          {
+            "fecha_hora": "2025-05-05T02:00:00",
+            "real": 11,
+            "pronostico": 7.98
+          },
+          {
+            "fecha_hora": "2025-05-05T03:00:00",
+            "real": 9,
+            "pronostico": 9.28
+          },
+          {
+            "fecha_hora": "2025-05-05T04:00:00",
+            "real": 10,
+            "pronostico": 8.2
+          },
+          {
+            "fecha_hora": "2025-05-05T05:00:00",
+            "real": 17,
+            "pronostico": 9.67
+          },
+          {
+            "fecha_hora": "2025-05-05T06:00:00",
+            "real": 9,
+            "pronostico": 14.76
+          },
+          {
+            "fecha_hora": "2025-05-05T07:00:00",
+            "real": 13,
+            "pronostico": 10.69
+          },
+          {
+            "fecha_hora": "2025-05-05T08:00:00",
+            "real": 13,
+            "pronostico": 11.29
+          },
+          {
+            "fecha_hora": "2025-05-05T09:00:00",
+            "real": 19,
+            "pronostico": 11.26
+          },
+          {
+            "fecha_hora": "2025-05-05T10:00:00",
+            "real": 16,
+            "pronostico": 16.58
+          },
+          {
+            "fecha_hora": "2025-05-05T11:00:00",
+            "real": 17,
+            "pronostico": 13.04
+          },
+          {
+            "fecha_hora": "2025-05-05T12:00:00",
+            "real": 18.5,
+            "pronostico": 18.34
+          },
+          {
+            "fecha_hora": "2025-05-05T13:00:00",
+            "real": 20,
+            "pronostico": 21.32
+          },
+          {
+            "fecha_hora": "2025-05-05T14:00:00",
+            "real": 25,
+            "pronostico": 20.31
+          },
+          {
+            "fecha_hora": "2025-05-05T15:00:00",
+            "real": 30,
+            "pronostico": 22.04
+          },
+          {
+            "fecha_hora": "2025-05-05T16:00:00",
+            "real": 39,
+            "pronostico": 24.04
+          },
+          {
+            "fecha_hora": "2025-05-05T17:00:00",
+            "real": 37,
+            "pronostico": 31.7
+          },
+          {
+            "fecha_hora": "2025-05-05T18:00:00",
+            "real": 31,
+            "pronostico": 28.04
+          },
+          {
+            "fecha_hora": "2025-05-05T19:00:00",
+            "real": 26,
+            "pronostico": 26.75
+          },
+          {
+            "fecha_hora": "2025-05-05T20:00:00",
+            "real": 11,
+            "pronostico": 24.31
+          },
+          {
+            "fecha_hora": "2025-05-05T21:00:00",
+            "real": 8,
+            "pronostico": 11.91
+          },
+          {
+            "fecha_hora": "2025-05-05T22:00:00",
+            "real": 15,
+            "pronostico": 9.7
+          },
+          {
+            "fecha_hora": "2025-05-05T23:00:00",
+            "real": 15,
+            "pronostico": 12.85
+          },
+          {
+            "fecha_hora": "2025-05-06T00:00:00",
+            "real": 16,
+            "pronostico": 14.66
+          },
+          {
+            "fecha_hora": "2025-05-06T01:00:00",
+            "real": 20,
+            "pronostico": 15.06
+          },
+          {
+            "fecha_hora": "2025-05-06T02:00:00",
+            "real": 20,
+            "pronostico": 19.47
+          },
+          {
+            "fecha_hora": "2025-05-06T03:00:00",
+            "real": 21,
+            "pronostico": 16.87
+          },
+          {
+            "fecha_hora": "2025-05-06T04:00:00",
+            "real": 31,
+            "pronostico": 17.62
+          },
+          {
+            "fecha_hora": "2025-05-06T05:00:00",
+            "real": 25,
+            "pronostico": 28.89
+          },
+          {
+            "fecha_hora": "2025-05-06T06:00:00",
+            "real": 29,
+            "pronostico": 23.18
+          },
+          {
+            "fecha_hora": "2025-05-06T07:00:00",
+            "real": 29,
+            "pronostico": 28.66
+          },
+          {
+            "fecha_hora": "2025-05-06T08:00:00",
+            "real": 30,
+            "pronostico": 27.64
+          },
+          {
+            "fecha_hora": "2025-05-06T09:00:00",
+            "real": 32,
+            "pronostico": 28.34
+          },
+          {
+            "fecha_hora": "2025-05-06T10:00:00",
+            "real": 45,
+            "pronostico": 30.99
+          },
+          {
+            "fecha_hora": "2025-05-06T11:00:00",
+            "real": 51,
+            "pronostico": 41.6
+          },
+          {
+            "fecha_hora": "2025-05-06T12:00:00",
+            "real": 61,
+            "pronostico": 51.63
+          },
+          {
+            "fecha_hora": "2025-05-06T13:00:00",
+            "real": 71,
+            "pronostico": 55.95
+          },
+          {
+            "fecha_hora": "2025-05-06T14:00:00",
+            "real": 76.5,
+            "pronostico": 56.78
+          },
+          {
+            "fecha_hora": "2025-05-06T15:00:00",
+            "real": 82,
+            "pronostico": 59.02
+          },
+          {
+            "fecha_hora": "2025-05-06T16:00:00",
+            "real": 43,
+            "pronostico": 53.78
+          },
+          {
+            "fecha_hora": "2025-05-06T17:00:00",
+            "real": 23,
+            "pronostico": 25.75
+          },
+          {
+            "fecha_hora": "2025-05-06T18:00:00",
+            "real": 14,
+            "pronostico": 20.12
+          },
+          {
+            "fecha_hora": "2025-05-06T19:00:00",
+            "real": 13.5,
+            "pronostico": 13.83
+          },
+          {
+            "fecha_hora": "2025-05-06T20:00:00",
+            "real": 13,
+            "pronostico": 14.82
+          },
+          {
+            "fecha_hora": "2025-05-06T21:00:00",
+            "real": 5,
+            "pronostico": 16.38
+          },
+          {
+            "fecha_hora": "2025-05-06T22:00:00",
+            "real": 3,
+            "pronostico": 10.09
+          },
+          {
+            "fecha_hora": "2025-05-06T23:00:00",
+            "real": 4.5,
+            "pronostico": 7.87
+          },
+          {
+            "fecha_hora": "2025-05-07T00:00:00",
+            "real": 6,
+            "pronostico": 8.88
+          },
+          {
+            "fecha_hora": "2025-05-07T01:00:00",
+            "real": 15,
+            "pronostico": 11.32
+          },
+          {
+            "fecha_hora": "2025-05-07T02:00:00",
+            "real": 22,
+            "pronostico": 18.12
+          },
+          {
+            "fecha_hora": "2025-05-07T03:00:00",
+            "real": 29,
+            "pronostico": 22.34
+          },
+          {
+            "fecha_hora": "2025-05-07T04:00:00",
+            "real": 9,
+            "pronostico": 29.53
+          },
+          {
+            "fecha_hora": "2025-05-07T05:00:00",
+            "real": 14,
+            "pronostico": 12.83
+          },
+          {
+            "fecha_hora": "2025-05-07T06:00:00",
+            "real": 17,
+            "pronostico": 15.95
+          },
+          {
+            "fecha_hora": "2025-05-07T07:00:00",
+            "real": 23,
+            "pronostico": 17.25
+          },
+          {
+            "fecha_hora": "2025-05-07T08:00:00",
+            "real": 24,
+            "pronostico": 25.13
+          },
+          {
+            "fecha_hora": "2025-05-07T09:00:00",
+            "real": 20,
+            "pronostico": 26.54
+          },
+          {
+            "fecha_hora": "2025-05-07T10:00:00",
+            "real": 30,
+            "pronostico": 24.58
+          },
+          {
+            "fecha_hora": "2025-05-07T11:00:00",
+            "real": 33.67,
+            "pronostico": 34.57
+          },
+          {
+            "fecha_hora": "2025-05-07T12:00:00",
+            "real": 37.33,
+            "pronostico": 39.66
+          },
+          {
+            "fecha_hora": "2025-05-07T13:00:00",
+            "real": 41,
+            "pronostico": 39.46
+          },
+          {
+            "fecha_hora": "2025-05-07T14:00:00",
+            "real": 24,
+            "pronostico": 36.43
+          }
+        ]
+      },
+      "ultimo_punto": {
+        "fecha_hora": "2025-06-03T05:00:00",
+        "real": 17.67,
+        "pronostico": 17.07
+      },
+      "serie_reciente": [
+        {
+          "fecha_hora": "2025-05-31T01:00:00",
+          "real": 12,
+          "pronostico": 6.04
+        },
+        {
+          "fecha_hora": "2025-05-31T02:00:00",
+          "real": 16,
+          "pronostico": 11.03
+        },
+        {
+          "fecha_hora": "2025-05-31T03:00:00",
+          "real": 17,
+          "pronostico": 15.09
+        },
+        {
+          "fecha_hora": "2025-05-31T04:00:00",
+          "real": 23,
+          "pronostico": 14.51
+        },
+        {
+          "fecha_hora": "2025-05-31T05:00:00",
+          "real": 14,
+          "pronostico": 19.27
+        },
+        {
+          "fecha_hora": "2025-05-31T06:00:00",
+          "real": 9,
+          "pronostico": 14.58
+        },
+        {
+          "fecha_hora": "2025-05-31T07:00:00",
+          "real": 19,
+          "pronostico": 10.41
+        },
+        {
+          "fecha_hora": "2025-05-31T08:00:00",
+          "real": 22,
+          "pronostico": 18.24
+        },
+        {
+          "fecha_hora": "2025-05-31T09:00:00",
+          "real": 21,
+          "pronostico": 17.68
+        },
+        {
+          "fecha_hora": "2025-05-31T10:00:00",
+          "real": 24,
+          "pronostico": 20.15
+        },
+        {
+          "fecha_hora": "2025-05-31T11:00:00",
+          "real": 11,
+          "pronostico": 23.54
+        },
+        {
+          "fecha_hora": "2025-05-31T12:00:00",
+          "real": 16.5,
+          "pronostico": 17.13
+        },
+        {
+          "fecha_hora": "2025-05-31T13:00:00",
+          "real": 22,
+          "pronostico": 18.44
+        },
+        {
+          "fecha_hora": "2025-05-31T14:00:00",
+          "real": 12,
+          "pronostico": 21.13
+        },
+        {
+          "fecha_hora": "2025-05-31T15:00:00",
+          "real": 34,
+          "pronostico": 15.98
+        },
+        {
+          "fecha_hora": "2025-05-31T16:00:00",
+          "real": 25,
+          "pronostico": 27.45
+        },
+        {
+          "fecha_hora": "2025-05-31T17:00:00",
+          "real": 13,
+          "pronostico": 19.81
+        },
+        {
+          "fecha_hora": "2025-05-31T18:00:00",
+          "real": 11,
+          "pronostico": 13.95
+        },
+        {
+          "fecha_hora": "2025-05-31T19:00:00",
+          "real": 15,
+          "pronostico": 19.23
+        },
+        {
+          "fecha_hora": "2025-05-31T20:00:00",
+          "real": 16,
+          "pronostico": 20.84
+        },
+        {
+          "fecha_hora": "2025-05-31T21:00:00",
+          "real": 23,
+          "pronostico": 17.99
+        },
+        {
+          "fecha_hora": "2025-05-31T22:00:00",
+          "real": 17,
+          "pronostico": 18.23
+        },
+        {
+          "fecha_hora": "2025-05-31T23:00:00",
+          "real": 10,
+          "pronostico": 14.33
+        },
+        {
+          "fecha_hora": "2025-06-01T00:00:00",
+          "real": 8,
+          "pronostico": 9.3
+        },
+        {
+          "fecha_hora": "2025-06-01T01:00:00",
+          "real": 6,
+          "pronostico": 8.42
+        },
+        {
+          "fecha_hora": "2025-06-01T02:00:00",
+          "real": 4,
+          "pronostico": 7.33
+        },
+        {
+          "fecha_hora": "2025-06-01T03:00:00",
+          "real": 9,
+          "pronostico": 4.27
+        },
+        {
+          "fecha_hora": "2025-06-01T04:00:00",
+          "real": 7,
+          "pronostico": 7.06
+        },
+        {
+          "fecha_hora": "2025-06-01T05:00:00",
+          "real": 12,
+          "pronostico": 7.63
+        },
+        {
+          "fecha_hora": "2025-06-01T06:00:00",
+          "real": 11,
+          "pronostico": 11.28
+        },
+        {
+          "fecha_hora": "2025-06-01T07:00:00",
+          "real": 11,
+          "pronostico": 11.72
+        },
+        {
+          "fecha_hora": "2025-06-01T08:00:00",
+          "real": 15,
+          "pronostico": 13.16
+        },
+        {
+          "fecha_hora": "2025-06-01T09:00:00",
+          "real": 15,
+          "pronostico": 15.26
+        },
+        {
+          "fecha_hora": "2025-06-01T10:00:00",
+          "real": 23,
+          "pronostico": 16.63
+        },
+        {
+          "fecha_hora": "2025-06-01T11:00:00",
+          "real": 39,
+          "pronostico": 24.62
+        },
+        {
+          "fecha_hora": "2025-06-01T12:00:00",
+          "real": 42,
+          "pronostico": 40.44
+        },
+        {
+          "fecha_hora": "2025-06-01T13:00:00",
+          "real": 45,
+          "pronostico": 37.5
+        },
+        {
+          "fecha_hora": "2025-06-01T14:00:00",
+          "real": 31,
+          "pronostico": 34.6
+        },
+        {
+          "fecha_hora": "2025-06-01T15:00:00",
+          "real": 24,
+          "pronostico": 22.41
+        },
+        {
+          "fecha_hora": "2025-06-01T16:00:00",
+          "real": 24,
+          "pronostico": 19.05
+        },
+        {
+          "fecha_hora": "2025-06-01T17:00:00",
+          "real": 11,
+          "pronostico": 18.38
+        },
+        {
+          "fecha_hora": "2025-06-01T18:00:00",
+          "real": 4,
+          "pronostico": 11
+        },
+        {
+          "fecha_hora": "2025-06-01T19:00:00",
+          "real": 4,
+          "pronostico": 7.03
+        },
+        {
+          "fecha_hora": "2025-06-01T20:00:00",
+          "real": 14,
+          "pronostico": 6.12
+        },
+        {
+          "fecha_hora": "2025-06-01T21:00:00",
+          "real": 15,
+          "pronostico": 14.77
+        },
+        {
+          "fecha_hora": "2025-06-01T22:00:00",
+          "real": 12,
+          "pronostico": 11.78
+        },
+        {
+          "fecha_hora": "2025-06-01T23:00:00",
+          "real": 9,
+          "pronostico": 9.65
+        },
+        {
+          "fecha_hora": "2025-06-02T00:00:00",
+          "real": 6,
+          "pronostico": 7.61
+        },
+        {
+          "fecha_hora": "2025-06-02T01:00:00",
+          "real": 17,
+          "pronostico": 6.87
+        },
+        {
+          "fecha_hora": "2025-06-02T02:00:00",
+          "real": 24,
+          "pronostico": 13.6
+        },
+        {
+          "fecha_hora": "2025-06-02T03:00:00",
+          "real": 30,
+          "pronostico": 22.68
+        },
+        {
+          "fecha_hora": "2025-06-02T04:00:00",
+          "real": 40,
+          "pronostico": 27.76
+        },
+        {
+          "fecha_hora": "2025-06-02T05:00:00",
+          "real": 28,
+          "pronostico": 35.34
+        },
+        {
+          "fecha_hora": "2025-06-02T06:00:00",
+          "real": 28,
+          "pronostico": 21.46
+        },
+        {
+          "fecha_hora": "2025-06-02T07:00:00",
+          "real": 32,
+          "pronostico": 28.98
+        },
+        {
+          "fecha_hora": "2025-06-02T08:00:00",
+          "real": 36,
+          "pronostico": 32.27
+        },
+        {
+          "fecha_hora": "2025-06-02T09:00:00",
+          "real": 45,
+          "pronostico": 34.62
+        },
+        {
+          "fecha_hora": "2025-06-02T10:00:00",
+          "real": 38,
+          "pronostico": 39.87
+        },
+        {
+          "fecha_hora": "2025-06-02T11:00:00",
+          "real": 34,
+          "pronostico": 29.22
+        },
+        {
+          "fecha_hora": "2025-06-02T12:00:00",
+          "real": 34.83,
+          "pronostico": 40.04
+        },
+        {
+          "fecha_hora": "2025-06-02T13:00:00",
+          "real": 35.67,
+          "pronostico": 38
+        },
+        {
+          "fecha_hora": "2025-06-02T14:00:00",
+          "real": 36.5,
+          "pronostico": 35.54
+        },
+        {
+          "fecha_hora": "2025-06-02T20:00:00",
+          "real": 11,
+          "pronostico": 25.86
+        },
+        {
+          "fecha_hora": "2025-06-02T21:00:00",
+          "real": 10,
+          "pronostico": 13.77
+        },
+        {
+          "fecha_hora": "2025-06-02T22:00:00",
+          "real": 4,
+          "pronostico": 9.82
+        },
+        {
+          "fecha_hora": "2025-06-02T23:00:00",
+          "real": 8,
+          "pronostico": 5.77
+        },
+        {
+          "fecha_hora": "2025-06-03T00:00:00",
+          "real": 4,
+          "pronostico": 7.93
+        },
+        {
+          "fecha_hora": "2025-06-03T01:00:00",
+          "real": 10,
+          "pronostico": 6.19
+        },
+        {
+          "fecha_hora": "2025-06-03T02:00:00",
+          "real": 11,
+          "pronostico": 9.27
+        },
+        {
+          "fecha_hora": "2025-06-03T03:00:00",
+          "real": 12,
+          "pronostico": 15.36
+        },
+        {
+          "fecha_hora": "2025-06-03T04:00:00",
+          "real": 17,
+          "pronostico": 12.85
+        },
+        {
+          "fecha_hora": "2025-06-03T05:00:00",
+          "real": 17.67,
+          "pronostico": 17.07
         }
       ]
     }
