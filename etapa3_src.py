@@ -83,7 +83,7 @@ df["fecha_hora"] = pd.to_datetime(df["fecha_hora"])
 
 TARGET = "PM2.5"
 ESTACIONES = ["NE", "SO"]
-METEO = ["TOUT", "RH", "SR", "WSR", "WDR", "RAINF", "PRS"]
+METEO = ["TOUT", "RH", "SR", "WSR", "WDR", "RAINF", "PRS"] #7 variables meteorológicas (TOUT temperatura, RH humedad, SR radiación solar, WSR rapidez de viento, WDR dirección de viento, RAINF lluvia, PRS presión
 CONTEXTO = ["PM10"]  # familia PM2.5-PM10: PM10 entra como variable de contexto, no como objetivo
 
 print(f"Base: {DATA_PATH}")
