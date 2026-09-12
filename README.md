@@ -40,16 +40,15 @@ dashboard en `web/`) sin volver a correr el notebook académico completo.
 
 ## Cómo correrlo desde cero
 
-### 1. Dataset (importante — es lo primero)
+### 1. Dataset
 
 Los datos crudos (`data/BD 2020.xlsx` … `data/BD 2025.xlsx`) **sí están en el
 repo**. La base ya limpia (`output/sima_2020_2025_limpio.parquet`) **no**
 —`output/` está en `.gitignore` porque es un artefacto derivado, no una
 fuente— así que hay que regenerarla una vez, corriendo `limpieza_datos.ipynb`
-de principio a fin. Todo lo demás (`etapa2/3/4`) lee ese parquet y falla con
-un `FileNotFoundError` explícito si no existe.
+de principio a fin.
 
-### 2. Entorno Python (todo el pipeline)
+### 2. Entorno en Python (todo el pipeline)
 
 ```bash
 python -m pip install -r requirements.txt
@@ -59,7 +58,7 @@ jupyter notebook etapa3.ipynb
 jupyter notebook etapa4.ipynb
 ```
 
-### 3. Dashboard web (opcional)
+### 3. Dashboard web
 
 Ver [`web/README.md`](web/README.md) — sitio estático en Node puro que
 consume el export de `etapa4.ipynb` (`output/etapa4_forecast.json`).
