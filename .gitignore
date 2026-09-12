@@ -6,3 +6,6 @@ renv/staging/
 output/
 
 /.quarto/
+
+__pycache__/
+*.pyc
